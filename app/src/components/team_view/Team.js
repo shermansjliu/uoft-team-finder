@@ -11,7 +11,9 @@ class Team extends React.Component {
         //      1) a team member of the team
         //      2) the team leader of the team
         //      3) other users not in the team
-        const currentUser = {userID: "SpectatorID", name: "Spectator"}
+        // const currentUser = {userID: "SpectatorID", name: "Spectator"}
+        // const currentUser = {userID: "ShermanID", name: "Sherman"}
+        const currentUser = {userID: "DavidID", name: "David"}
 
         const teamLeaderID = "ShermanID"
 
@@ -22,7 +24,9 @@ class Team extends React.Component {
             {userID: "QuincyID", name: "Quincy"},
             {userID: "JesseID", name: "Jesse"},
         ]  
-
+        
+        const teamName = "The John Wicks"
+        const teamDescription = " We seek revenge for our dogs"
         const teamCapacity = 4
 
         /* ------------------------------------------ */
