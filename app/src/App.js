@@ -7,6 +7,8 @@ import 'antd/dist/antd.css'
 import Setting from './components/Setting';
 import RealHome from './components/RealHome/RealHome';
 import Login from './components/Login/Login';
+import Team from './components/team_view/Team';
+
 
 class App extends React.Component {
 
@@ -26,6 +28,8 @@ class App extends React.Component {
                             (<RealHome appState={this.state}/>)}/>
             <Route exact path='/setting' render={() => 
                             (<Setting appState={this.state}/>)}/>
+            <Route exact path='/Team' render={() => 
+                            (<Team appState={this.state}/>)}/>
           </Switch>
         </BrowserRouter>
       </div>
