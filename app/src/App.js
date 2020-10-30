@@ -5,8 +5,8 @@ import './App.css';
 import 'antd/dist/antd.css'
 
 import Setting from './components/Setting';
-import Home from './components/Home';
-import Login from './components/Login';
+import Home from './components/Home/Home';
+import Login from './components/Login/Login';
 
 class App extends React.Component {
 
