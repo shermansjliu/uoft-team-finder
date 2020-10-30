@@ -1,6 +1,7 @@
 import React, {Component} from "react";
 import {Layout, Space, Typography} from 'antd'
-import {SettingOutlined} from '@ant-design/icons'
+
+import {SettingOutlined, TeamOutlined} from '@ant-design/icons'
 
 import '../App.css'
 
@@ -27,7 +28,10 @@ class Home extends Component {
         {/* <Layout> */}
           <footer className="homeViewFooter">
             <ul>
+              
            <li className="footerItem"><SettingOutlined /></li>
+           <li className="footerItem"><TeamOutlined /></li>
+           <li className="footerItem"></li>
             </ul>
         
          </footer>
