@@ -1,17 +1,18 @@
 import React, { Component } from "react";
-import { Layout, Space, Typography, Divider, Button } from "antd";
-import { Link } from "react-router-dom";
+import { Layout, Space, Typography, Divider } from "antd";
 import TeamCard from "./TeamCard";
-import { SettingOutlined, TeamOutlined } from "@ant-design/icons";
-import { User, Group } from "grommet-icons";
+import HomeViewFooter from "./HomeViewFooter";
+
 import "../App.css";
 
-const { Sider, Content, Footer } = Layout;
+const { Sider, Content } = Layout;
 const { Title } = Typography;
 class Home extends Component {
   constructor(props) {
     super(props);
+
     this.state = {
+      className: "CSC236",
       teams: [
         {
           teamName: "The John Wicks",
@@ -39,7 +40,7 @@ class Home extends Component {
             <div className="homeViewSideMenu">
               <div>
                 <Title className="classTitle" level={2}>
-                  CSC236
+                  {this.state.className}
                 </Title>
                 <Title className="totalTeams" level={3}>
                   {" "}
@@ -51,33 +52,7 @@ class Home extends Component {
                   <Title level={5}> Study: 5</Title>
                 </Space>
               </div>
-              <footer className="homeViewFooter">
-                <Button
-                  type="primary"
-                  block={true}
-                  size="large"
-                  id="homeViewBackButton"
-                >
-                  Back
-                </Button>
-                <ul>
-                  <Link to="/Setting">
-                    <li className="footerItem">
-                      <SettingOutlined />
-                    </li>
-                  </Link>
-                  <Link to="/Team">
-                    <li className="footerItem">
-                      <Group />
-                    </li>
-                  </Link>
-                  <Link>
-                    <li className="footerItem">
-                      <User />
-                    </li>
-                  </Link>
-                </ul>
-              </footer>
+              <HomeViewFooter />
             </div>
           </Sider>
           <Content hasSider={true} className="homeViewContent">
