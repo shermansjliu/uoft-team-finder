@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Layout, Space, Typography, Divider } from "antd";
 import TeamCard from "./TeamCard";
-import HomeViewFooter from "./HomeViewFooter";
+import HomeViewFooter from "./CourseViewFooter";
 
 import "../App.css";
 
