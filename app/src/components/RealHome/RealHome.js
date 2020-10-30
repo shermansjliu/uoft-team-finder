@@ -1,6 +1,8 @@
 import React, {Component} from "react";
-import {Layout, Space, Typography, Menu} from 'antd'
+import {Layout, Space, Typography, Menu, Avatar} from 'antd'
 import Grid from '../Grid/Grid'
+import './index.css';
+
 import {
   MenuUnfoldOutlined,
   MenuFoldOutlined,
@@ -16,7 +18,7 @@ const { Header, Sider, Content } = Layout;
 const {Title} = Typography
 
 
-class Home extends Component {
+class RealHome extends Component {
   state = {
     collapsed: false,
   };
@@ -29,7 +31,13 @@ class Home extends Component {
     return (
       <Layout style={{height:"100vh"}}>
         <Sider trigger={null} collapsible collapsed={this.state.collapsed}>
-          <div className="logo" />
+          <div className="logo" > 
+          <Avatar
+            size={{xs: 24, sm: 32, md: 40, lg: 64, xl: 80, xxl: 100,}}
+            icon={<UserOutlined />}
+            src=""
+          />
+          </div>
           <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']}>
             <Menu.Item key="1" icon={<UserOutlined />}>
               nav 1
@@ -57,7 +65,6 @@ class Home extends Component {
               minHeight: 280,
             }}
           >
-            Content
             <Grid /> 
           </Content>
         </Layout>
@@ -66,6 +73,6 @@ class Home extends Component {
   }
 }
 
-export default Home;
+export default RealHome;
 
 

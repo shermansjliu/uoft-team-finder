@@ -1,5 +1,6 @@
 import { Row, Col, Slider, Button} from 'antd';
 import React from 'react'
+import 'antd/dist/antd.css';
 import "./styles.css"
 
 const gutters = {};
@@ -50,7 +51,7 @@ class Grid extends React.Component {
     }
     return (
       <>
-        <span>Horizontal Gutter (px): </span>
+        {/* <span>Horizontal Gutter (px): </span>
         <div style={{ width: '50%' }}>
           <Slider
             min={0}
@@ -85,7 +86,8 @@ class Grid extends React.Component {
             step={null}
             tipFormatter={value => colCounts[value]}
           />
-        </div>
+        </div> */}
+        
         <Row gutter={[gutters[gutterKey], vgutters[vgutterKey]]}>{cols}</Row>
         <Row gutter={[gutters[gutterKey], vgutters[vgutterKey]]}>{cols}</Row>
         
