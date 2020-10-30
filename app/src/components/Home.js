@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Layout, Space, Typography, Menu, Divider } from "antd";
+import { Layout, Space, Typography, Divider, Button } from "antd";
 import { Link } from "react-router-dom";
 import TeamCard from "./TeamCard";
 import { SettingOutlined, TeamOutlined } from "@ant-design/icons";
@@ -52,6 +52,14 @@ class Home extends Component {
                 </Space>
               </div>
               <footer className="homeViewFooter">
+                <Button
+                  type="primary"
+                  block={true}
+                  size="large"
+                  id="homeViewBackButton"
+                >
+                  Back
+                </Button>
                 <ul>
                   <Link to="/Setting">
                     <li className="footerItem">
