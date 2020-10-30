@@ -7,7 +7,7 @@ import "../App.css";
 
 const { Sider, Content } = Layout;
 const { Title } = Typography;
-class Home extends Component {
+export default class Course extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -73,5 +73,3 @@ class Home extends Component {
     );
   }
 }
-
-export default Home;

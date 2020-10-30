@@ -5,7 +5,7 @@ import "./App.css";
 import "antd/dist/antd.css";
 
 import Setting from "./components/Setting";
-import Home from "./components/CourseView";
+import Course from "./components/CourseView";
 import Login from "./components/Login";
 
 class App extends React.Component {
@@ -26,8 +26,8 @@ class App extends React.Component {
             />
             <Route
               exact
-              path="/Home"
-              render={() => <Home appState={this.state} />}
+              path="/Course"
+              render={() => <Course appState={this.state} />}
             />
             <Route
               exact
