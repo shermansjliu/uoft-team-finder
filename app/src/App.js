@@ -8,6 +8,8 @@ import Setting from './components/Setting';
 import RealHome from './components/RealHome/RealHome';
 import Home from './components/Home';
 import Login from './components/Login/Login';
+import Team from './components/team_view/Team';
+
 
 class App extends React.Component {
 
@@ -29,6 +31,8 @@ class App extends React.Component {
                             (<Home appState={this.state}/>)}/>
             <Route exact path='/setting' render={() => 
                             (<Setting appState={this.state}/>)}/>
+            <Route exact path='/Team' render={() => 
+                            (<Team appState={this.state}/>)}/>
           </Switch>
         </BrowserRouter>
       </div>

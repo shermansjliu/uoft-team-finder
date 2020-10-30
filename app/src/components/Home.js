@@ -10,7 +10,6 @@ const { Title } = Typography;
 class Home extends Component {
   constructor(props) {
     super(props);
-
     this.state = {
       className: "CSC236",
       teams: [
