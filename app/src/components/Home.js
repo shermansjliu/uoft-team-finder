@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Layout, Space, Typography, Menu } from "antd";
+import { Layout, Space, Typography, Menu, Divider } from "antd";
 import { Link } from "react-router-dom";
 import TeamCard from "./TeamCard";
 import { SettingOutlined, TeamOutlined } from "@ant-design/icons";
@@ -75,11 +75,14 @@ class Home extends Component {
           <Content hasSider={true} className="homeViewContent">
             {this.state.teams.map((team) => {
               return (
-                <TeamCard
-                  teamName={team.teamName}
-                  members={team.members}
-                  capacity={team.capacity}
-                />
+                <div>
+                  <TeamCard
+                    teamName={team.teamName}
+                    members={team.members}
+                    capacity={team.capacity}
+                  />
+                  <Divider className="teamCardDivider" />
+                </div>
               );
             })}
           </Content>
