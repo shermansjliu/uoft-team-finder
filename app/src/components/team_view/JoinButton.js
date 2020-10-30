@@ -1,9 +1,11 @@
 import React from 'react'
 
 class JoinButton extends React.Component {
+
     render(){
+        const {handleJoinRequest} = this.props
         return (
-            <button>Join</button>
+            <button onClick={handleJoinRequest}>Join</button>
         )
     }
 }
