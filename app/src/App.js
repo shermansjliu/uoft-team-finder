@@ -2,6 +2,7 @@ import React from 'react'
 // Importing react-router-dom to use the React Router
 import { Route, Switch, BrowserRouter } from 'react-router-dom';
 import './App.css';
+import 'antd/dist/antd.css'
 
 import Setting from './components/Setting';
 import Home from './components/Home';
