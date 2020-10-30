@@ -5,8 +5,8 @@ import './App.css';
 import 'antd/dist/antd.css'
 
 import Setting from './components/Setting';
-import Home from './components/Home';
-import Login from './components/Login';
+import RealHome from './components/RealHome/RealHome';
+import Login from './components/Login/Login';
 
 class App extends React.Component {
 
@@ -23,7 +23,7 @@ class App extends React.Component {
           <Route exact path='/' render={() => 
                             (<Login appState={this.state}/>)}/>
             <Route exact path='/Home' render={() => 
-                            (<Home appState={this.state}/>)}/>
+                            (<RealHome appState={this.state}/>)}/>
             <Route exact path='/setting' render={() => 
                             (<Setting appState={this.state}/>)}/>
           </Switch>
