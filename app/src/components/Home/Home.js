@@ -9,7 +9,7 @@ import {
   UploadOutlined,
 } from '@ant-design/icons';
 
-import '../App.css'
+import '../../App.css'
 
 const { Header, Sider, Content } = Layout;
 
