@@ -1,0 +1,36 @@
+/* .ant-avatar {
+    margin-top: 16px;
+    margin-left: 48px;
+  } */
+/* .ant-row-rtl .ant-avatar {
+    margin-right: 0;
+    margin-left: 16px;
+} */
+
+#profile_wrapper {
+    height: 800px;
+}
+#profile_image_bar {
+    background-color: gainsboro;
+    float: left;
+    width: 200;
+    padding-top: 20px;
+    padding-left: 20px;
+}
+
+#reviews_bar {
+    max-width: 30%;
+    background-color: lightslategrey;
+    float: left;
+    padding-top: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+#information_bar {
+    background-color: seashell;
+    float: left;
+    padding-top: 20px;
+    padding-left: 20px;
+}
+
