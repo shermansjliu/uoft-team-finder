@@ -1,1 +1,30 @@
 @import "~antd/dist/antd.css";
+* {
+  box-sizing: border-box;
+}
+.homeViewSideMenu {
+  text-align: center;
+  background-color: aquamarine;
+  height: 100vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  padding: 0px 20px 0px 20px;
+}
+.homeViewContent {
+  padding: 0 20px 0 20px;
+}
+.homeViewContainer {
+  height: 100vh;
+}
+.homeViewFooter {
+  height: 10rem;
+  display: flex;
+}
+.footerItem {
+  list-style: none;
+}
+
+.classTitle {
+  border: 3px solid black;
+}

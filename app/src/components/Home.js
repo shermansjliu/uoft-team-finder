@@ -1,9 +1,10 @@
 import React, {Component} from "react";
 import {Layout, Space, Typography} from 'antd'
+import {SettingOutlined} from '@ant-design/icons'
 
 import '../App.css'
 
-const {Sider, Content} = Layout
+const {Sider, Content, Footer} = Layout
 const {Title} = Typography
 class Home extends Component {
   render() {
@@ -11,15 +12,30 @@ class Home extends Component {
      <div> 
       <Layout className="homeViewContainer">
 
-        <Sider className="homeViewSideMenu">Sider
-        <Title level={2}>CSC236</Title>
-            <Space direction="vertical">
-              <Title level={3}> Teams: 10</Title>
-              <Title level={5}> 5 Project</Title>
-              <Title level={5}> 5 Study</Title>
-              </Space>         
+        <Sider >
+          <div className="homeViewSideMenu">
+            <div>
+        <Title className="classTitle" level={2}>CSC236</Title>
+        <Title className="totalTeams" level={3}> Teams: 10</Title>
+
+        <Space direction="vertical">
+        <Title level={5}> Project: 5</Title>
+        <Title level={5}> Study: 5</Title>
+      
+        </Space>
+        </div>
+        {/* <Layout> */}
+          <footer className="homeViewFooter">
+            <ul>
+           <li className="footerItem"><SettingOutlined /></li>
+            </ul>
+        
+         </footer>
+         {/* </Layout> */}
+       
+         </div>
         </Sider>
-        <Content hasSider={true} style={{background:"red"}}>Content</Content>
+        <Content hasSider={true} className="homeViewContent">Content</Content>
       </Layout>
       </div>
     )
