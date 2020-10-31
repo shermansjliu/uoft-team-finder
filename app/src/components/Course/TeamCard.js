@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Typography, Statistic, Menu } from "antd";
-import "../App.css";
+import "../../App.css";
+import "./index.css";
 
 const { Title } = Typography;
 const { SubMenu } = Menu;

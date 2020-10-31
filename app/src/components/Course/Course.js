@@ -1,12 +1,13 @@
 import React, { Component } from "react";
 import { Layout, Space, Typography, Divider } from "antd";
 import TeamCard from "./TeamCard";
-import HomeViewFooter from "./CourseViewFooter";
-
-import "../App.css";
+import HomeViewFooter from "./CourseFooter";
+import "../../App.css";
+import "./index.css";
 
 const { Sider, Content } = Layout;
 const { Title } = Typography;
+
 export default class Course extends Component {
   constructor(props) {
     super(props);
@@ -42,8 +43,7 @@ export default class Course extends Component {
                   {this.state.className}
                 </Title>
                 <Title className="totalTeams" level={3}>
-                  {" "}
-                  Teams: 10
+                  {this.state.teams.state.size}
                 </Title>
 
                 <Space direction="vertical">

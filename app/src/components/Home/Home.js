@@ -1,7 +1,7 @@
-import React, {Component} from "react";
-import {Layout, Space, Typography, Menu, Avatar} from 'antd'
-import Grid from '../Grid/Grid'
-import './index.css';
+import React, { Component } from "react";
+import { Layout, Menu, Avatar } from "antd";
+import Grid from "../Grid/Grid";
+import "./index.css";
 
 import {
   MenuUnfoldOutlined,
@@ -9,16 +9,13 @@ import {
   UserOutlined,
   VideoCameraOutlined,
   UploadOutlined,
-} from '@ant-design/icons';
+} from "@ant-design/icons";
 
-import '../../App.css'
+import "../../App.css";
 
 const { Header, Sider, Content } = Layout;
 
-const {Title} = Typography
-
-
-class RealHome extends Component {
+export default class Home extends Component {
   state = {
     collapsed: false,
   };
@@ -29,16 +26,16 @@ class RealHome extends Component {
   };
   render() {
     return (
-      <Layout style={{height:"100vh"}}>
+      <Layout style={{ height: "100vh" }}>
         <Sider trigger={null} collapsible collapsed={this.state.collapsed}>
-          <div className="logo" > 
-          <Avatar
-            size={{xs: 24, sm: 32, md: 40, lg: 64, xl: 80, xxl: 100,}}
-            icon={<UserOutlined />}
-            src=""
-          />
+          <div className="logo">
+            <Avatar
+              size={{ xs: 24, sm: 32, md: 40, lg: 64, xl: 80, xxl: 100 }}
+              icon={<UserOutlined />}
+              src=""
+            />
           </div>
-          <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']}>
+          <Menu theme="dark" mode="inline" defaultSelectedKeys={["1"]}>
             <Menu.Item key="1" icon={<UserOutlined />}>
               nav 1
             </Menu.Item>
@@ -52,27 +49,26 @@ class RealHome extends Component {
         </Sider>
         <Layout className="site-layout">
           <Header className="site-layout-background" style={{ padding: 0 }}>
-            {React.createElement(this.state.collapsed ? MenuUnfoldOutlined : MenuFoldOutlined, {
-              className: 'trigger',
-              onClick: this.toggle,
-            })}
+            {React.createElement(
+              this.state.collapsed ? MenuUnfoldOutlined : MenuFoldOutlined,
+              {
+                className: "trigger",
+                onClick: this.toggle,
+              }
+            )}
           </Header>
           <Content
             className="site-layout-background"
             style={{
-              margin: '24px 16px',
+              margin: "24px 16px",
               padding: 24,
               minHeight: 280,
             }}
           >
-            <Grid /> 
+            <Grid />
           </Content>
         </Layout>
       </Layout>
     );
   }
 }
-
-export default RealHome;
-
-
