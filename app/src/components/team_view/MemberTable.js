@@ -1,21 +1,21 @@
 import React from 'react'
 import TeamMember from './TeamMember'
 import TeamLeader from './TeamLeader'
-import JoinButton from './JoinButton'
-import LeaveButton from './LeaveButton'
+import {Button, Statistic} from "antd"
+import './style.css'
 
 class MemberTable extends React.Component {
     constructor(props){
         super(props)
-        this.handleJoinRequest = this.handleJoinRequest.bind(this)
-        this.handleLeaveRequest = this.handleLeaveRequest.bind(this)
+        this.handleAddRequest = this.handleAddRequest.bind(this)
+        this.handleRemoveRequest = this.handleRemoveRequest.bind(this)
     }
 
-    handleJoinRequest (newMember) {
+    handleAddRequest (newMember) {
         this.props.addMember(newMember)
     }
 
-    handleLeaveRequest (rmMember) {
+    handleRemoveRequest (rmMember) {
         this.props.deleteMember(rmMember)
     }
     
@@ -29,15 +29,15 @@ class MemberTable extends React.Component {
 
         const renderJoinOrLeaveButton = () => {
             if(view === "otherUserView") {
-                return <JoinButton handleJoinRequest={() => this.handleJoinRequest(currentUser)}/>
+                return <Button className="joinLeaveButton" type="primary" onClick={() => this.handleAddRequest(currentUser)}> Join </Button>
             } else {
-                return <LeaveButton handleLeaveRequest={() => this.handleLeaveRequest(currentUser)}/>
+                return <Button className="joinLeaveButton" type="primary" onClick={() => this.handleRemoveRequest(currentUser)}> Leave </Button>
             }
         }
 
         return (
-            <div>
-                <h2> Team Members: </h2>
+            <div className="memberTableContainer">
+                <h2> Team Members </h2>
                 
                 <TeamLeader teamLeader={teamLeader} view={view} currentUser={currentUser}/>
 
@@ -47,6 +47,7 @@ class MemberTable extends React.Component {
                     />
                 )}
 
+                <Statistic className="teamCapacity" value={members.length} suffix={`/${this.props.teamCapacity}`} />
                 {renderJoinOrLeaveButton()}
 
             </div>

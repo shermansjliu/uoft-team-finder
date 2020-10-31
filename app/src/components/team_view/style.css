@@ -1,0 +1,45 @@
+/*Team View*/
+body {
+    background-color: #f0f2f5;
+}
+
+.teamViewContent {
+    padding: 0px 20px 0px 20px;
+    margin-top: 2rem;
+    width: 100%;
+  }
+
+.teamViewContainer {
+    height: 100%;
+}
+
+.teamTitle {
+    border: 3px solid black;
+    margin-left: 30%;
+    margin-right: 30%;
+    text-align: center;
+}
+
+.teamDescription {
+    text-align: center;
+    font-style: italic;
+}
+
+.teamMemberCard {
+    margin: 1% auto;
+}
+
+.memberTableContainer {
+    margin: auto 10%
+}
+
+.joinLeaveButton {
+    float: right;
+    margin-bottom: 1%;
+}
+
+.teamCapacity {
+    display: inline-block;
+    margin-left: 90%;
+    margin-bottom: 0.5%;
+}

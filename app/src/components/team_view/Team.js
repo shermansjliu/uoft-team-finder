@@ -1,5 +1,11 @@
 import React from 'react'
 import MemberTable from './MemberTable'
+import { Layout, Space, Typography, Divider } from "antd";
+
+import './style.css'
+
+const { Sider, Content } = Layout;
+const { Title } = Typography;
 
 class Team extends React.Component {
     
@@ -24,21 +30,21 @@ class Team extends React.Component {
                 {userID: "QuincyID", name: "Quincy"},
                 {userID: "JesseID", name: "Jesse"},
             ],
-            teamName: "The John Wicks", 
+            teamName: "THE JOHN WICKS", 
             teamDescription: "We seek revenge for our dogs",
             teamCapacity: 5,
             view:""
         }
-        this.setView = this.setView.bind(this)
+        this.updateView = this.updateView.bind(this)
         this.addMember = this.addMember.bind(this)
         this.deleteMember = this.deleteMember.bind(this)
     }
 
     initView () {
-        this.setState({view: this.setView(this.state.currentUser)})
+        this.setState({view: this.updateView()})
     }
 
-    setView (currentUser){
+    updateView (){
         if (!this.state.members.some(member => this.state.currentUser.userID === member.userID)){
             return "otherUserView"
         } else if (this.state.currentUser.userID === this.teamLeaderID) {
@@ -52,14 +58,14 @@ class Team extends React.Component {
         if(!this.state.members.some(member => this.state.currentUser.userID === member.userID)){
             this.setState(prevState => ({
                 members: [...prevState.members, newMember],    
-            }), () => this.setState({view: this.setView(this.state.currentUser)}))
+            }), () => this.setState({view: this.updateView()}))
         }      
     }
 
     deleteMember (rmMember) {
         this.setState(prevState => ({
             members: prevState.members.filter(member => rmMember.userID !== member.userID)
-        }), () => this.setState({view: this.setView(this.state.currentUser)}))
+        }), () => this.setState({view: this.updateView()}))
     }   
 
 
@@ -69,16 +75,22 @@ class Team extends React.Component {
 
         return (
             <div>
-                <h1>{this.state.view}</h1>
-                <MemberTable
-                    view= {this.state.view}
-                    teamLeaderID={this.state.teamLeaderID}
-                    currentUser={this.state.currentUser}
-                    members={this.state.members}
-                    addMember={this.addMember}
-                    deleteMember={this.deleteMember}
-                />
-                <h2> Capacity: ({this.state.members.length}/{this.state.teamCapacity})</h2>
+                <Layout className="teamViewContainer">
+                    <Content hasSider={false} className="teamViewContent">
+                        <h1 className="teamTitle">{this.state.teamName}</h1>
+                        <p className="teamDescription">{this.state.teamDescription}</p>
+                        <p style={{textAlign: "center"}}>({this.state.view})</p>
+                        <MemberTable 
+                            view= {this.state.view}
+                            teamLeaderID={this.state.teamLeaderID}
+                            teamCapacity={this.state.teamCapacity}
+                            currentUser={this.state.currentUser}
+                            members={this.state.members}
+                            addMember={this.addMember}
+                            deleteMember={this.deleteMember}
+                        />
+                    </Content>
+                </Layout>
             </div>
         );
         
