@@ -66,6 +66,11 @@ export const login = request => {
 
         }
     })
-     log("failed to login");
+    log("failed to login");
+    request.setState({
+        users: userList,
+        msg: "invalid username or password.",
+        msgColor: "red"
+    });
 
 };
