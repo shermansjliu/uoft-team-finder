@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import {Layout, Space, Typography, Menu, Avatar} from 'antd'
+import {Layout, Menu, Avatar} from 'antd'
 import Grid from '../Grid/Grid'
 import './index.css';
 
@@ -15,10 +15,9 @@ import '../../App.css'
 
 const { Header, Sider, Content } = Layout;
 
-const {Title} = Typography
 
 
-class RealHome extends Component {
+class Home extends Component {
   state = {
     collapsed: false,
   };
@@ -73,6 +72,6 @@ class RealHome extends Component {
   }
 }
 
-export default RealHome;
+export default Home;
 
 
