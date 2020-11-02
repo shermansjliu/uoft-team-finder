@@ -21,7 +21,7 @@ class Team extends React.Component {
         // const currentUser = {userID: "SpectatorID", name: "Spectator"}
         // const currentUser = {userID: "ShermanID", name: "Sherman"}
         this.state = {
-            currentUser: {userID: "DenisID", name: "Denis"},
+            currentUser: {userID: "ShermanID", name: "Sherman"},
             teamLeaderID: "ShermanID",
             members: [ 
                 // list of users
@@ -30,7 +30,7 @@ class Team extends React.Component {
                 {userID: "QuincyID", name: "Quincy"},
                 {userID: "JesseID", name: "Jesse"},
             ],
-            teamName: "THE JOHN WICKS", 
+            teamName: "THE JOHN WICKS",
             teamDescription: "We seek revenge for our dogs",
             teamCapacity: 5,
             view:""
@@ -38,6 +38,7 @@ class Team extends React.Component {
         this.updateView = this.updateView.bind(this)
         this.addMember = this.addMember.bind(this)
         this.deleteMember = this.deleteMember.bind(this)
+        this.changeLeader = this.changeLeader.bind(this)
     }
 
     initView () {
@@ -47,7 +48,7 @@ class Team extends React.Component {
     updateView (){
         if (!this.state.members.some(member => this.state.currentUser.userID === member.userID)){
             return "otherUserView"
-        } else if (this.state.currentUser.userID === this.teamLeaderID) {
+        } else if (this.state.currentUser.userID === this.state.teamLeaderID) {
             return "teamLeaderView"
         } else {
             return "teamMemberView"
@@ -67,6 +68,10 @@ class Team extends React.Component {
             members: prevState.members.filter(member => rmMember.userID !== member.userID)
         }), () => this.setState({view: this.updateView()}))
     }   
+
+    changeLeader (newLeader) {
+        this.setState({teamLeaderID: newLeader.userID}, () => this.setState({view: this.updateView()}))
+    }
 
 
     render() {
@@ -88,6 +93,7 @@ class Team extends React.Component {
                             members={this.state.members}
                             addMember={this.addMember}
                             deleteMember={this.deleteMember}
+                            changeLeader={this.changeLeader}
                         />
                     </Content>
                 </Layout>

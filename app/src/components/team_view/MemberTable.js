@@ -9,6 +9,7 @@ class MemberTable extends React.Component {
         super(props)
         this.handleAddRequest = this.handleAddRequest.bind(this)
         this.handleRemoveRequest = this.handleRemoveRequest.bind(this)
+        this.handleChangeLeaderRequest = this.handleChangeLeaderRequest.bind(this)
     }
 
     handleAddRequest (newMember) {
@@ -16,7 +17,16 @@ class MemberTable extends React.Component {
     }
 
     handleRemoveRequest (rmMember) {
-        this.props.deleteMember(rmMember)
+        if(this.props.teamLeaderID === rmMember.userID && this.props.members.length > 1) {
+            // the member to be removed is the team leader
+            alert("You have to pick a new team leader first before you leave!")
+        } else {
+            this.props.deleteMember(rmMember)
+        }
+    }
+
+    handleChangeLeaderRequest (newLeader) {
+        this.props.changeLeader(newLeader)
     }
     
 
@@ -43,7 +53,8 @@ class MemberTable extends React.Component {
 
                 {teamMembers.map((member) => 
                     <TeamMember key={member.userID} member={member} view={view}
-                                currentUser={currentUser}
+                                currentUser={currentUser} handleKickRequest={this.handleRemoveRequest}
+                                handleMakeLeaderRequest={this.handleChangeLeaderRequest}
                     />
                 )}
 

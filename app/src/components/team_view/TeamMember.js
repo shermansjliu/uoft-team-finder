@@ -1,18 +1,26 @@
 import React from 'react'
 import EditNickNameButton from './EditNickNameButton'
-import KickButton from './KickButton'
-import MakeLeaderButton from './MakeLeaderButton'
-import {Card, Avatar} from 'antd'
+import {Card, Avatar, Button} from 'antd'
 import './style.css'
 
 const {Meta} = Card
 class TeamMember extends React.Component {
     render() {
-        const {member, currentUser, view} = this.props
+        const {member, currentUser, view, handleKickRequest, handleMakeLeaderRequest} = this.props
         // const picture = this.props.pictureURL
 
         const renderLeaderButtons = () => {
-            return [<MakeLeaderButton/>, <KickButton/>]
+            return [
+            <Button className="kickButton" 
+                type="primary"
+                onClick={() => handleKickRequest(member)}>
+                Kick
+            </Button>, 
+            <Button className="makeLeaderButton" 
+                type="primary"
+                onClick={() => handleMakeLeaderRequest(member)}>
+                Make Leader
+            </Button>]
         }
         
         return (
@@ -29,6 +37,8 @@ class TeamMember extends React.Component {
                     title={member.name}
                     description="This is the description"
                     />
+                    {view === "teamLeaderView" && renderLeaderButtons()}
+                    
                 </Card>
                 
             </div>

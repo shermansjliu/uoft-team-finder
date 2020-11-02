@@ -2,7 +2,8 @@ import React from 'react'
 import EditCapacityButton from './EditCapacityButton'
 import EditTeamNameButton from './EditTeamNameButton'
 import EditNickNameButton from './EditNickNameButton'
-import {Card, Avatar} from 'antd'
+import {Card, Avatar, Button} from 'antd'
+import {StarTwoTone} from '@ant-design/icons'
 import './style.css'
 
 const {Meta} = Card
@@ -28,7 +29,9 @@ class TeamLeader extends React.Component {
                     <hr/>
                 </Card> */}
                 <Card className="teamMemberCard">
-                    <Meta
+                    <StarTwoTone twoToneColor="#eb2f96" className="leaderIcon"/>
+                    <i>Team Leader</i>
+                    <Meta 
                     avatar={
                         <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
                     }
