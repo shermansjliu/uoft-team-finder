@@ -1,36 +1,34 @@
-/* .ant-avatar {
-    margin-top: 16px;
-    margin-left: 48px;
-  } */
+.ant-avatar {
+    margin-top: -30px;
+    margin-left: 25px;
+  }
 /* .ant-row-rtl .ant-avatar {
     margin-right: 0;
     margin-left: 16px;
 } */
 
 #profile_wrapper {
-    height: 800px;
+    background-color: lightsalmon;
 }
-#profile_image_bar {
+
+#fixed_bar{
+    background-color: transparent;
+}
+
+#profile_image {
+    background-color: transparent;
+}
+
+#personal_information {
     background-color: gainsboro;
-    float: left;
-    width: 200;
-    padding-top: 20px;
-    padding-left: 20px;
+    opacity: 0.8;
 }
 
-#reviews_bar {
-    max-width: 30%;
-    background-color: lightslategrey;
-    float: left;
-    padding-top: 20px;
-    padding-left: 20px;
-    padding-right: 20px;
+#experience_bar {
+    background-color: transparent;
 }
-
-#information_bar {
-    background-color: seashell;
-    float: left;
-    padding-top: 20px;
-    padding-left: 20px;
+/* profile_image.js */
+#profile_curve{
+    background-color: black;
+    border: 5px solid black;
 }
-

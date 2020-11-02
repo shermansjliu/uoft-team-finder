@@ -3,59 +3,57 @@ import { Avatar, List, Layout, Descriptions } from 'antd'
 import 'antd/dist/antd.css';
 import { UserOutlined } from '@ant-design/icons';
 import "./style.css";
-
+import Profile_image from './Profile_image.js';
 const { Header, Footer, Sider, Content } = Layout;
 
 class Profile extends react.Component {
     state = {
-        reviews: [
-            {name: 'quincy',
-            content: "for test purpose"},
-            {name: 'quincy',
-            content: "here goes reviews"}
-        ]
+        name: "Quincy Yu"
     }
     render() {
         return (
-            <Layout id="profile_wrapper">
-            <Sider id="profile_image_bar" >
-                <Avatar icon={<UserOutlined />} size={160} shape="circle"
-                style={{
-                    color: '#FFFAF0',
-                    backgroundColor: '#4682B4',
-                }} > 
-                </Avatar>
-            </Sider>
+            <Layout id="profile_wrapper" style={{
+                padding:30,
+                height:"200vh",
+            }}>
+                <Layout id='fixed_bar' style={{
+                    position:"fixed",
+                    height:"100vh",
+                    left:"10%",
+                    width:"30%"}}>
+                    <div id="profile_image" style={{
+                            paddingTop:70,
+                            height:"40%",
+                            width:"100%",
+                        }}>
+                        <div align="center">
+                            <Profile_image></Profile_image>
+                        </div>
+                    </div>
+                    <footer id="personal_information" style={{
+                            padding:40,
+                            borderRadius: "8%",
+                            height:"45%",
+                            weight:"80%"
+                        }}>
+                        <h3> personal info</h3>
+                    </footer>
+                </Layout>
 
-            <Sider id="reviews_bar">
-                <List
-                    itemLayout="horizontal"
-                    dataSource={this.state.reviews}
-                    renderItem={item => (
-                    <List.Item>
-                        <List.Item.Meta
-                        avatar={<Avatar icon={<UserOutlined />}/>}
-                        title={item.name}
-                        description={item.content}
-                        />
-                    </List.Item>
-                    )}
-                />
-            </Sider>
-
-            <Content id="information_bar">
-                <Descriptions title="User Info">
-                    <Descriptions.Item label="Name"> 
-                    Someone </Descriptions.Item>
-                    <Descriptions.Item label="Year"> 
-                    Third </Descriptions.Item>
-                    <Descriptions.Item label="Major"> 
-                        Computer Science </Descriptions.Item>
-                    <Descriptions.Item label="Perso">
-                    Here goes the personal descriton!
-                    </Descriptions.Item>
-                </Descriptions>,
-            </Content>            
+                <div id="name block" style={{
+                    width: "100%",
+                    height: "100"
+                }}></div>
+                
+                <Layout id="leftpadding" width="50%" style={{backgroundColor:"transparent"}}/>
+                <Sider id="experience_bar" width="50%" style={{
+                    height:"100%",
+                    padding:30,
+                }}>
+                    <div align="center" style={{paddingTop:60}}>
+                        <h3 style={{fontSize:"64px"}}>{this.state.name}</h3>
+                    </div>
+                </Sider>
             </Layout>
         )
     }
