@@ -1,6 +1,9 @@
 import React from 'react'
 import MemberTable from './MemberTable'
-import { Layout, Space, Typography, Divider } from "antd";
+import TeamTitle from './TeamTitle'
+import TeamDescription from './TeamDescription'
+import {Layout, Space, Typography, Divider, Button} from "antd";
+import {EditFilled} from '@ant-design/icons'
 
 import './style.css'
 
@@ -32,13 +35,14 @@ class Team extends React.Component {
             ],
             teamName: "THE JOHN WICKS",
             teamDescription: "We seek revenge for our dogs",
-            teamCapacity: 5,
+            teamCapacity: 4,
             view:""
         }
         this.updateView = this.updateView.bind(this)
         this.addMember = this.addMember.bind(this)
         this.deleteMember = this.deleteMember.bind(this)
         this.changeLeader = this.changeLeader.bind(this)
+        this.setName = this.setName.bind(this)
     }
 
     initView () {
@@ -73,6 +77,10 @@ class Team extends React.Component {
         this.setState({teamLeaderID: newLeader.userID}, () => this.setState({view: this.updateView()}))
     }
 
+    setName(newName) {
+        this.setState({teamName: newName})
+    }
+
 
     render() {
 
@@ -82,8 +90,15 @@ class Team extends React.Component {
             <div>
                 <Layout className="teamViewContainer">
                     <Content hasSider={false} className="teamViewContent">
-                        <h1 className="teamTitle">{this.state.teamName}</h1>
-                        <p className="teamDescription">{this.state.teamDescription}</p>
+                        <TeamTitle 
+                            teamName={this.state.teamName} 
+                            isLeaderView={this.state.view === "teamLeaderView"}
+                            setName={this.setName}
+                        />
+                        <TeamDescription 
+                            teamDescription={this.state.teamDescription} 
+                            isLeaderView={this.state.view === "teamLeaderView"}
+                        />
                         <p style={{textAlign: "center"}}>({this.state.view})</p>
                         <MemberTable 
                             view= {this.state.view}

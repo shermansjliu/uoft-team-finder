@@ -11,24 +11,12 @@ const {Meta} = Card
 
 class TeamLeader extends React.Component {
     render() {
-        const {teamLeader, currentUser, view} = this.props
+        const {teamLeader, currentUser, view, handleChangeTitleRequest, handleCapacityRequest} = this.props
         // const picture = this.props.pictureURL
-
-        const renderLeaderButtons = () => {
-            return [<EditCapacityButton/>, <EditTeamNameButton/>]
-        }
         
         return (
             <div>
-                {/* <Card>
-                    <hr/>
-                    <h3> Team Leader!</h3>
-                    <h4>{teamLeader.name}</h4>
-                    {view === "teamLeaderView" && renderLeaderButtons()}
-                    {currentUser.userID === teamLeader.userID && <EditNickNameButton/>}
-                    <hr/>
-                </Card> */}
-                <Card className="teamMemberCard">
+                <Card className="teamMemberCard" hoverable onClick={() => alert("to profile view")}>
                     <StarTwoTone twoToneColor="#eb2f96" className="leaderIcon"/>
                     <i>Team Leader</i>
                     <Meta 
@@ -38,6 +26,7 @@ class TeamLeader extends React.Component {
                     title={teamLeader.name}
                     description="This is the description"
                     />
+                    {/* {view === "teamLeaderView" && renderLeaderButtons()} */}
                 </Card>
             </div>
         );

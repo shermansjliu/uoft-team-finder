@@ -31,7 +31,7 @@ class MemberTable extends React.Component {
     
 
     render() {
-        const { view, teamLeaderID, currentUser, members } = this.props 
+        const { view, teamLeaderID, currentUser, members, teamCapacity} = this.props 
 
         const teamLeader = members.filter(member => member.userID === teamLeaderID)[0]
         const teamMembers = members.filter(member => member.userID !== teamLeaderID)
@@ -42,6 +42,12 @@ class MemberTable extends React.Component {
                 return <Button className="joinLeaveButton" type="primary" onClick={() => this.handleAddRequest(currentUser)}> Join </Button>
             } else {
                 return <Button className="joinLeaveButton" type="primary" onClick={() => this.handleRemoveRequest(currentUser)}> Leave </Button>
+            }
+        }
+        
+        const renderLockButton = () => {
+            if(members.length === teamCapacity && view === "teamLeaderView") {
+                return <Button className="lockButton">Lock Team</Button>
             }
         }
 
@@ -59,6 +65,7 @@ class MemberTable extends React.Component {
                 )}
 
                 <Statistic className="teamCapacity" value={members.length} suffix={`/${this.props.teamCapacity}`} />
+                {renderLockButton()}
                 {renderJoinOrLeaveButton()}
 
             </div>

@@ -25,17 +25,14 @@ class TeamMember extends React.Component {
         
         return (
             <div>
-                {/* <Card title={member.name}>  
-                    {view === "teamLeaderView" && renderLeaderButtons()}
-                    {currentUser.userID === member.userID && <EditNickNameButton/>}
-                </Card> */}
-                <Card className="teamMemberCard">
+                <Card className="teamMemberCard" hoverable>
                     <Meta
                     avatar={
                         <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
                     }
                     title={member.name}
                     description="This is the description"
+                    onClick={() => alert("to profile view")}
                     />
                     {view === "teamLeaderView" && renderLeaderButtons()}
                     
