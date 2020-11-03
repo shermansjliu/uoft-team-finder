@@ -7,7 +7,7 @@ import style from './style.css';
 class Profile_image extends React.Component {
     render() {
         return (
-            <div id='profile_curve' style={{
+            <div className='shadow' style={{
                 borderRadius: "50%",
                 position: "relative",
                 width: "200px",

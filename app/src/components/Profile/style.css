@@ -27,8 +27,9 @@
 #experience_bar {
     background-color: transparent;
 }
+
 /* profile_image.js */
-#profile_curve{
+.shadow{
     background-color: black;
-    border: 5px solid black;
+    z-index: 1;
 }

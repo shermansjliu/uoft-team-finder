@@ -1,7 +1,6 @@
 import react from 'react';
-import { Avatar, List, Layout, Input, InputNumber, Divider, Button} from 'antd'
+import {Layout, Input, Divider} from 'antd'
 import 'antd/dist/antd.css';
-import { UserOutlined } from '@ant-design/icons';
 import "./style.css";
 import Profile_image from './Profile_image.js';
 import personal_info from './personal_info.js';
@@ -16,6 +15,7 @@ class Profile extends react.Component {
         courses:'DADA',
         cGPA:'',
     }
+    
 
     handleInputChange = event => {
         const target = event.target;
@@ -55,13 +55,40 @@ class Profile extends react.Component {
                             borderRadius: "8%",
                             height: "100%",
                         }}>
-                        <personal_info 
-                            handleInputChange={this.handleInputChange}
-                            major={this.state.major}
-                            year={this.state.year}
-                            courses={this.state.courses} 
-                            cGPA={this.state.cGPA}>    
-                        </personal_info>
+
+                            <div>
+                                <div id="personal_information">
+                                    <h3 style={{fontSize:"30px"}}> About me</h3>
+                                    <div>
+                                        <h3 style={{float:"left"}}> Major: </h3>
+                                        <Input style={{float:"right", width:"50%"}} name="major" onChange={this.handleInputChange} placeholder={this.state.major} bordered={false} />
+                                    </div>
+                                    <Divider></Divider>
+                                    <div>
+                                        <h3 style={{float:"left"}}> Year: </h3>
+                                        <Input style={{float:"right", width:"50%"}} name="year" onChange={this.handleInputChange} placeholder={this.state.year} bordered={false} />
+                                    </div>
+                                    <Divider></Divider>
+                                    <div>
+                                        <h3 style={{float:"left"}}>Courses taking: </h3>
+                                        <Input style={{float:"right", width:"50%"}} name="courses" onChange={this.handleInputChange} placeholder={this.state.courses} bordered={false} />
+                                    </div>
+                                    <Divider></Divider>
+                                    <div>
+                                    <h3 style={{float:"left"}}>cGPA: (optional)</h3>
+                                        <Input style={{float:"right", width:"50%", color:""}} name="cGPA" onChange={this.handleInputChange} placeholder={this.state.cGPA} bordered={false} />
+                                    </div>
+                                </div>
+                            </div>
+                            {/* <div>
+                                <personal_info 
+                                    handleInputChange={this.handleInputChange}
+                                    major={this.state.major}
+                                    year={this.state.year}
+                                    courses={this.state.courses} 
+                                    cGPA={this.state.cGPA}>    
+                                </personal_info>
+                            </div> */}
                         </div>
                     </footer>
                 </Layout>
@@ -72,7 +99,7 @@ class Profile extends react.Component {
                     position: 'relative',
                 }}>
                         <div style={{backgroundColor:"transparent", position:'relative', left:'70%', paddingTop:70}}>
-                            <input style={{fontSize:"84px" }} placeholder={this.state.name}> </input>
+                            <Input style={{fontSize:"84px" }} placeholder={this.state.name} bordered={false}/>
                         </div>
                 </div>
                 <div style={{
@@ -91,22 +118,6 @@ class Profile extends react.Component {
                         height:"100%"
                     }}></div>
                 </div>
-
-                {/* <Layout id="experience_wrapper" style={{backgroundColor:"transparent"}}>
-                    <Sider id="leftpadding" style={{backgroundColor:"transparent"}} width="50%" style={{backgroundColor:"transparent"}}/>
-                    <Layout style={{backgroundColor:"transparent"}}>
-                        <div id="name block" style={{width:"100%", height: 300}}>
-                            <div align="center" style={{paddingTop:60}}>
-                                <h3 style={{fontSize:"64px"}}>{this.state.name}</h3>
-                            </div>
-                            <div id="experience_bar" width="50%" style={{
-                            height:"100%",
-                            padding:30,
-                            }}>
-                            </div>
-                        </div>
-                    </Layout>
-                </Layout> */}
             </Layout>
         )
     }
