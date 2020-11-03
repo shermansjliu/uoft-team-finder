@@ -4,22 +4,17 @@ import 'antd/dist/antd.css';
 import { UserOutlined } from '@ant-design/icons';
 import "./style.css";
 import Profile_image from './Profile_image.js';
-import  { change_info } from "./action.js";
+import personal_info from './personal_info.js';
 const { Header, Footer, Sider, Content,} = Layout;
 
 
 class Profile extends react.Component {
     state = {
-        name:'harry',
-        name_editing:false,
+        name:'Harry',
         major:'wizard',
-        major_editing:false,
         year:'4',
-        year_editing:false,
         courses:'DADA',
-        courses_editing:false,
         cGPA:'',
-        cGPA_editing:false,
     }
 
     handleInputChange = event => {
@@ -46,7 +41,7 @@ class Profile extends react.Component {
                     left:"10%",
                     width:"30%"}}>
                     <div id="profile_image" style={{
-                            paddingTop:70,
+                            paddingTop:60,
                             height:"40%",
                             width:"100%",
                         }}>
@@ -54,37 +49,50 @@ class Profile extends react.Component {
                             <Profile_image></Profile_image>
                         </div>
                     </div>
-                    <footer id="personal_information" style={{
+                    <footer style={{height:"45%", backgroundColor:"transparent"}}>
+                        <div id="personal_information" style={{
                             padding:40,
                             borderRadius: "8%",
-                            height:"45%",
+                            height: "100%",
                         }}>
-                        <div>
-                            <h3 style={{fontSize:"30px"}}> About me</h3>
-                            <div>
-                                <h3 style={{float:"left"}}> Major: </h3>
-                                <Input style={{float:"right", width:"50%"}} name="major" onChange={this.handleInputChange} placeholder={this.state.major} bordered={false} />
-                            </div>
-                            <Divider></Divider>
-                            <div>
-                                <h3 style={{float:"left"}}> Year: </h3>
-                                <Input style={{float:"right", width:"50%"}} name="year" onChange={this.handleInputChange} placeholder={this.state.year} bordered={false} />
-                            </div>
-                            <Divider></Divider>
-                            <div>
-                                <h3 style={{float:"left"}}>Courses taking: </h3>
-                                <Input style={{float:"right", width:"50%"}} name="courses" onChange={this.handleInputChange} placeholder={this.state.courses} bordered={false} />
-                            </div>
-                            <Divider></Divider>
-                            <div>
-                                <h3 style={{float:"left"}}>cGPA: (optional)</h3>
-                                <Input style={{float:"right", width:"50%", color:""}} name="cGPA" onChange={this.handleInputChange} placeholder={this.state.cGAP} bordered={false} />
-                            </div>
+                        <personal_info 
+                            handleInputChange={this.handleInputChange}
+                            major={this.state.major}
+                            year={this.state.year}
+                            courses={this.state.courses} 
+                            cGPA={this.state.cGPA}>    
+                        </personal_info>
                         </div>
                     </footer>
                 </Layout>
                 
-                <Layout id="experience_wrapper" style={{backgroundColor:"transparent"}}>
+                <div id="upperPart" style={{
+                    width: '100%',
+                    height: 265,
+                    position: 'relative',
+                }}>
+                        <div style={{backgroundColor:"transparent", position:'relative', left:'70%', paddingTop:70}}>
+                            <input style={{fontSize:"84px" }} placeholder={this.state.name}> </input>
+                        </div>
+                </div>
+                <div style={{
+                    height: 100,
+                    width: '100%',
+                    border: '4px solid red',
+                }}>
+                    <Input style={{fontSize:"62px", height:"100%",}} placeholder='write something interesting about you!' bordered={false}></Input>
+                </div>
+                <div id="lowerPart" style={{
+                    width: "100%"
+                }}>
+                    <div id="lowerLeftPadding" style={{
+                        float:"left",
+                        width:"50%",
+                        height:"100%"
+                    }}></div>
+                </div>
+
+                {/* <Layout id="experience_wrapper" style={{backgroundColor:"transparent"}}>
                     <Sider id="leftpadding" style={{backgroundColor:"transparent"}} width="50%" style={{backgroundColor:"transparent"}}/>
                     <Layout style={{backgroundColor:"transparent"}}>
                         <div id="name block" style={{width:"100%", height: 300}}>
@@ -98,7 +106,7 @@ class Profile extends react.Component {
                             </div>
                         </div>
                     </Layout>
-                </Layout>
+                </Layout> */}
             </Layout>
         )
     }
