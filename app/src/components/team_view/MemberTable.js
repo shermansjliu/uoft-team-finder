@@ -1,27 +1,37 @@
 import React from 'react'
 import TeamMember from './TeamMember'
 import TeamLeader from './TeamLeader'
-import JoinButton from './JoinButton'
-import LeaveButton from './LeaveButton'
+import {Button, Statistic} from "antd"
+import './style.css'
 
 class MemberTable extends React.Component {
     constructor(props){
         super(props)
-        this.handleJoinRequest = this.handleJoinRequest.bind(this)
-        this.handleLeaveRequest = this.handleLeaveRequest.bind(this)
+        this.handleAddRequest = this.handleAddRequest.bind(this)
+        this.handleRemoveRequest = this.handleRemoveRequest.bind(this)
+        this.handleChangeLeaderRequest = this.handleChangeLeaderRequest.bind(this)
     }
 
-    handleJoinRequest (newMember) {
+    handleAddRequest (newMember) {
         this.props.addMember(newMember)
     }
 
-    handleLeaveRequest (rmMember) {
-        this.props.deleteMember(rmMember)
+    handleRemoveRequest (rmMember) {
+        if(this.props.teamLeaderID === rmMember.userID && this.props.members.length > 1) {
+            // the member to be removed is the team leader
+            alert("You have to pick a new team leader first before you leave!")
+        } else {
+            this.props.deleteMember(rmMember)
+        }
+    }
+
+    handleChangeLeaderRequest (newLeader) {
+        this.props.changeLeader(newLeader)
     }
     
 
     render() {
-        const { view, teamLeaderID, currentUser, members } = this.props 
+        const { view, teamLeaderID, currentUser, members, teamCapacity} = this.props 
 
         const teamLeader = members.filter(member => member.userID === teamLeaderID)[0]
         const teamMembers = members.filter(member => member.userID !== teamLeaderID)
@@ -29,24 +39,33 @@ class MemberTable extends React.Component {
 
         const renderJoinOrLeaveButton = () => {
             if(view === "otherUserView") {
-                return <JoinButton handleJoinRequest={() => this.handleJoinRequest(currentUser)}/>
+                return <Button className="joinLeaveButton" type="primary" onClick={() => this.handleAddRequest(currentUser)}> Join </Button>
             } else {
-                return <LeaveButton handleLeaveRequest={() => this.handleLeaveRequest(currentUser)}/>
+                return <Button className="joinLeaveButton" type="primary" onClick={() => this.handleRemoveRequest(currentUser)}> Leave </Button>
+            }
+        }
+        
+        const renderLockButton = () => {
+            if(members.length === teamCapacity && view === "teamLeaderView") {
+                return <Button className="lockButton">Lock Team</Button>
             }
         }
 
         return (
-            <div>
-                <h2> Team Members: </h2>
+            <div className="memberTableContainer">
+                <h2> Team Members </h2>
                 
                 <TeamLeader teamLeader={teamLeader} view={view} currentUser={currentUser}/>
 
                 {teamMembers.map((member) => 
                     <TeamMember key={member.userID} member={member} view={view}
-                                currentUser={currentUser}
+                                currentUser={currentUser} handleKickRequest={this.handleRemoveRequest}
+                                handleMakeLeaderRequest={this.handleChangeLeaderRequest}
                     />
                 )}
 
+                <Statistic className="teamCapacity" value={members.length} suffix={`/${this.props.teamCapacity}`} />
+                {renderLockButton()}
                 {renderJoinOrLeaveButton()}
 
             </div>

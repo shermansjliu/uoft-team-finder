@@ -1,5 +1,14 @@
 import React from 'react'
 import MemberTable from './MemberTable'
+import TeamTitle from './TeamTitle'
+import TeamDescription from './TeamDescription'
+import {Layout, Space, Typography, Divider, Button} from "antd";
+import {EditFilled} from '@ant-design/icons'
+
+import './style.css'
+
+const { Sider, Content } = Layout;
+const { Title } = Typography;
 
 class Team extends React.Component {
     
@@ -15,7 +24,7 @@ class Team extends React.Component {
         // const currentUser = {userID: "SpectatorID", name: "Spectator"}
         // const currentUser = {userID: "ShermanID", name: "Sherman"}
         this.state = {
-            currentUser: {userID: "DenisID", name: "Denis"},
+            currentUser: {userID: "ShermanID", name: "Sherman"},
             teamLeaderID: "ShermanID",
             members: [ 
                 // list of users
@@ -24,24 +33,26 @@ class Team extends React.Component {
                 {userID: "QuincyID", name: "Quincy"},
                 {userID: "JesseID", name: "Jesse"},
             ],
-            teamName: "The John Wicks", 
+            teamName: "THE JOHN WICKS",
             teamDescription: "We seek revenge for our dogs",
-            teamCapacity: 5,
+            teamCapacity: 4,
             view:""
         }
-        this.setView = this.setView.bind(this)
+        this.updateView = this.updateView.bind(this)
         this.addMember = this.addMember.bind(this)
         this.deleteMember = this.deleteMember.bind(this)
+        this.changeLeader = this.changeLeader.bind(this)
+        this.setName = this.setName.bind(this)
     }
 
     initView () {
-        this.setState({view: this.setView(this.state.currentUser)})
+        this.setState({view: this.updateView()})
     }
 
-    setView (currentUser){
+    updateView (){
         if (!this.state.members.some(member => this.state.currentUser.userID === member.userID)){
             return "otherUserView"
-        } else if (this.state.currentUser.userID === this.teamLeaderID) {
+        } else if (this.state.currentUser.userID === this.state.teamLeaderID) {
             return "teamLeaderView"
         } else {
             return "teamMemberView"
@@ -52,15 +63,23 @@ class Team extends React.Component {
         if(!this.state.members.some(member => this.state.currentUser.userID === member.userID)){
             this.setState(prevState => ({
                 members: [...prevState.members, newMember],    
-            }), () => this.setState({view: this.setView(this.state.currentUser)}))
+            }), () => this.setState({view: this.updateView()}))
         }      
     }
 
     deleteMember (rmMember) {
         this.setState(prevState => ({
             members: prevState.members.filter(member => rmMember.userID !== member.userID)
-        }), () => this.setState({view: this.setView(this.state.currentUser)}))
+        }), () => this.setState({view: this.updateView()}))
     }   
+
+    changeLeader (newLeader) {
+        this.setState({teamLeaderID: newLeader.userID}, () => this.setState({view: this.updateView()}))
+    }
+
+    setName(newName) {
+        this.setState({teamName: newName})
+    }
 
 
     render() {
@@ -69,16 +88,30 @@ class Team extends React.Component {
 
         return (
             <div>
-                <h1>{this.state.view}</h1>
-                <MemberTable
-                    view= {this.state.view}
-                    teamLeaderID={this.state.teamLeaderID}
-                    currentUser={this.state.currentUser}
-                    members={this.state.members}
-                    addMember={this.addMember}
-                    deleteMember={this.deleteMember}
-                />
-                <h2> Capacity: ({this.state.members.length}/{this.state.teamCapacity})</h2>
+                <Layout className="teamViewContainer">
+                    <Content hasSider={false} className="teamViewContent">
+                        <TeamTitle 
+                            teamName={this.state.teamName} 
+                            isLeaderView={this.state.view === "teamLeaderView"}
+                            setName={this.setName}
+                        />
+                        <TeamDescription 
+                            teamDescription={this.state.teamDescription} 
+                            isLeaderView={this.state.view === "teamLeaderView"}
+                        />
+                        <p style={{textAlign: "center"}}>({this.state.view})</p>
+                        <MemberTable 
+                            view= {this.state.view}
+                            teamLeaderID={this.state.teamLeaderID}
+                            teamCapacity={this.state.teamCapacity}
+                            currentUser={this.state.currentUser}
+                            members={this.state.members}
+                            addMember={this.addMember}
+                            deleteMember={this.deleteMember}
+                            changeLeader={this.changeLeader}
+                        />
+                    </Content>
+                </Layout>
             </div>
         );
         
