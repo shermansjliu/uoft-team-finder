@@ -1,31 +1,38 @@
 import React from 'react'
-import {Input, Row, Col, Card, Button} from 'antd';
+import {Button, Input, Row, Col, Card} from 'antd';
 import {UserOutlined, LockOutlined} from '@ant-design/icons';
 import "./styles.css";
-import { register, login } from "./action.js"
+import {register, login} from "./action.js"
+import {withRouter} from 'react-router-dom';
+
 
 class LoginView extends React.Component {
-    state = {
-        users: [
-            {username:"Jack", password: "123456", admin:false},
-            {username:"admin", password: "admin", admin:true},
-        ],
-        autoLogin: false,
-        user:null,
-        userName:"",
-        userPassword:"",
-        msg:"",
-        msgColor:"red",
+    constructor(props) {
+        super(props);
+        this.state = {
+            autoLogin: false,
+            user: null,
+            userName: "",
+            userPassword: "",
+            msg: "",
+            msgColor: "red",
+            users: [
+                {username: "Jack", password: "123456", admin: false},
+                {username: "admin", password: "admin", admin: true},
+            ],
+        }
+
     }
+
 
     render() {
         return (
             <div
                 className="login-wrap"
                 style={{topMargin: 10}}>
-                <div className="padding" />
+                <div className="padding"/>
                 <Row align="center">
-                    <span style={{color:this.state.msgColor }}>{this.state.msg}</span>
+                    <span style={{color: this.state.msgColor}}>{this.state.msg}</span>
                 </Row>
                 <Row align="center">
                     <Col>
@@ -33,19 +40,19 @@ class LoginView extends React.Component {
                               style={{textAlign: 'center', width: 400}}>
                             <Input
                                 size="large"
-                                name = "userName"
+                                name="userName"
                                 placeholder="username"
                                 prefix={<UserOutlined/>}
                                 value={this.state.userName}
                                 onChange={this.handleInputChange}
-                                />
+                            />
                             <Input
                                 type="password"
                                 size="large"
                                 placeholder="userpassward"
-                                name = "userPassword"
+                                name="userPassword"
                                 prefix={<LockOutlined/>}
-                                value={ this.state.userPassword}
+                                value={this.state.userPassword}
                                 onChange={this.handleInputChange}/>
                             <Button
                                 className="btn"
@@ -85,4 +92,4 @@ class LoginView extends React.Component {
 }
 
 
-export default LoginView;
+export default withRouter(LoginView);
