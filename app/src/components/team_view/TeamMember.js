@@ -1,5 +1,4 @@
 import React from 'react'
-import EditNickNameButton from './EditNickNameButton'
 import {Card, Avatar, Button} from 'antd'
 import './style.css'
 

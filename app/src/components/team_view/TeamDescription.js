@@ -1,11 +1,20 @@
-import { configConsumerProps } from 'antd/lib/config-provider';
 import React from 'react';
+import { Typography } from 'antd';
 
+const { Paragraph } = Typography;
 class TeamDescription extends React.Component {
-    state = {  }
+    
+
     render() {
+        const {teamDescription, isLeaderView, setDescription} = this.props
+
         return (
-            <p className="teamDescription">{this.props.teamDescription}</p>
+            <div>
+                {isLeaderView ? 
+                <Paragraph className="teamDescription" editable={{ onChange:setDescription, maxLength: 500}}>{teamDescription}</Paragraph> :
+                <Paragraph className="teamDescription">{teamDescription}</Paragraph>
+                }
+            </div>
         );
     }
 }

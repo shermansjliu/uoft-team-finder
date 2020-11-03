@@ -1,7 +1,4 @@
 import React from 'react'
-import EditCapacityButton from './EditCapacityButton'
-import EditTeamNameButton from './EditTeamNameButton'
-import EditNickNameButton from './EditNickNameButton'
 import {Card, Avatar, Button} from 'antd'
 import {StarTwoTone} from '@ant-design/icons'
 import './style.css'

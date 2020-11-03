@@ -1,6 +1,6 @@
 import React from 'react'
 import MemberTable from './MemberTable'
-import TeamTitle from './TeamTitle'
+import TeamName from './TeamName'
 import TeamDescription from './TeamDescription'
 import {Layout, Space, Typography, Divider, Button} from "antd";
 import {EditFilled} from '@ant-design/icons'
@@ -43,6 +43,8 @@ class Team extends React.Component {
         this.deleteMember = this.deleteMember.bind(this)
         this.changeLeader = this.changeLeader.bind(this)
         this.setName = this.setName.bind(this)
+        this.setDescription = this.setDescription.bind(this)
+        this.setCapacity = this.setCapacity.bind(this)
     }
 
     initView () {
@@ -78,7 +80,20 @@ class Team extends React.Component {
     }
 
     setName(newName) {
-        this.setState({teamName: newName})
+        if(newName === ""){
+            alert("Name cannot be empty!")
+        } else {
+            this.setState({teamName: newName.toUpperCase()})
+        }
+        
+    } 
+
+    setDescription(newDescription) {
+        this.setState({teamDescription: newDescription})
+    }
+
+    setCapacity(newCapacity) {
+        this.setState({teamCapacity: newCapacity})
     }
 
 
@@ -90,7 +105,7 @@ class Team extends React.Component {
             <div>
                 <Layout className="teamViewContainer">
                     <Content hasSider={false} className="teamViewContent">
-                        <TeamTitle 
+                        <TeamName 
                             teamName={this.state.teamName} 
                             isLeaderView={this.state.view === "teamLeaderView"}
                             setName={this.setName}
@@ -98,6 +113,7 @@ class Team extends React.Component {
                         <TeamDescription 
                             teamDescription={this.state.teamDescription} 
                             isLeaderView={this.state.view === "teamLeaderView"}
+                            setDescription={this.setDescription}
                         />
                         <p style={{textAlign: "center"}}>({this.state.view})</p>
                         <MemberTable 
@@ -109,6 +125,7 @@ class Team extends React.Component {
                             addMember={this.addMember}
                             deleteMember={this.deleteMember}
                             changeLeader={this.changeLeader}
+                            setCapacity={this.setCapacity}
                         />
                     </Content>
                 </Layout>

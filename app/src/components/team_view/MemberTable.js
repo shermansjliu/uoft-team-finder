@@ -1,8 +1,11 @@
 import React from 'react'
 import TeamMember from './TeamMember'
 import TeamLeader from './TeamLeader'
-import {Button, Statistic} from "antd"
+import {Button, Statistic, Typography} from "antd"
+
 import './style.css'
+
+const { Paragraph } = Typography;
 
 class MemberTable extends React.Component {
     constructor(props){
@@ -10,6 +13,7 @@ class MemberTable extends React.Component {
         this.handleAddRequest = this.handleAddRequest.bind(this)
         this.handleRemoveRequest = this.handleRemoveRequest.bind(this)
         this.handleChangeLeaderRequest = this.handleChangeLeaderRequest.bind(this)
+        this.handleChangeCapaRequest = this.handleChangeCapaRequest.bind(this)
     }
 
     handleAddRequest (newMember) {
@@ -27,6 +31,15 @@ class MemberTable extends React.Component {
 
     handleChangeLeaderRequest (newLeader) {
         this.props.changeLeader(newLeader)
+    }
+
+    handleChangeCapaRequest (newCapacity) {
+        let capacity = parseInt(newCapacity)
+        if (capacity >= this.props.members.length && capacity <= 10){
+            this.props.setCapacity(capacity)
+        } else {
+            alert("Invalid capacity number")
+        }
     }
     
 
@@ -51,6 +64,15 @@ class MemberTable extends React.Component {
             }
         }
 
+        const renderCapacity = () => {
+            if(view === "teamLeaderView"){
+                return <Paragraph editable={{onChange: this.handleChangeCapaRequest, maxLength: 2}}>/ {teamCapacity}</Paragraph>
+            } else {
+                return <Paragraph>/ {teamCapacity}</Paragraph>
+            }
+            
+        }
+
         return (
             <div className="memberTableContainer">
                 <h2> Team Members </h2>
@@ -64,7 +86,7 @@ class MemberTable extends React.Component {
                     />
                 )}
 
-                <Statistic className="teamCapacity" value={members.length} suffix={`/${this.props.teamCapacity}`} />
+                <Statistic className="teamCapacity" value={members.length} suffix={renderCapacity()} />
                 {renderLockButton()}
                 {renderJoinOrLeaveButton()}
 
