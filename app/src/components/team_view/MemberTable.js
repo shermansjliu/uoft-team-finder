@@ -52,17 +52,13 @@ class MemberTable extends React.Component {
 
         const renderJoinOrLeaveButton = () => {
             if(view === "otherUserView") {
-                return <Button className="joinLeaveButton" type="primary" onClick={() => this.handleAddRequest(currentUser)}> Join </Button>
+                return <Button className="joinLeaveButton" type="primary" onClick={() => this.handleAddRequest(currentUser)}> JOIN </Button>
             } else {
-                return <Button className="joinLeaveButton" type="primary" onClick={() => this.handleRemoveRequest(currentUser)}> Leave </Button>
+                return <Button className="joinLeaveButton" type="primary" onClick={() => this.handleRemoveRequest(currentUser)}> LEAVE </Button>
             }
         }
         
-        const renderLockButton = () => {
-            if(members.length === teamCapacity && view === "teamLeaderView") {
-                return <Button className="lockButton">Lock Team</Button>
-            }
-        }
+        
 
         const renderCapacity = () => {
             if(view === "teamLeaderView"){
@@ -77,7 +73,7 @@ class MemberTable extends React.Component {
             <div className="memberTableContainer">
                 <h2> Team Members </h2>
                 
-                <TeamLeader teamLeader={teamLeader} view={view} currentUser={currentUser}/>
+                <TeamLeader teamLeader={teamLeader} view={view} members={members} currentUser={currentUser}/>
 
                 {teamMembers.map((member) => 
                     <TeamMember key={member.userID} member={member} view={view}
@@ -85,10 +81,11 @@ class MemberTable extends React.Component {
                                 handleMakeLeaderRequest={this.handleChangeLeaderRequest}
                     />
                 )}
-
-                <Statistic className="teamCapacity" value={members.length} suffix={renderCapacity()} />
-                {renderLockButton()}
+                
                 {renderJoinOrLeaveButton()}
+                <Statistic className="teamCapacity" value={members.length} suffix={renderCapacity()} />
+                
+                
 
             </div>
         );

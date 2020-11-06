@@ -104,7 +104,10 @@ class Team extends React.Component {
         return (
             <div>
                 <Layout className="teamViewContainer">
-                    <Content hasSider={false} className="teamViewContent">
+                    <Sider className="teamViewSidebar">
+                        <h1>sidebar</h1>
+                    </Sider>
+                    <Content hasSider={true} className="teamViewContent">
                         <TeamName 
                             teamName={this.state.teamName} 
                             isLeaderView={this.state.view === "teamLeaderView"}

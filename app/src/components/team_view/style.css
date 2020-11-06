@@ -1,6 +1,6 @@
 /*Team View*/
 body {
-    background-color: #f0f2f5;
+    background-color: #F1FAFA;
 }
 
 .teamViewContent {
@@ -9,54 +9,155 @@ body {
     width: 100%;
   }
 
+.teamViewSidebar {
+    background-color: #D5F3F4;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 10rem 20px 0px 20px;
+}
+
 .teamViewContainer {
+    background-color: #F1FAFA;
     height: 100%;
 }
 
 .teamTitle {
-    border: 3px solid black;
-    margin-left: 30%;
-    margin-right: 30%;
+    font-family: 'Spartan', sans-serif;
+    font-weight: bold;
+    font-size: 60px;
+    margin-left: 10%;
+    margin-right: 10%;
+    margin-top: 60px;
     text-align: center;
 }
 
 .teamDescription {
     text-align: center;
     font-style: italic;
+    margin: auto 10%;
 }
 
 .teamMemberCard {
-    margin: 1% auto;
+    margin: 20px auto;
+    background-color: #FFFFF6;
+    border-radius: 20px;
+    border: 0;
+    box-shadow: 0px 6px 6px #FDE4CC;
+    
+}
+
+.teamMemberCard:hover {
+    box-shadow: none;
+}
+
+.memberInfo {
+    display: inline-block;
+}
+
+.ant-card-meta-title {
+    margin-top: 34px;
+    font-size: 20px;
+}
+
+.memberAvatar {
+    margin-bottom: 16px;
+}
+
+.leaderIconContainer {
+    margin-right: 10px;
+}
+
+.memberButtonsContainer {
+    float: right;
 }
 
 .memberTableContainer {
     margin: auto 10%
 }
 
-.joinLeaveButton {
-    float: right;
-    margin-bottom: 1%;
-}
-
 .teamCapacity {
-    display: inline-block;
-    margin-left: 90%;
+    text-align: right;
+    float: right;
     margin-bottom: 0.5%;
+    margin-right: 20px;
 }
 
 .leaderIcon {
     font-size: 20px;
-    margin-bottom: 15px;
+    margin-left: 10px;
     margin-right: 10px;
-    margin-left: 5px;
+}
+
+.lockButton {
+    font-family: 'Spartan', sans-serif;
+    font-weight: bolder;
+    background-color: #FF9999;
+    border: 0;
+    border-radius: 9px;
+    width: 140px;
+    height: 100px;
+    box-shadow: 0px 4px 4px #FF7A7A;
+    margin: 4px;
+}
+
+.lockButton:hover {
+    box-shadow: none;
+    background-color: #FF9999;
+    padding-bottom: 2px;
 }
 
 .kickButton {
-    float: right;
+    font-family: 'Spartan', sans-serif;
+    font-weight: bolder;
+    background-color: #66CCCC;
+    border: 0;
+    border-radius: 9px;
+    width: 140px;
+    box-shadow: 0px 3px 3px #4C9494;
     margin: 4px;
+    display: block;
+}
+
+.kickButton:hover {
+    box-shadow: none;
+    background-color: #66CCCC;
+    padding-bottom: 2px;
 }
 
 .makeLeaderButton {
-    float: right;
+    background-color: #66CCCC;
+    font-family: 'Spartan', sans-serif;
+    font-weight: bolder;
+    border: 0;
+    border-radius: 9px;
+    box-shadow: 0px 3px 3px #4C9494;
     margin: 4px;
+    width: 140px;
+}
+
+.makeLeaderButton:hover {
+    box-shadow: none;
+    background-color: #66CCCC;
+    padding-bottom: 2px;
+}
+
+.joinLeaveButton {
+    font-family: 'Spartan', sans-serif;
+    font-weight: bolder;
+    background-color: #66CCCC;
+    float: right;
+    margin-bottom: 1%;
+    margin-right: 28px;
+    width: 140px;
+    border: 0;
+    border-radius: 9px;
+    box-shadow: 0px 3px 3px #4C9494;
+}
+
+.joinLeaveButton:hover {
+    box-shadow: none;
+    background-color: #66CCCC;
+    padding-bottom: 2px;
 }

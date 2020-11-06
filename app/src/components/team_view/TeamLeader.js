@@ -8,22 +8,35 @@ const {Meta} = Card
 
 class TeamLeader extends React.Component {
     render() {
-        const {teamLeader, currentUser, view, handleChangeTitleRequest, handleCapacityRequest} = this.props
+        const {teamLeader, view, members} = this.props
         // const picture = this.props.pictureURL
-        
+        const renderLockButton = () => {
+            if(view === "teamLeaderView") {
+                return <Button className="lockButton" type="primary">LOCK TEAM</Button>
+            }
+        }
+
         return (
             <div>
-                <Card className="teamMemberCard" hoverable onClick={() => alert("to profile view")}>
-                    <StarTwoTone twoToneColor="#eb2f96" className="leaderIcon"/>
-                    <i>Team Leader</i>
-                    <Meta 
-                    avatar={
-                        <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
-                    }
-                    title={teamLeader.name}
-                    description="This is the description"
-                    />
-                    {/* {view === "teamLeaderView" && renderLeaderButtons()} */}
+                <Card className="teamMemberCard">
+                    <div className="memberInfo">
+                        <div className="leaderIconContainer">
+                            <StarTwoTone twoToneColor="#eb2f96" className="leaderIcon"/>
+                            <i>Team Leader</i>
+                        </div>
+                        <Meta 
+                        avatar={
+                            <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" 
+                                    size={60}
+                            />
+                        }
+                        title={teamLeader.name}
+                        onClick={() => alert("to profile view")}
+                        />
+                    </div>
+                    <div className="memberButtonsContainer">
+                        {renderLockButton()}
+                    </div>
                 </Card>
             </div>
         );

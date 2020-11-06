@@ -13,27 +13,34 @@ class TeamMember extends React.Component {
             <Button className="kickButton" 
                 type="primary"
                 onClick={() => handleKickRequest(member)}>
-                Kick
+                KICK
             </Button>, 
             <Button className="makeLeaderButton" 
                 type="primary"
                 onClick={() => handleMakeLeaderRequest(member)}>
-                Make Leader
+                MAKE LEADER
             </Button>]
         }
         
         return (
             <div>
-                <Card className="teamMemberCard" hoverable>
-                    <Meta
-                    avatar={
-                        <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
-                    }
-                    title={member.name}
-                    description="This is the description"
-                    onClick={() => alert("to profile view")}
-                    />
-                    {view === "teamLeaderView" && renderLeaderButtons()}
+                <Card className="teamMemberCard">
+                    <div className="memberInfo">
+                        <Meta
+                        avatar={
+                            <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" 
+                                    size={60}
+                                    className="memberAvatar"
+                            />
+                        }
+                        title={member.name}
+                        onClick={() => alert("to profile view")}
+                        />
+                    </div>
+                    <div className="memberButtonsContainer">
+                        {view === "teamLeaderView" && renderLeaderButtons()}
+                    </div>
+                    
                     
                 </Card>
                 
