@@ -3,7 +3,9 @@ import MemberTable from './MemberTable'
 import TeamName from './TeamName'
 import TeamDescription from './TeamDescription'
 import {Layout, Space, Typography, Divider, Button} from "antd";
-import {EditFilled} from '@ant-design/icons'
+import {EditFilled, UserOutlined, TeamOutlined, LogoutOutlined} from '@ant-design/icons'
+
+import profPic from './radiohead.jpg'
 
 import './style.css'
 
@@ -104,8 +106,15 @@ class Team extends React.Component {
         return (
             <div>
                 <Layout className="teamViewContainer">
-                    <Sider className="teamViewSidebar">
-                        <h1>sidebar</h1>
+                    <Sider className="teamViewSidebar" width={100} collapsible={true} collapsedWidth={0}>
+                        <div className="profilePictureContainer">
+                            <img className="profilePicture" src={profPic}/>
+                        </div>
+                        <div className="sideBarButtons">
+                            <UserOutlined/>
+                            <TeamOutlined/>
+                            <LogoutOutlined/>
+                        </div>
                     </Sider>
                     <Content hasSider={true} className="teamViewContent">
                         <TeamName 

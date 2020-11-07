@@ -3,6 +3,7 @@ body {
     background-color: #F1FAFA;
 }
 
+
 .teamViewContent {
     padding: 0px 20px 0px 20px;
     margin-top: 2rem;
@@ -15,7 +16,7 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    padding: 10rem 20px 0px 20px;
+    padding-top: 60px;
 }
 
 .teamViewContainer {
@@ -54,6 +55,32 @@ body {
 
 .memberInfo {
     display: inline-block;
+}
+
+.profilePictureContainer {
+    display: inline-block;
+    position: relative;
+    width: 75px;
+    height: 75px;
+    overflow: hidden;
+    border-radius: 50%;
+    border: 5px solid #F1FAFA;
+    /* box-shadow: 0px 3px 3px #4C9494; */
+}
+
+.profilePicture {
+    width: auto;
+    height: 100%;
+    margin-left: -18.75px;
+}
+
+.sideBarButtons {
+    width: 30px;
+    font-size: 30px;
+    line-height: 100px;
+    margin-top: 20vh;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .ant-card-meta-title {
