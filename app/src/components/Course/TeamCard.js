@@ -15,19 +15,20 @@ export default class TeamCard extends Component {
   render() {
     const { teamName, members, capacity } = this.props;
     return (
-      <div className="teamCardContainer">
-        <div className="teamCardHeader">
-          <Title level={2}>{teamName}</Title>
-          <Statistic value={members.length} suffix={`/${capacity}`} />
-        </div>
-        <Menu mode="inline">
-          <SubMenu title="Current Members">
-            {members.map((member) => {
-              return <Menu.Item>{member.name}</Menu.Item>;
-            })}
-          </SubMenu>
-        </Menu>
-      </div>
+      <div></div>
+      // <div className="teamCardContainer">
+      //   <div className="teamCardHeader">
+      //     <Title level={2}>{teamName}</Title>
+      //     <Statistic value={members.length} suffix={`/${capacity}`} />
+      //   </div>
+      //   <Menu mode="inline">
+      //     <SubMenu title="Current Members">
+      //       {members.map((member) => {
+      //         return <Menu.Item>{member.name}</Menu.Item>;
+      //       })}
+      //     </SubMenu>
+      //   </Menu>
+      // </div>
     );
   }
 }
