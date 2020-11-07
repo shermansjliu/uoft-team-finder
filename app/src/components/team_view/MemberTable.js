@@ -1,27 +1,50 @@
 import React from 'react'
 import TeamMember from './TeamMember'
 import TeamLeader from './TeamLeader'
-import JoinButton from './JoinButton'
-import LeaveButton from './LeaveButton'
+import {Button, Statistic, Typography} from "antd"
+
+import './style.css'
+
+const { Paragraph } = Typography;
 
 class MemberTable extends React.Component {
     constructor(props){
         super(props)
-        this.handleJoinRequest = this.handleJoinRequest.bind(this)
-        this.handleLeaveRequest = this.handleLeaveRequest.bind(this)
+        this.handleAddRequest = this.handleAddRequest.bind(this)
+        this.handleRemoveRequest = this.handleRemoveRequest.bind(this)
+        this.handleChangeLeaderRequest = this.handleChangeLeaderRequest.bind(this)
+        this.handleChangeCapaRequest = this.handleChangeCapaRequest.bind(this)
     }
 
-    handleJoinRequest (newMember) {
+    handleAddRequest (newMember) {
         this.props.addMember(newMember)
     }
 
-    handleLeaveRequest (rmMember) {
-        this.props.deleteMember(rmMember)
+    handleRemoveRequest (rmMember) {
+        if(this.props.teamLeaderID === rmMember.userID && this.props.members.length > 1) {
+            // the member to be removed is the team leader
+            alert("You have to pick a new team leader first before you leave!")
+        } else {
+            this.props.deleteMember(rmMember)
+        }
+    }
+
+    handleChangeLeaderRequest (newLeader) {
+        this.props.changeLeader(newLeader)
+    }
+
+    handleChangeCapaRequest (newCapacity) {
+        let capacity = parseInt(newCapacity)
+        if (capacity >= this.props.members.length && capacity <= 10){
+            this.props.setCapacity(capacity)
+        } else {
+            alert("Invalid capacity number")
+        }
     }
     
 
     render() {
-        const { view, teamLeaderID, currentUser, members } = this.props 
+        const { view, teamLeaderID, currentUser, members, teamCapacity} = this.props 
 
         const teamLeader = members.filter(member => member.userID === teamLeaderID)[0]
         const teamMembers = members.filter(member => member.userID !== teamLeaderID)
@@ -29,25 +52,40 @@ class MemberTable extends React.Component {
 
         const renderJoinOrLeaveButton = () => {
             if(view === "otherUserView") {
-                return <JoinButton handleJoinRequest={() => this.handleJoinRequest(currentUser)}/>
+                return <Button className="joinLeaveButton" type="primary" onClick={() => this.handleAddRequest(currentUser)}> JOIN </Button>
             } else {
-                return <LeaveButton handleLeaveRequest={() => this.handleLeaveRequest(currentUser)}/>
+                return <Button className="joinLeaveButton" type="primary" onClick={() => this.handleRemoveRequest(currentUser)}> LEAVE </Button>
             }
+        }
+        
+        
+
+        const renderCapacity = () => {
+            if(view === "teamLeaderView"){
+                return <Paragraph editable={{onChange: this.handleChangeCapaRequest, maxLength: 2}}>/ {teamCapacity}</Paragraph>
+            } else {
+                return <Paragraph>/ {teamCapacity}</Paragraph>
+            }
+            
         }
 
         return (
-            <div>
-                <h2> Team Members: </h2>
+            <div className="memberTableContainer">
+                <h2> Team Members </h2>
                 
-                <TeamLeader teamLeader={teamLeader} view={view} currentUser={currentUser}/>
+                <TeamLeader teamLeader={teamLeader} view={view} members={members} currentUser={currentUser}/>
 
                 {teamMembers.map((member) => 
                     <TeamMember key={member.userID} member={member} view={view}
-                                currentUser={currentUser}
+                                currentUser={currentUser} handleKickRequest={this.handleRemoveRequest}
+                                handleMakeLeaderRequest={this.handleChangeLeaderRequest}
                     />
                 )}
-
+                
                 {renderJoinOrLeaveButton()}
+                <Statistic className="teamCapacity" value={members.length} suffix={renderCapacity()} />
+                
+                
 
             </div>
         );

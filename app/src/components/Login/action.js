@@ -1,5 +1,4 @@
-
-const log =  console.log;
+const log = console.log;
 
 export const register = request => {
     request.setState({
@@ -16,14 +15,14 @@ export const register = request => {
     };
     let failed = false;
     let emsg = "";
-    if (userList.some(u => u.username === user.username)){
+    if (userList.some(u => u.username === user.username)) {
         failed = true;
         emsg = "The username is already token. Try another name!"
-    }else if(user.password.length < 6) {
+    } else if (user.password.length < 6) {
         failed = true;
         emsg = "The password length must greater than 6."
     }
-    if (failed){
+    if (failed) {
         log("failed");
         request.setState({
             msg: "failed to register:" + emsg,
@@ -56,11 +55,24 @@ export const login = request => {
     userList.map(u => {
         if (u.username === user.username && u.password === user.password) {
             request.setState({user: u});
-            if(u.admin){
+            if (u.admin) {
                 // go to admin
+                // request.props.appState.push("/Admin", {user: u})
+                request.props.history.push({
+                    pathname: '/Admin',
+                    state: {
+                        user: u
+                    }
+                })
                 window.location = "./Admin";
-            }else{
+            } else {
                 // go to home
+                request.props.history.push({
+                    pathname: '/Home',
+                    state: {
+                        user: u
+                    }
+                })
                 window.location = "./Home";
             }
 

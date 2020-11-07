@@ -1,25 +1,43 @@
 import React from 'react'
-import EditCapacityButton from './EditCapacityButton'
-import EditTeamNameButton from './EditTeamNameButton'
-import EditNickNameButton from './EditNickNameButton'
+import {Card, Avatar, Button} from 'antd'
+import {StarTwoTone} from '@ant-design/icons'
+import './style.css'
+
+const {Meta} = Card
+
 
 class TeamLeader extends React.Component {
     render() {
-        const {teamLeader, currentUser, view} = this.props
+        const {teamLeader, view, members} = this.props
         // const picture = this.props.pictureURL
-
-        const renderLeaderButtons = () => {
-            return [<EditCapacityButton/>, <EditTeamNameButton/>]
+        const renderLockButton = () => {
+            if(view === "teamLeaderView") {
+                return <Button className="lockButton" type="primary">LOCK TEAM</Button>
+            }
         }
-        
+
         return (
             <div>
-                <hr/>
-                <h3> Team Leader!</h3>
-                <h4>{teamLeader.name}</h4>
-                {view === "teamLeaderView" && renderLeaderButtons()}
-                {currentUser.userID === teamLeader.userID && <EditNickNameButton/>}
-                <hr/>
+                <Card className="teamMemberCard">
+                    <div className="memberInfo">
+                        <div className="leaderIconContainer">
+                            <StarTwoTone twoToneColor="#eb2f96" className="leaderIcon"/>
+                            <i>Team Leader</i>
+                        </div>
+                        <Meta 
+                        avatar={
+                            <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" 
+                                    size={60}
+                            />
+                        }
+                        title={teamLeader.name}
+                        onClick={() => alert("to profile view")}
+                        />
+                    </div>
+                    <div className="memberButtonsContainer">
+                        {renderLockButton()}
+                    </div>
+                </Card>
             </div>
         );
     }
