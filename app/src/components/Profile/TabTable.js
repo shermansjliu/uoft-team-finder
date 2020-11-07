@@ -1,26 +1,25 @@
 import React from 'react';
-import { Tabs } from 'antd';
+import { Tabs, Divider } from 'antd';
+import CourseTable from './CourseTable.js';
+import TeamTable from './TeamTable.js'
+import ExperienceTable from './ExperienceTable.js'
 
 const { TabPane } = Tabs;
 
+
 class TabTable extends React.Component{
     render() {
+        const {infos} = this.props;
         return (
-            <Tabs type="card">
+            <Tabs>
                 <TabPane tab="Courses" key="1">
-                    <p>Content of Tab Pane 1</p>
-                    <p>Content of Tab Pane 1</p>
-                    <p>Content of Tab Pane 1</p>
+                    <CourseTable infos={infos}></CourseTable>
                 </TabPane>
                 <TabPane tab="Teams" key="2">
-                    <p>Content of Tab Pane 2</p>
-                    <p>Content of Tab Pane 2</p>
-                    <p>Content of Tab Pane 2</p>
+                    <TeamTable infos={infos}></TeamTable>
                 </TabPane>
                 <TabPane tab="Experiences" key="3">
-                    <p>Content of Tab Pane 3</p>
-                    <p>Content of Tab Pane 3</p>
-                    <p>Content of Tab Pane 3</p>
+                    <ExperienceTable infos={infos}></ExperienceTable>
                 </TabPane>
             </Tabs>
         )

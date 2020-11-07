@@ -1,5 +1,5 @@
 import React from 'react';
-import {Avatar, Descriptions, Button, Dropdown, Typography, Layout, Menu, InputNumber} from 'antd'
+import {Avatar, Descriptions, Typography, Layout, InputNumber, Input} from 'antd'
 import {UserOutlined } from '@ant-design/icons';
 import 'antd/dist/antd.css';
 
@@ -7,8 +7,9 @@ import { setUserName, setMajor, setDescription, setYear, setGPA }from './Action.
 
 const { Sider } = Layout;
 const { Paragraph } = Typography;
+const { TextArea } = Input;
 
-class Information_bar extends React.Component{
+class InformationBar extends React.Component{
     render() {
         const {infos, name, major, year, gpa, description,} = this.props
 
@@ -35,7 +36,7 @@ class Information_bar extends React.Component{
                             <InputNumber min={1} max={4} defaultValue={gpa} onChange={e => setGPA(infos, e)} />
                         </Descriptions.Item>
                         <Descriptions.Item label="About me" span={3}>
-                            <Paragraph editable={{onChange: e => setDescription(infos, e)}}> {description} </Paragraph>
+                            <TextArea showCount maxLength={200} onChange={e => setDescription(infos, e)} allowClear={true} autoSize={true}> {description} </TextArea>
                         </Descriptions.Item>
                     </Descriptions>
                 </div>
@@ -44,4 +45,4 @@ class Information_bar extends React.Component{
     }
 }
 
-export default Information_bar
+export default InformationBar

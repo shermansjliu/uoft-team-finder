@@ -1,10 +1,9 @@
 import React from 'react';
-import {Layout} from 'antd'
+import {Layout} from 'antd';
 import 'antd/dist/antd.css';
-import "./style.css";
 
-import Information_bar from './Information_bar';
-import TabTable from './TabTable';
+import InformationBar from './InformationBar.js';
+import TabTable from './TabTable.js';
 
 class Profile extends React.Component {
     state = {
@@ -13,7 +12,17 @@ class Profile extends React.Component {
         description:"Write something about you!",
         year:"3",
         cGPA:"",
-        courses:[],
+        courses:[
+            {courseTitle: 'CSC309'},
+            {courseTitle: 'CSC373'},
+        ],
+        teams:[
+            {teamName: 'THE JOHN WICKS'}
+        ],
+        exps:[
+            {expTitle: 'CSC207',
+             content: 'Took it last year!'}
+        ]
     }
 
    render() {
@@ -22,7 +31,7 @@ class Profile extends React.Component {
                height:"100vh",
            }}>
                {/* Left side bar */}
-               <Information_bar infos={this}
+               <InformationBar infos={this}
                                 name={this.state.name}
                                 major={this.state.major}
                                 year={this.state.year}
@@ -34,7 +43,7 @@ class Profile extends React.Component {
                    height:"100%",
                    padding:24,
                }}>
-                   <TabTable></TabTable>
+                   <TabTable infos={this}></TabTable>
                </Layout>
            </Layout>
        )
