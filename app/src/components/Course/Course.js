@@ -43,7 +43,7 @@ export default class Course extends Component {
                   {this.state.className}
                 </Title>
                 <Title className="totalTeams" level={3}>
-                  {this.state.teams.state.size}
+                  {this.state.teams.length}
                 </Title>
 
                 <Space direction="vertical">

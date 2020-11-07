@@ -1,24 +1,49 @@
 import React from 'react'
-import EditNickNameButton from './EditNickNameButton'
-import KickButton from './KickButton'
-import MakeLeaderButton from './MakeLeaderButton'
+import {Card, Avatar, Button} from 'antd'
+import './style.css'
 
+const {Meta} = Card
 class TeamMember extends React.Component {
     render() {
-        const {member, currentUser, view} = this.props
+        const {member, currentUser, view, handleKickRequest, handleMakeLeaderRequest} = this.props
         // const picture = this.props.pictureURL
 
         const renderLeaderButtons = () => {
-            return [<MakeLeaderButton/>, <KickButton/>]
+            return [
+            <Button className="kickButton" 
+                type="primary"
+                onClick={() => handleKickRequest(member)}>
+                KICK
+            </Button>, 
+            <Button className="makeLeaderButton" 
+                type="primary"
+                onClick={() => handleMakeLeaderRequest(member)}>
+                MAKE LEADER
+            </Button>]
         }
         
         return (
             <div>
-                <hr/>
-                <h4>{member.name}</h4>
-                {view === "teamLeaderView" && renderLeaderButtons()}
-                {currentUser.userID === member.userID && <EditNickNameButton/>}
-                <hr/>
+                <Card className="teamMemberCard">
+                    <div className="memberInfo">
+                        <Meta
+                        avatar={
+                            <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" 
+                                    size={60}
+                                    className="memberAvatar"
+                            />
+                        }
+                        title={member.name}
+                        onClick={() => alert("to profile view")}
+                        />
+                    </div>
+                    <div className="memberButtonsContainer">
+                        {view === "teamLeaderView" && renderLeaderButtons()}
+                    </div>
+                    
+                    
+                </Card>
+                
             </div>
         );
     }

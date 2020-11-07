@@ -1,0 +1,190 @@
+/*Team View*/
+body {
+    background-color: #F1FAFA;
+}
+
+
+.teamViewContent {
+    padding: 0px 20px 0px 20px;
+    margin-top: 2rem;
+    width: 100%;
+  }
+
+.teamViewSidebar {
+    background-color: #D5F3F4;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding-top: 60px;
+}
+
+.teamViewContainer {
+    background-color: #F1FAFA;
+    height: 100%;
+}
+
+.teamTitle {
+    font-family: 'Spartan', sans-serif;
+    font-weight: bold;
+    font-size: 60px;
+    margin-left: 10%;
+    margin-right: 10%;
+    margin-top: 60px;
+    text-align: center;
+}
+
+.teamDescription {
+    text-align: center;
+    font-style: italic;
+    margin: auto 10%;
+}
+
+.teamMemberCard {
+    margin: 20px auto;
+    background-color: #FFFFF6;
+    border-radius: 20px;
+    border: 0;
+    box-shadow: 0px 6px 6px #FDE4CC;
+    
+}
+
+.teamMemberCard:hover {
+    box-shadow: none;
+}
+
+.memberInfo {
+    display: inline-block;
+}
+
+.profilePictureContainer {
+    display: inline-block;
+    position: relative;
+    width: 75px;
+    height: 75px;
+    overflow: hidden;
+    border-radius: 50%;
+    border: 5px solid #F1FAFA;
+    /* box-shadow: 0px 3px 3px #4C9494; */
+}
+
+.profilePicture {
+    width: auto;
+    height: 100%;
+    margin-left: -18.75px;
+}
+
+.sideBarButtons {
+    width: 30px;
+    font-size: 30px;
+    line-height: 100px;
+    margin-top: 20vh;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.ant-card-meta-title {
+    margin-top: 34px;
+    font-size: 20px;
+}
+
+.memberAvatar {
+    margin-bottom: 16px;
+}
+
+.leaderIconContainer {
+    margin-right: 10px;
+}
+
+.memberButtonsContainer {
+    float: right;
+}
+
+.memberTableContainer {
+    margin: auto 10%
+}
+
+.teamCapacity {
+    text-align: right;
+    float: right;
+    margin-bottom: 0.5%;
+    margin-right: 20px;
+}
+
+.leaderIcon {
+    font-size: 20px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.lockButton {
+    font-family: 'Spartan', sans-serif;
+    font-weight: bolder;
+    background-color: #FF9999;
+    border: 0;
+    border-radius: 9px;
+    width: 140px;
+    height: 100px;
+    box-shadow: 0px 4px 4px #FF7A7A;
+    margin: 4px;
+}
+
+.lockButton:hover {
+    box-shadow: none;
+    background-color: #FF9999;
+    padding-bottom: 2px;
+}
+
+.kickButton {
+    font-family: 'Spartan', sans-serif;
+    font-weight: bolder;
+    background-color: #66CCCC;
+    border: 0;
+    border-radius: 9px;
+    width: 140px;
+    box-shadow: 0px 3px 3px #4C9494;
+    margin: 4px;
+    display: block;
+}
+
+.kickButton:hover {
+    box-shadow: none;
+    background-color: #66CCCC;
+    padding-bottom: 2px;
+}
+
+.makeLeaderButton {
+    background-color: #66CCCC;
+    font-family: 'Spartan', sans-serif;
+    font-weight: bolder;
+    border: 0;
+    border-radius: 9px;
+    box-shadow: 0px 3px 3px #4C9494;
+    margin: 4px;
+    width: 140px;
+}
+
+.makeLeaderButton:hover {
+    box-shadow: none;
+    background-color: #66CCCC;
+    padding-bottom: 2px;
+}
+
+.joinLeaveButton {
+    font-family: 'Spartan', sans-serif;
+    font-weight: bolder;
+    background-color: #66CCCC;
+    float: right;
+    margin-bottom: 1%;
+    margin-right: 28px;
+    width: 140px;
+    border: 0;
+    border-radius: 9px;
+    box-shadow: 0px 3px 3px #4C9494;
+}
+
+.joinLeaveButton:hover {
+    box-shadow: none;
+    background-color: #66CCCC;
+    padding-bottom: 2px;
+}

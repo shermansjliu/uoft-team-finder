@@ -1,19 +1,21 @@
-import React from "react";
+import React, { useState } from "react";
 // Importing react-router-dom to use the React Router
 import { Route, Switch, BrowserRouter } from "react-router-dom";
 import "./App.css";
 import "antd/dist/antd.css";
 import Setting from "./components/Setting";
-
+import Course from "./components/Course/Course";
 import Home from "./components/Home/Home";
 import Login from "./components/Login/Login";
 import Team from "./components/team_view/Team";
-import Course from "./components/Course/Course";
+import Admin from "./components/Admin";
 
 class App extends React.Component {
   state = {
-    userName: "",
-    userPassword: "",
+    users: [
+      { username: "Jack", password: "123456", admin: false },
+      { username: "admin", password: "admin", admin: true },
+    ],
   };
 
   render() {
@@ -30,6 +32,11 @@ class App extends React.Component {
               exact
               path="/Home"
               render={() => <Home appState={this.state} />}
+            />
+            <Route
+              exact
+              path="/Admin"
+              render={() => <Admin appState={this.state} />}
             />
             <Route
               exact
