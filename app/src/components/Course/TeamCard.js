@@ -18,7 +18,9 @@ export default class TeamCard extends Component {
     return (
       <div className="teamCardContainer">
         <div className="teamCardHeader">
-          <Title level={3}>{teamName}</Title>
+          <Title className="teamName" level={3} ellipsis={true}>
+            {teamName}
+          </Title>
           <Statistic
             className="memberNumber"
             value={members.length}

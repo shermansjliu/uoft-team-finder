@@ -40,7 +40,7 @@
   border: 3px solid black;
 }
 .teamCardContainer {
-  max-width: 314px;
+  width: 314px;
   background-color: white;
   margin-bottom: 2rem;
   border-radius: 5px;

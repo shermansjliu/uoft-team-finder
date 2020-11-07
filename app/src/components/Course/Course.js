@@ -1,6 +1,5 @@
 import React, { Component } from "react";
-
-import { Layout, Space, Typography, Divider } from "antd";
+import { Layout, Row, Col } from "antd";
 import TeamCard from "./TeamCard";
 import HomeViewFooter from "./CourseFooter";
 import "../../App.css";
@@ -29,6 +28,16 @@ export default class Course extends Component {
           members: [],
           capacity: 4,
         },
+        {
+          teamName: "League of Legends",
+          members: [],
+          capacity: 4,
+        },
+        {
+          teamName: "March March",
+          members: [],
+          capacity: 4,
+        },
       ],
     };
   }
@@ -40,18 +49,21 @@ export default class Course extends Component {
 
           <Content hasSider={true} className="homeViewContent">
             <h1 className="courseCode">{this.state.className}</h1>
-
-            {this.state.teams.map((team) => {
-              return (
-                <div>
-                  <TeamCard
-                    teamName={team.teamName}
-                    members={team.members}
-                    capacity={team.capacity}
-                  />
-                </div>
-              );
-            })}
+            <Row gutter={16}>
+              {this.state.teams.map((team) => {
+                return (
+                  <Col span={8}>
+                    <div>
+                      <TeamCard
+                        teamName={team.teamName}
+                        members={team.members}
+                        capacity={team.capacity}
+                      />
+                    </div>
+                  </Col>
+                );
+              })}
+            </Row>
           </Content>
         </Layout>
       </div>
