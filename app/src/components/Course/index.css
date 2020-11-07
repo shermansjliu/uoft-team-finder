@@ -40,16 +40,36 @@
   border: 3px solid black;
 }
 .teamCardContainer {
-  width: 100%;
+  max-width: 314px;
+  background-color: white;
   margin-bottom: 2rem;
+  border-radius: 5px;
+  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
   padding: 2rem;
+  height: 204px;
 }
-.teamCardDivider {
-  background: gray;
+.courseCode {
+  text-align: center;
+  font-size: 4em;
+}
+.teamImage > img {
+  object-fit: cover;
+  object-position: center;
+}
+.teamImageContainer {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .teamCardHeader {
+  align-items: center;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
+}
+.memberNumber {
+  position: relative;
+  left: 20px;
 }
 #homeViewBackButton {
   margin-bottom: 1rem;

@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import { Typography, Statistic, Menu } from "antd";
+import { Typography, Statistic, Menu, Image } from "antd";
+import teamPlaceholder from "./teamPlaceholder.jpg";
 import "../../App.css";
 import "./index.css";
 
@@ -15,20 +16,25 @@ export default class TeamCard extends Component {
   render() {
     const { teamName, members, capacity } = this.props;
     return (
-      <div></div>
-      // <div className="teamCardContainer">
-      //   <div className="teamCardHeader">
-      //     <Title level={2}>{teamName}</Title>
-      //     <Statistic value={members.length} suffix={`/${capacity}`} />
-      //   </div>
-      //   <Menu mode="inline">
-      //     <SubMenu title="Current Members">
-      //       {members.map((member) => {
-      //         return <Menu.Item>{member.name}</Menu.Item>;
-      //       })}
-      //     </SubMenu>
-      //   </Menu>
-      // </div>
+      <div className="teamCardContainer">
+        <div className="teamCardHeader">
+          <Title level={3}>{teamName}</Title>
+          <Statistic
+            className="memberNumber"
+            value={members.length}
+            suffix={`/ ${capacity}`}
+          />
+        </div>
+        <div className="teamImageContainer">
+          <Image
+            width={100}
+            className="teamImage"
+            src={teamPlaceholder}
+            alt="TeamImage"
+            height={100}
+          />
+        </div>
+      </div>
     );
   }
 }

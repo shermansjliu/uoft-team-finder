@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+
 import { Layout, Space, Typography, Divider } from "antd";
 import TeamCard from "./TeamCard";
 import HomeViewFooter from "./CourseFooter";
@@ -6,7 +7,6 @@ import "../../App.css";
 import "./index.css";
 
 const { Sider, Content } = Layout;
-const { Title } = Typography;
 
 export default class Course extends Component {
   constructor(props) {
@@ -36,25 +36,11 @@ export default class Course extends Component {
     return (
       <div>
         <Layout className="homeViewContainer">
-          <Sider>
-            <div className="homeViewSideMenu">
-              <div>
-                <Title className="classTitle" level={2}>
-                  {this.state.className}
-                </Title>
-                <Title className="totalTeams" level={3}>
-                  {this.state.teams.length}
-                </Title>
+          <Sider></Sider>
 
-                <Space direction="vertical">
-                  <Title level={5}> Project: 5</Title>
-                  <Title level={5}> Study: 5</Title>
-                </Space>
-              </div>
-              <HomeViewFooter />
-            </div>
-          </Sider>
           <Content hasSider={true} className="homeViewContent">
+            <h1 className="courseCode">{this.state.className}</h1>
+
             {this.state.teams.map((team) => {
               return (
                 <div>
@@ -63,7 +49,6 @@ export default class Course extends Component {
                     members={team.members}
                     capacity={team.capacity}
                   />
-                  <Divider className="teamCardDivider" />
                 </div>
               );
             })}
