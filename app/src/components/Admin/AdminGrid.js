@@ -1,7 +1,6 @@
 import {Row, Col, Slider, Button, Skeleton, Switch, Card, Avatar} from 'antd';
 import React from 'react'
 import 'antd/dist/antd.css';
-import "./styles.css"
 import {EditOutlined, EllipsisOutlined, SettingOutlined} from '@ant-design/icons';
 
 const {Meta} = Card;
@@ -21,7 +20,7 @@ const colCounts = {};
     colCounts[i] = value;
 });
 
-class Grid extends React.Component {
+export class AdminGrid extends React.Component {
     state = {
         gutterKey: 1,
         vgutterKey: 1,
@@ -51,18 +50,19 @@ class Grid extends React.Component {
                 //   <Button className="course-tab">Course</Button>
                 // </Col>,
                 <Card
-                    style={{
-                        width: 300,
-                        marginTop: 16,
-                        margin:10,
-                        borderRadius:10,
-                        backgroundColor:"#DDF3FF"
-                    }}
-                    hoverable={true}
+                    style={{width: 300, marginTop: 16}}
+                    actions={[
+                        <SettingOutlined key="setting"/>,
+                        <EditOutlined key="edit"/>,
+                        <EllipsisOutlined key="ellipsis"/>,
+                    ]}
                 >
                     <Skeleton loading={false} avatar active>
                         <Meta
-                            title="Course title"
+                            avatar={
+                                <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"/>
+                            }
+                            title="Card title"
                             description="This is the description"
                         />
                     </Skeleton>
@@ -116,5 +116,3 @@ class Grid extends React.Component {
         );
     }
 }
-
-export default Grid;

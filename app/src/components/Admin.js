@@ -1,25 +1,29 @@
-import React, { Component } from "react";
-import { Layout, Space, Typography, Divider } from "antd";
+import React, {Component} from "react";
+import {Layout, Space, Typography, Divider} from "antd";
 import TeamCard from "./TeamCard";
 import HomeViewFooter from "./CourseViewFooter";
-
+import {AdminGrid} from "./Admin/AdminGrid"
+import {withRouter} from 'react-router-dom';
 import "../App.css";
+import Home from "./Home/Home";
 
-const { Sider, Content } = Layout;
-const { Title } = Typography;
-export default class Admin extends Component {
+const {Sider, Content} = Layout;
+const {Title} = Typography;
+
+class Admin extends Component {
     constructor(props) {
         super(props);
+        console.log(this.props)
         this.state = {
-            className: "CSC236",
+            adminName: "Admin",
             teams: [
                 {
                     teamName: "The John Wicks",
                     members: [
-                        { userID: "DavidID", name: "David" },
-                        { userID: "ShermanID", name: "Sherman" },
-                        { userID: "QuincyID", name: "Quincy" },
-                        { userID: "JesseID", name: "Jesse" },
+                        {userID: "DavidID", name: "David"},
+                        {userID: "ShermanID", name: "Sherman"},
+                        {userID: "QuincyID", name: "Quincy"},
+                        {userID: "JesseID", name: "Jesse"},
                     ],
                     capacity: 4,
                 },
@@ -29,9 +33,12 @@ export default class Admin extends Component {
                     capacity: 4,
                 },
             ],
+            users: [],
         };
     }
+
     render() {
+
         return (
             <div>
                 <Layout className="homeViewContainer">
@@ -39,37 +46,31 @@ export default class Admin extends Component {
                         <div className="homeViewSideMenu">
                             <div>
                                 <Title className="classTitle" level={2}>
-                                    {this.state.className}
+                                    {this.state.adminName}
                                 </Title>
                                 <Title className="totalTeams" level={3}>
                                     {" "}
-                                    Teams: 10
+                                    State: {this.props.location.state.user.username}
                                 </Title>
-
                                 <Space direction="vertical">
                                     <Title level={5}> Project: 5</Title>
                                     <Title level={5}> Study: 5</Title>
                                 </Space>
+                                <Title level={3}>
+                                    {" "}
+                                    Users: {this.state.users.length}
+                                </Title>
                             </div>
-                            <HomeViewFooter />
+                            <HomeViewFooter/>
                         </div>
                     </Sider>
-                    <Content hasSider={true} className="homeViewContent">
-                        {this.state.teams.map((team) => {
-                            return (
-                                <div>
-                                    <TeamCard
-                                        teamName={team.teamName}
-                                        members={team.members}
-                                        capacity={team.capacity}
-                                    />
-                                    <Divider className="teamCardDivider" />
-                                </div>
-                            );
-                        })}
+                    <Content className="homeViewContent">
+                        <AdminGrid/>
                     </Content>
                 </Layout>
             </div>
         );
     }
 }
+
+export default withRouter(Admin);

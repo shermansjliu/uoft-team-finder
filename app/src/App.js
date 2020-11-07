@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 // Importing react-router-dom to use the React Router
 import {Route, Switch, BrowserRouter} from "react-router-dom";
 import "./App.css";
@@ -13,8 +13,10 @@ import Admin from './components/Admin';
 
 class App extends React.Component {
     state = {
-        userName: "",
-        userPassword: "",
+        users: [
+            {username: "Jack", password: "123456", admin: false},
+            {username: "admin", password: "admin", admin: true},
+        ],
     };
 
     render() {
