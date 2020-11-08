@@ -1,8 +1,7 @@
 import React, { Component } from "react";
 import { Layout, Row, Col, Input } from "antd";
 import TeamCard from "./TeamCard";
-import { SearchOutlined } from "@ant-design/icons";
-import HomeViewFooter from "./CourseFooter";
+import SearchBar from "./SearchBar";
 import "../../App.css";
 import "./index.css";
 
@@ -32,16 +31,19 @@ export default class Course extends Component {
         },
         {
           teamName: "BA Forever",
+          teamLeader: "Daveedo",
           members: [],
           capacity: 4,
         },
         {
           teamName: "League of Legends",
+          teamLeader: "Mike",
           members: [],
           capacity: 4,
         },
         {
           teamName: "March March",
+          teamLeader: "Sherman",
           members: [],
           capacity: 4,
         },
@@ -59,14 +61,7 @@ export default class Course extends Component {
             <h1 className="courseCode green-dark-title">
               {this.state.className}
             </h1>
-            <Input
-              className="searchBar"
-              value={this.state.searchRes}
-              size="large"
-              onChange={this.handleInputChange}
-              placeholder="search team name"
-              prefix={<SearchOutlined />}
-            />
+            <SearchBar />
             <Row gutter={16}>
               {this.state.teams.map((team) => {
                 return (

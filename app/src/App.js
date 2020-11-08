@@ -4,6 +4,7 @@ import { Route, Switch, BrowserRouter } from "react-router-dom";
 import "./App.css";
 import "antd/dist/antd.css";
 import Course from "./components/Course/Course";
+import CourseAdmin from "./components/Course/CourseAdmin";
 import Home from "./components/Home/Home";
 import Login from "./components/Login/Login";
 import Team from "./components/team_view/Team";
@@ -47,6 +48,11 @@ class App extends React.Component {
               exact
               path="/Course"
               render={() => <Course appState={this.state} />}
+            />
+            <Route
+              exact
+              path="/CourseAdmin"
+              render={() => <CourseAdmin appState={this.state} />}
             />
             <Route
               exact
