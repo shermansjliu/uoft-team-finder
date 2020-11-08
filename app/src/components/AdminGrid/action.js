@@ -42,3 +42,11 @@ export const save = (card, course) => {
     course.image = card.state.newImg
     console.log(card.state);
 }
+
+export const onSearch = (page, value) =>{
+    console.log("onSearch");
+    const courses = page.state.courses
+    const filteredCourses = courses.filter(course => {
+        return course.courseName.includes(value)})
+    page.setState({displayedCourses: filteredCourses})
+}

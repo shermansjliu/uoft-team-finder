@@ -4,13 +4,14 @@ import 'antd/dist/antd.css';
 import {
     FileAddOutlined
 } from '@ant-design/icons';
-import CourseCard from "./CourseCard";
-import {Tooltip} from "antd";
+import CourseCard from "./AdminCourseCard";
+import {Tooltip, Input } from "antd";
 import bkimg from "../../img/home-books.jpg";
-import {addCourse} from "./action";
+import {addCourse, onSearch} from "./action";
 
 
 const {Title} = Typography;
+const { Search } = Input;
 export class AdminGrid extends React.Component {
 
     state = {
@@ -40,7 +41,33 @@ export class AdminGrid extends React.Component {
                 image: bkimg,
             },
         ],
-        courseName: "333",
+        displayedCourses: [
+            {
+                courseName: 'csc309',
+                department: 'CSC',
+                description: 'This is a description',
+                image: bkimg,
+            },
+            {
+                courseName: 'csc301',
+                department: 'CSC',
+                description: 'This is a description',
+                image: bkimg,
+            },
+            {
+                courseName: 'csc302',
+                department: 'CSC',
+                description: 'This is a description',
+                image: bkimg,
+            },
+            {
+                courseName: 'csc303',
+                department: 'CSC',
+                description: 'This is a description',
+                image: bkimg,
+            },
+        ],
+        onSearchString: "",
 
     };
 
@@ -56,8 +83,16 @@ export class AdminGrid extends React.Component {
                                     icon={<FileAddOutlined
                                         onClick={() => addCourse(this, bkimg)}/>}/>
                         </Tooltip>
+                        <Search  placeholder="search a course here"
+                                 onSearch={() => onSearch(this, this.state.onSearchString)}
+                                 value={this.state.onSearchString}
+                                 onChange={(e)=>{this.setState({onSearchString: e.target.value})}}
+                                 enterButton
+
+                        />
                     </Space>
                 </Row>
+
                 <List
                     grid={{
                         gutter: 16,
@@ -68,7 +103,7 @@ export class AdminGrid extends React.Component {
                         xl: 5,
                         xxl: 6,
                     }}
-                    dataSource={this.state.courses}
+                    dataSource={this.state.displayedCourses}
                     renderItem={item => (
                         <List.Item>
                             <CourseCard
@@ -83,6 +118,4 @@ export class AdminGrid extends React.Component {
             </>
         );
     }
-
-
 }

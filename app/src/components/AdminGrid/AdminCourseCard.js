@@ -13,7 +13,7 @@ const ConditionalLink = ({ children, to, condition }) => (!!condition && to)
     ? <Link to={to} >{children}</Link>
     : <>{children}</>;
 
-class CourseCard extends React.Component {
+class AdminCourseCard extends React.Component {
     constructor(props) {
         super(props);
         const course = this.props.course;
@@ -46,9 +46,9 @@ class CourseCard extends React.Component {
                                     onChange={this.handleInputChange}/>
             // upload photo if editing, need backend here
             img = (
-                <div className={"center"}>
+                <span className={"center_"}>
                     <ImageUploader api={"implement latter"} />
-                </div>
+                </span>
                 )
             // change icon to save mode
             editIcon = (<SaveOutlined onClick={() => save(this, course)}/>)
@@ -88,4 +88,4 @@ class CourseCard extends React.Component {
     };
 }
 
-export default withRouter(CourseCard);
+export default withRouter(AdminCourseCard);

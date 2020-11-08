@@ -4,6 +4,7 @@ import {UserOutlined, LockOutlined} from '@ant-design/icons';
 import "./styles.css";
 import {register, login} from "./action.js"
 import {withRouter} from 'react-router-dom';
+import {forgetPWD} from "./action";
 
 
 class LoginView extends React.Component {
@@ -28,9 +29,7 @@ class LoginView extends React.Component {
 
     render() {
         return (
-            <div
-                className="login-wrap"
-            >
+            <div className="login-wrap">
                 <div className="padding"/>
                 <Row align="center">
                     <span className={this.state.msgColor}>{this.state.msg}</span>
@@ -70,7 +69,7 @@ class LoginView extends React.Component {
                                 Sign up
                             </Button>
                             <br/>
-                            <a className="forget">Don't remember the password?</a>
+                            <a className="forget" onClick={() => forgetPWD(this)}>Don't remember the password?</a>
                         </Card>
                     </Col>
                 </Row>

@@ -31,4 +31,18 @@
     margin-top: 20vh;
     margin-left: auto;
     margin-right: auto;
+    color: #FFF;
+}
+.btn-color{
+    color: #66CCCC;
+}
+.content{
+    margin-left: 5vw;
+    margin-top: 3vh;
+}
+.text-center{
+    text-align: center;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
 }

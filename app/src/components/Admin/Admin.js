@@ -1,9 +1,10 @@
 import React, {Component} from "react";
 import {Layout, Space, Typography} from "antd";
-import HomeViewFooter from "./CourseViewFooter";
-import {AdminGrid} from "./AdminGrid/AdminGrid"
+import HomeViewFooter from "../CourseViewFooter";
+import {AdminGrid} from "../AdminGrid/AdminGrid"
 import {withRouter} from 'react-router-dom';
-import "../App.css";
+import "../../App.css";
+import "./style.css";
 
 const {Sider, Content} = Layout;
 const {Title} = Typography;
@@ -13,7 +14,7 @@ class Admin extends Component {
         super(props);
         console.log(this.props)
         this.state = {
-            adminName: "AdminGrid",
+            adminName: "Admin",
             teams: [
                 {
                     teamName: "The John Wicks",
@@ -62,22 +63,24 @@ class Admin extends Component {
                                 <HomeViewFooter/>
                             </div>
                         </Sider>
-                        <Content className="homeViewContent">
+                        <Content className="homeViewContent" >
 
-                            <AdminGrid/>
+                            <AdminGrid />
                         </Content>
                     </Layout>
                 </div>
             );
         }else {
+            // no permission
             return(
-                <div style={{textAlign: 'center', marginTop:100}}>
+                <div className="center" >
                     <h1 > You do not have permission to this page</h1>
                 </div>
 
             )
         }
     }
+
 
 }
 
