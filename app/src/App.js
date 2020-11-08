@@ -11,6 +11,7 @@ import Team from "./components/team_view/Team";
 import Admin from "./components/Admin/Admin";
 import Profile from "./components/Profile/Profile";
 import StandardLayout from "./components/StandardLayout/layout";
+import AdminLayout from "./components/AdminLayout/AdminLayout";
 
 class App extends React.Component {
   state = {
@@ -47,13 +48,18 @@ class App extends React.Component {
             />
             <Route
               exact
-              path="/Course"
-              render={() => <Course appState={this.state} />}
+              path="/Layout"
+              render={() => <StandardLayout appState={this.state} />}
             />
             <Route
               exact
-              path="/CourseAdmin"
-              render={() => <CourseAdmin appState={this.state} />}
+              path="/AdminLayout"
+              render={() => <AdminLayout appState={this.state} />}
+            />
+            <Route
+              exact
+              path="/Course"
+              render={() => <Course appState={this.state} />}
             />
             <Route
               exact
@@ -64,11 +70,6 @@ class App extends React.Component {
               exact
               path="/Profile"
               render={() => <Profile appState={this.state} />}
-            />
-            <Route
-              exact
-              path="/StandardLayout"
-              render={() => <StandardLayout appState={this.state} />}
             />
           </Switch>
         </BrowserRouter>

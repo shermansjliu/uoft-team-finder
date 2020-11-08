@@ -1,7 +1,7 @@
 import {Card, List} from 'antd';
 import React from 'react'
 import 'antd/dist/antd.css';
-import "./styles.css"
+import "./style.css"
 import {Link} from "react-router-dom";
 import bkimg from "../../img/home-books.jpg";
 
@@ -17,23 +17,23 @@ class CourseGrid extends React.Component {
                 image: bkimg,
             },
             {
-                courseName: 'csc309',
+                courseName: 'csc301',
                 department: 'CSC',
                 description: 'This is a description',
                 image: bkimg,
             },
             {
-                courseName: 'csc309',
+                courseName: 'csc302',
                 department: 'CSC',
                 description: 'This is a description',
                 image: bkimg,
             },
             {
-                courseName: 'csc309',
+                courseName: 'csc303',
                 department: 'CSC',
                 description: 'This is a description',
                 image: bkimg,
-            }
+            },
         ],
         numColumns: 5,
     };
@@ -57,7 +57,7 @@ class CourseGrid extends React.Component {
                             <Link to='/Course' params={{ course: item }}>
                                 <Card hoverable
                                     cover={
-                                        <img
+                                        <img className={"courseCard"}
                                             alt="Cannot load"
                                             src={item.image}
                                         />

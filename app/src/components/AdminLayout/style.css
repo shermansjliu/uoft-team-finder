@@ -1,0 +1,26 @@
+.btn-color{
+    color: white;
+
+}
+.admin-footer{
+    width: 100%;
+}
+.admin-footer  {
+    position: absolute;
+    bottom: 0;
+    border-top: 1px solid white;
+    font-size: 20px;
+    height: 35px;
+    text-align: center;
+    vertical-align: middle;
+    background-color: var(--sed-bg-color);
+}
+
+.profilePicture{
+    box-shadow: 10px 10px 5px grey;
+}
+.admin{
+    border: 3px solid white;
+    margin-left: 35px;
+    margin-right: 35px;
+}

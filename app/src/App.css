@@ -15,27 +15,35 @@ code {
 }
 
 .theme-background-color {
-  background-color: #f1fafa;
+  background-color: var(--main-bg-color);
 }
 
 .theme-bar-color {
-  background-color: #66cccc;
+  background-color: var(--main-btn-color);
 }
 
 .theme-btn-color {
-  background-color: #8aebe5;
+  background-color: var(--sed-btn-color);
   color: #fff;
   opacity: 0.9;
 }
 
-.green-dark-title {
-  color: #4c9494;
+.theme-content {
+  background-color: #f1fafa;
 }
 
-.searchBar {
-  position: relative;
-  left: 25%;
-  margin-right: 325px;
-  margin-bottom: 2rem;
-  width: 50%;
+:root {
+  --main-bg-color: #d5f3f4;
+  --sed-bg-color: #66cccc;
+  --main-btn-color: #66cccc;
+  --sed-btn-color: #8aebe5;
+  --content-color: #f1fafa;
+}
+
+/*global ant design parimary button setting*/
+.ant-btn-primary {
+  background-color: #66cccc;
+  border: 0;
+  box-shadow: 1px 1px 0 grey;
+  border-radius: 5px;
 }
