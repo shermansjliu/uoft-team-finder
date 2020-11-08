@@ -82,3 +82,11 @@
 #homeViewBackButton {
   margin-bottom: 1rem;
 }
+.searchBarContainer {
+  justify-content: center;
+  display: flex;
+}
+.searchBar {
+  margin-bottom: 2rem;
+  width: 50%;
+}

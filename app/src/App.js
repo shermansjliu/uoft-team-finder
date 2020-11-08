@@ -63,6 +63,11 @@ class App extends React.Component {
             />
             <Route
               exact
+              path="/CourseAdmin"
+              render={() => <CourseAdmin appState={this.state} />}
+            />
+            <Route
+              exact
               path="/Team"
               render={() => <Team appState={this.state} />}
             />
