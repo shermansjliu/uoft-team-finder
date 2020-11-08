@@ -2,18 +2,12 @@ import React from "react";
 import MemberTable from "./MemberTable";
 import TeamName from "./TeamName";
 import TeamDescription from "./TeamDescription";
-import { Layout, Space, Typography, Divider, Button } from "antd";
-import {
-  EditFilled,
-  UserOutlined,
-  TeamOutlined,
-  LogoutOutlined,
-} from "@ant-design/icons";
+import { Layout } from "antd";
+import { UserOutlined, TeamOutlined, LogoutOutlined } from "@ant-design/icons";
 
 import "./style.css";
 
 const { Sider, Content } = Layout;
-const { Title } = Typography;
 
 class Team extends React.Component {
   constructor(props) {
@@ -110,6 +104,7 @@ class Team extends React.Component {
                 src={
                   "https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
                 }
+                alt="not found"
               />
             </div>
             <div className="sideBarButtons">
