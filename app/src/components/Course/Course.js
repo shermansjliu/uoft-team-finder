@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Layout, Row, Col, Input } from "antd";
+import { Layout, Row, Col } from "antd";
 import TeamCard from "./TeamCard";
 import SearchBar from "./SearchBar";
 import uuid from "react-uuid";
@@ -11,7 +11,6 @@ const { Sider, Content } = Layout;
 export default class Course extends Component {
   handleInputChange = (e) => {
     this.setState({ searchRes: e.target.value });
-    console.log(this.state.searchRes);
   };
   constructor(props) {
     super(props);

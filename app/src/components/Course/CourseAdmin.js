@@ -84,13 +84,14 @@ export default class CourseAdmin extends Component {
     console.log(this.state.searchRes);
   };
 
-  handleDeleteTeam = (e) => {
-    const deletedTeamId = e.target;
-    console.log(e.target);
-    //   const newTeams = this.state.teams.filter(team => {
-    //   return team.
-    //   })
-    //   this.setState()
+  handleDeleteTeam = (key) => {
+    console.log(key);
+    const { teamId: deletedTeamId } = key;
+    // conso
+    const newTeams = this.state.teams.filter((team) => {
+      return team.teamId !== deletedTeamId;
+    });
+    this.setState({ teams: newTeams });
   };
   handleEditTeam = (e) => {};
 
@@ -136,11 +137,11 @@ export default class CourseAdmin extends Component {
       {
         title: "Action",
         key: "action",
-        render: () => {
+        render: (record) => {
           return (
             <Space size="middle">
               <a onClick={this.handleEditTeam}>Edit</a>
-              <a onClick={this.handleDeleteTeam}>Delete</a>
+              <a onClick={() => this.handleDeleteTeam(record)}>Delete</a>
             </Space>
           );
         },
