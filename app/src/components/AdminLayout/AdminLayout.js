@@ -34,7 +34,7 @@ class AdminLayout extends React.Component {
                             </Space>
 
                             <Title level={2}>
-                                <Link to={"/Admin"}>
+                                <Link to={{ pathname: '/Admin' , state : { name: '两百斤' }}}>
                                     <Button type="primary" className="round" size="large">
                                         {/*All Courses: {this.state.courses.length}*/}
                                         All Courses:  {appState.courses.length}
