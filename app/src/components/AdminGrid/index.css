@@ -1,5 +1,6 @@
-.center{
+.center_{
     text-align: center;
+
 }
 
 .ant-card-hoverable {
@@ -7,5 +8,11 @@
 }
 .card {
     min-width: 200px;
-    height: 300px;
+    /*height: 300px;*/
+}
+
+.ant-input-search-button{
+    background-color: #66CCCC;
+    /*opacity: 0.9;*/
+    border: 0;
 }

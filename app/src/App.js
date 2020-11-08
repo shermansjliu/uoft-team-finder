@@ -8,8 +8,9 @@ import CourseAdmin from "./components/Course/CourseAdmin";
 import Home from "./components/Home/Home";
 import Login from "./components/Login/Login";
 import Team from "./components/team_view/Team";
-import Admin from "./components/Admin";
+import Admin from "./components/Admin/Admin";
 import Profile from "./components/Profile/Profile";
+import StandardLayout from "./components/StandardLayout/layout";
 
 class App extends React.Component {
   state = {
@@ -63,6 +64,11 @@ class App extends React.Component {
               exact
               path="/Profile"
               render={() => <Profile appState={this.state} />}
+            />
+            <Route
+              exact
+              path="/StandardLayout"
+              render={() => <StandardLayout appState={this.state} />}
             />
           </Switch>
         </BrowserRouter>
