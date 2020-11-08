@@ -7,7 +7,7 @@ import Course from "./components/Course/Course";
 import CourseAdmin from "./components/Course/CourseAdmin";
 import Home from "./components/Home/Home";
 import Login from "./components/Login/Login";
-import Team from "./components/team_view/Team";
+import Team from "./components/Team/user/Team";
 import Admin from "./components/Admin/Admin";
 import Profile from "./components/Profile/Profile";
 import StandardLayout from "./components/StandardLayout/layout";
