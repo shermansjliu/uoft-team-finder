@@ -1,6 +1,7 @@
 import React from 'react'
 import {LogoutOutlined, TeamOutlined, UserOutlined} from "@ant-design/icons";
-import  {Col,Row,Layout} from "antd";
+
+import  {Layout} from "antd";
 import "./index.css"
 import "../../App.css";
 import {Link} from "react-router-dom";
@@ -35,8 +36,7 @@ class StandardLayout extends React.Component {
                     </Sider>
                     <Content  className="content">
                                 <div className={"text-center"}>
-                                    <Row><h1>{title}</h1></Row>
-
+                                    <h1 className={"text-center"}>{title}</h1>
                                 </div>
                         {content}
                     </Content>

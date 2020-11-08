@@ -25,7 +25,7 @@ export const register = request => {
     if (failed) {
         log("failed");
         request.setState({
-            msg: "failed to register:" + emsg,
+            msg: "Failed to register:" + emsg,
             msgColor: "red"
         });
     } else {

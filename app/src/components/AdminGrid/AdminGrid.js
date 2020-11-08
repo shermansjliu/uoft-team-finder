@@ -56,17 +56,16 @@ export class AdminGrid extends React.Component {
                 <Row type="flex" align="middle">
                     <Space>
                         <Title>Course</Title>
-                        <Tooltip title="add more courses" >
+                        <Tooltip title="add more courses" onClick={() => addCourse(this, bkimg)} >
                             <Button shape="circle"
                                     icon={<FileAddOutlined
-                                        onClick={() => addCourse(this, bkimg)}/>}/>
+                                        />}/>
                         </Tooltip>
                         <Search  placeholder="search a course here"
                                  onSearch={() => onSearch(this, this.state.onSearchString)}
                                  value={this.state.onSearchString}
                                  onChange={(e)=>{this.setState({onSearchString: e.target.value})}}
                                  enterButton
-
                         />
                     </Space>
                 </Row>
@@ -75,11 +74,11 @@ export class AdminGrid extends React.Component {
                     grid={{
                         gutter: 16,
                         xs: 1,
-                        sm: 2,
-                        md: 3,
-                        lg: 4,
-                        xl: 5,
-                        xxl: 6,
+                        sm: 1,
+                        md: 2,
+                        lg: 3,
+                        xl: 4,
+                        xxl: 5,
                     }}
                     dataSource={filteredCourses}
                     renderItem={item => (
