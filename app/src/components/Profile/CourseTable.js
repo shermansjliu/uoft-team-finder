@@ -1,7 +1,9 @@
 import { List, Card, Button, Input} from 'antd';
 import React from 'react';
-
+import "./styles.css"
+import "../../App.css"
 import {removeCourse} from './Action.js'
+
 
 class CourseTable extends React.Component{
     render() {
@@ -12,14 +14,14 @@ class CourseTable extends React.Component{
             <div>
                 <h3 style={{fontSize: 30}}>Courses Currently Taking:</h3>
                 <div style={{padding:10}}>
-                    <Input placeholder={newCourseTitle} style={{width:120}} allowClear={true} onChange={e => {newCourseTitle = e.target.value}}/>
-                    <Button type="primary" shape="round" style={{position:"relative", left:40}} onClick={() => {
+                    <Input className="courseNameInput" placeholder={newCourseTitle} allowClear={true} onChange={e => {newCourseTitle = e.target.value}}/>
+                    <Button className="profileFont theme-btn-color addButton" size={"large"} type="primary" shape="round" onClick={() => {
                         if (newCourseTitle.length >= 10) {
                             alert("Please enter a course title with less than 10 characters.");
                             newCourseTitle ='';
                         } else {
                             courses.push({courseTitle:newCourseTitle})
-                            infos.setState({courses: courses});}}}>add</Button>
+                            infos.setState({courses: courses});}}}>ADD</Button>
                 </div>
                 <List
                     grid={{
@@ -37,7 +39,7 @@ class CourseTable extends React.Component{
                     <List.Item>
                         <Card title={item.courseTitle}>
                             
-                            <Button onClick={() => removeCourse(infos, item)} type="primary" shape="round" style={{float: 'right'}}>Remove</Button>
+                            <Button className="profileFont theme-btn-color" size={"large"} onClick={() => removeCourse(infos, item)} type="primary" shape="round" style={{float: 'right'}}>Remove</Button>
                         </Card>
                     </List.Item>
                     )}

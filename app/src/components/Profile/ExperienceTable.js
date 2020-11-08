@@ -1,7 +1,7 @@
 import { List, Card, Button, Input, Typography} from 'antd';
 import React from 'react';
 import {removeExp, setExpContent} from './Action.js'
-
+import "./styles.css"
 const { Paragraph } = Typography;
 
 class ExperienceTable extends React.Component{
@@ -13,13 +13,13 @@ class ExperienceTable extends React.Component{
             <div>
                 <h3 style={{fontSize: 30}}>Past Experiences:</h3>
                 <div style={{padding:10}}>
-                    <Input placeholder={newExpTitle} style={{width:220}} allowClear={true} onChange={e => {newExpTitle = e.target.value}}/>
-                    <Button type="primary" shape="round" style={{position:"relative", left:40}} onClick={() => {
+                    <Input className="expNameInput" placeholder={newExpTitle} allowClear={true} onChange={e => {newExpTitle = e.target.value}}/>
+                    <Button className="profileFont theme-btn-color addButton" size={"large"} type="primary" shape="round" onClick={() => {
                         if (newExpTitle.length >= 20) {
                             alert("Please enter a title with less than 20 characters.");
                         } else {
                             exps.push({expTitle :newExpTitle});
-                            infos.setState({exps: exps});}}}>add</Button>
+                            infos.setState({exps: exps});}}}>ADD</Button>
                 </div>
                 <List
                     grid={{
@@ -37,7 +37,7 @@ class ExperienceTable extends React.Component{
                     <List.Item>
                         <Card title={item.expTitle}>
                             <Paragraph editable={{onChange: e => setExpContent(infos, item, e)}}> {item.content} </Paragraph>
-                            <Button onClick={() => removeExp(infos, item)} type="primary" shape="round" style={{float: 'right'}}>Remove</Button>
+                            <Button className="profileFont theme-btn-color" size={"large"} onClick={() => removeExp(infos, item)} type="primary" shape="round" style={{float: 'right'}}>Remove</Button>
                         </Card>
                     </List.Item>
                     )}

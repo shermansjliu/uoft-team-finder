@@ -1,6 +1,6 @@
 import { List, Card, Button, Input} from 'antd';
 import React from 'react';
-
+import "./styles.css"
 import {removeTeam} from './Action.js'
 
 class TeamTable extends React.Component{
@@ -12,14 +12,13 @@ class TeamTable extends React.Component{
             <div>
                 <h3 style={{fontSize: 30}}>All Teams:</h3>
                 <div style={{padding:10}}>
-                    <Input placeholder={newTeamName} style={{width:120}} allowClear={true} onChange={e => {newTeamName = e.target.value}}/>
-                    <Button type="primary" shape="round" style={{position:"relative", left:40}} onClick={() => {
+                    <Input className="teamNameInput" placeholder={newTeamName} allowClear={true} onChange={e => {newTeamName = e.target.value}}/>
+                    <Button className="profileFont theme-btn-color" size={"large"} type="primary" shape="round" style={{position:"relative", left:40}} onClick={() => {
                         if (newTeamName.length >= 10) {
                             alert("Please enter a team name with less than 10 characters.");
-                            newTeamName ='';
                         } else {
                             teams.push({teamName:newTeamName})
-                            infos.setState({teams: teams});}}}>add</Button>
+                            infos.setState({teams: teams});}}}>ADD</Button>
                 </div>
                 <List
                     grid={{
@@ -35,9 +34,9 @@ class TeamTable extends React.Component{
                     dataSource={teams}
                     renderItem={item => (
                     <List.Item>
-                        <Card title={item.teamName}>
+                        <Card className="" title={item.teamName}>
                             
-                            <Button onClick={() => removeTeam(infos, item)} type="primary" shape="round" style={{float: 'right'}}>Remove</Button>
+                            <Button className="profileFont theme-btn-color" size={"large"} onClick={() => removeTeam(infos, item)} type="primary" shape="round" style={{float: 'right'}}>Remove</Button>
                         </Card>
                     </List.Item>
                     )}

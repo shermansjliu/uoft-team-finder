@@ -1,0 +1,51 @@
+.profileFont{
+    font-size: large;
+}
+
+.rightLayout{
+    padding: 24px;
+}
+
+.informationBar {
+    height: 100vh;
+    padding: 20px;
+    position: fixed;
+}
+
+.descriptionTable{
+    padding:10px;
+}
+
+.profileImg{
+    position: relative;
+    top: 5%;
+    left: 30%;
+    margin: 0;
+}
+
+.profilePadding{
+    width:100px;
+    height:150px;
+}
+
+.addButton{
+    position: relative;
+    left: 40px;
+}
+
+.courseNameInput{
+    width: 120px;
+}
+
+.teamNameInput{
+    width: 120px;
+}
+
+.expNameInput{
+    width: 220px;
+}
+
+.formText{
+    position: relative;
+    top:6px;
+}
