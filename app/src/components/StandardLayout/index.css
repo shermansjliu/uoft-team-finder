@@ -46,3 +46,8 @@
     justify-content: center;
     align-items: center;
 }
+
+.admin-footer{
+    color: white;
+    background-color: var(--main-bg-color);
+}

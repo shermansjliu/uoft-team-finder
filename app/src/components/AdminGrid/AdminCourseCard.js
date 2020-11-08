@@ -3,7 +3,7 @@ import {Input, Card} from 'antd';
 import {DeleteOutlined, EditOutlined, SaveOutlined} from '@ant-design/icons';
 import {edit, removeCourse, save} from "./action";
 import 'antd/dist/antd.css';
-import './index.css';
+import './style.css';
 import  {withRouter,Link} from "react-router-dom";
 import ImageUploader from "../ImageUploader";
 const {Meta} = Card;
@@ -46,7 +46,7 @@ class AdminCourseCard extends React.Component {
                                     onChange={this.handleInputChange}/>
             // upload photo if editing, need backend here
             img = (
-                <span className={"center_"}>
+                <span className={"center__"}>
                     <ImageUploader api={"implement latter"} />
                 </span>
                 )

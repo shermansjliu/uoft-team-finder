@@ -16,7 +16,7 @@ class StandardLayout extends React.Component {
         const {image,title, content} = this.props;
         return (
             <div>
-                <Layout className="teamViewContainer">
+                <Layout className="theme-content">
                     <Sider className="sideBar theme-background-color" width={100} collapsible={true} collapsedWidth={0}>
                         <div className="profilePictureContainer">
                             <img className="profilePicture" src={image} alt={""}/>

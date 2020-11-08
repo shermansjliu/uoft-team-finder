@@ -10,6 +10,7 @@ import Team from './components/team_view/Team';
 import Admin from './components/Admin/Admin';
 import Profile from './components/Profile/Profile';
 import StandardLayout from "./components/StandardLayout/layout";
+import AdminLayout from "./components/AdminLayout/AdminLayout";
 
 
 class App extends React.Component {
@@ -36,6 +37,8 @@ class App extends React.Component {
                             (<Profile appState={this.state}/>)}/>
                         <Route exact path='/Layout' render={() =>
                             (<StandardLayout appState={this.state}/>)}/>
+                        <Route exact path='/AdminLayout' render={() =>
+                            (<AdminLayout appState={this.state}/>)}/>
                         <Route
                             exact
                             path="/Course"

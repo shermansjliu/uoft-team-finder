@@ -58,15 +58,35 @@
 }
 
 .theme-background-color {
-  background-color:  #D5F3F4;
+  background-color:  var(--main-bg-color);
 }
 
 .theme-bar-color {
-  background-color:  #66CCCC;
+  background-color:  var(--main-btn-color);
 }
 
 .theme-btn-color{
-  background-color:  #8AEBE5;
+  background-color:  var(--sed-btn-color);
   color: #FFF;
   opacity: 0.9;
+}
+
+.theme-content{
+  background-color:  #F1FAFA;
+}
+
+:root {
+  --main-bg-color: #D5F3F4;
+  --sed-bg-color: #66CCCC;
+  --main-btn-color: #66CCCC;
+  --sed-btn-color:#8AEBE5;
+  --content-color: #F1FAFA;
+}
+
+/*global ant design parimary button setting*/
+.ant-btn-primary {
+  background-color: #66CCCC;
+  border: 0;
+  box-shadow: 1px 1px 0 grey;
+  border-radius:5px;
 }
