@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Layout, Space, Table } from "antd";
 import SearchBar from "./SearchBar";
+import { Link } from "react-router-dom";
 
 import "../../App.css";
 import "./index.css";
@@ -85,15 +86,12 @@ export default class CourseAdmin extends Component {
   };
 
   handleDeleteTeam = (key) => {
-    console.log(key);
     const { teamId: deletedTeamId } = key;
-    // conso
     const newTeams = this.state.teams.filter((team) => {
       return team.teamId !== deletedTeamId;
     });
     this.setState({ teams: newTeams });
   };
-  handleEditTeam = (e) => {};
 
   render() {
     const data = this.state.teams
@@ -140,7 +138,11 @@ export default class CourseAdmin extends Component {
         render: (record) => {
           return (
             <Space size="middle">
-              <a onClick={this.handleEditTeam}>Edit</a>
+              <Link to="/teamAdmin">
+                {/* Goes to a specific teamAdmin page based on the teamId 
+                This bevahour is not possible with react-router and so it goes to a default page for now*/}
+                <a onClick={this.handleEditTeam}>Edit</a>
+              </Link>
               <a onClick={() => this.handleDeleteTeam(record)}>Delete</a>
             </Space>
           );
