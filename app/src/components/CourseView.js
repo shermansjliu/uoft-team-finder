@@ -32,6 +32,7 @@ export default class Course extends Component {
     };
   }
   render() {
+    console.log(this.props);
     return (
       <div>
         <Layout className="homeViewContainer">

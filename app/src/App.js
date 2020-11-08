@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React from "react";
 // Importing react-router-dom to use the React Router
 import {Route, Switch, BrowserRouter} from "react-router-dom";
 import "./App.css";
@@ -43,6 +43,8 @@ class App extends React.Component {
                             (<Setting appState={this.state}/>)}/>
                         <Route exact path='/Team' render={() =>
                             (<Team appState={this.state}/>)}/>
+                        <Route exact path='/Profile' render={() =>
+                            (<Profile appState={this.state}/>)}/>
 
                     </Switch>
                 </BrowserRouter>

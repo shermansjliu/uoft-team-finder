@@ -1,11 +1,9 @@
 import React, {Component} from "react";
-import {Layout, Space, Typography, Divider} from "antd";
-import TeamCard from "./TeamCard";
+import {Layout, Space, Typography} from "antd";
 import HomeViewFooter from "./CourseViewFooter";
-import {AdminGrid} from "./Admin/AdminGrid"
+import {AdminGrid} from "./AdminGrid/AdminGrid"
 import {withRouter} from 'react-router-dom';
 import "../App.css";
-import Home from "./Home/Home";
 
 const {Sider, Content} = Layout;
 const {Title} = Typography;
@@ -15,7 +13,7 @@ class Admin extends Component {
         super(props);
         console.log(this.props)
         this.state = {
-            adminName: "Admin",
+            adminName: "AdminGrid",
             teams: [
                 {
                     teamName: "The John Wicks",
@@ -38,39 +36,49 @@ class Admin extends Component {
     }
 
     render() {
-
-        return (
-            <div>
-                <Layout className="homeViewContainer">
-                    <Sider>
-                        <div className="homeViewSideMenu">
-                            <div>
-                                <Title className="classTitle" level={2}>
-                                    {this.state.adminName}
-                                </Title>
-                                <Title className="totalTeams" level={3}>
-                                    {" "}
-                                    State: {this.props.location.state.user.username}
-                                </Title>
-                                <Space direction="vertical">
-                                    <Title level={5}> Project: 5</Title>
-                                    <Title level={5}> Study: 5</Title>
-                                </Space>
-                                <Title level={3}>
-                                    {" "}
-                                    Users: {this.state.users.length}
-                                </Title>
+        if (this.props.location.state) {
+            return (
+                <div>
+                    <Layout className="homeViewContainer">
+                        <Sider>
+                            <div className="homeViewSideMenu">
+                                <div>
+                                    <Title className="classTitle" level={2}>
+                                        {this.state.adminName}
+                                    </Title>
+                                    <Title className="totalTeams" level={3}>
+                                        {" "}
+                                        State: {this.props.location.state.user.username}
+                                    </Title>
+                                    <Space direction="vertical">
+                                        <Title level={5}> Project: 5</Title>
+                                        <Title level={5}> Study: 5</Title>
+                                    </Space>
+                                    <Title level={3}>
+                                        {" "}
+                                        Users: {this.state.users.length}
+                                    </Title>
+                                </div>
+                                <HomeViewFooter/>
                             </div>
-                            <HomeViewFooter/>
-                        </div>
-                    </Sider>
-                    <Content className="homeViewContent">
-                        <AdminGrid/>
-                    </Content>
-                </Layout>
-            </div>
-        );
+                        </Sider>
+                        <Content className="homeViewContent">
+
+                            <AdminGrid/>
+                        </Content>
+                    </Layout>
+                </div>
+            );
+        }else {
+            return(
+                <div style={{textAlign: 'center', marginTop:100}}>
+                    <h1 > You do not have permission to this page</h1>
+                </div>
+
+            )
+        }
     }
+
 }
 
 export default withRouter(Admin);

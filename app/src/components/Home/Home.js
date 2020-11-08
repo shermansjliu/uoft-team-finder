@@ -1,12 +1,11 @@
 import React, {Component} from "react";
-import {Layout, Menu, Avatar, Typography, Space, Divider} from 'antd'
-import Grid from '../Grid/Grid'
+import {Layout, Typography, Space} from 'antd'
+import CourseGrid from '../CourseGrid/CourseGrid'
 import './index.css';
 import '../../App.css'
 import HomeViewFooter from "../CourseViewFooter";
-import TeamCard from "../TeamCard";
 
-const {Header, Sider, Content} = Layout;
+const {Sider, Content} = Layout;
 const {Title} = Typography;
 
 
@@ -63,7 +62,7 @@ class Home extends Component {
                     </Sider>
                     <Content hasSider={true} className="homeViewContent">
 
-                        <Grid/>
+                        <CourseGrid/>
                     </Content>
                 </Layout>
             </div>

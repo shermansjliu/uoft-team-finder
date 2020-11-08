@@ -29,7 +29,8 @@ class LoginView extends React.Component {
         return (
             <div
                 className="login-wrap"
-                style={{topMargin: 10}}>
+                style={{Margin: "auto"}}
+            >
                 <div className="padding"/>
                 <Row align="center">
                     <span style={{color: this.state.msgColor}}>{this.state.msg}</span>
