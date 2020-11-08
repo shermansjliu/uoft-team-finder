@@ -1,15 +1,14 @@
 import React, { Component } from "react";
 import { Layout, Space, Typography, Divider } from "antd";
 import TeamCard from "./TeamCard";
-import HomeViewFooter from "./CourseViewFooter";
-
+import HomeViewFooter from "./Course/CourseFooter";
 
 import "../App.css";
-import {withRouter} from "react-router-dom";
+import { withRouter } from "react-router-dom";
 
 const { Sider, Content } = Layout;
 const { Title } = Typography;
- class Course extends Component {
+class Course extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -77,4 +76,4 @@ const { Title } = Typography;
   }
 }
 
-export default withRouter(Course)
+export default withRouter(Course);

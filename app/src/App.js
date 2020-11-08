@@ -3,7 +3,7 @@ import React from "react";
 import { Route, Switch, BrowserRouter } from "react-router-dom";
 import "./App.css";
 import "antd/dist/antd.css";
-import Course from "./components/CourseView";
+import Course from "./components/Course/Course";
 import Home from "./components/Home/Home";
 import Login from "./components/Login/Login";
 import Team from "./components/team_view/Team";
