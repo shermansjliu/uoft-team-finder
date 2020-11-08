@@ -13,66 +13,44 @@ import {addCourse, onSearch} from "./action";
 const {Title} = Typography;
 const { Search } = Input;
 export class AdminGrid extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            courses: [
+                {
+                    courseName: 'csc309',
+                    department: 'CSC',
+                    description: 'This is a description',
+                    image: bkimg,
+                },
+                {
+                    courseName: 'csc301',
+                    department: 'CSC',
+                    description: 'This is a description',
+                    image: bkimg,
+                },
+                {
+                    courseName: 'csc302',
+                    department: 'CSC',
+                    description: 'This is a description',
+                    image: bkimg,
+                },
+                {
+                    courseName: 'csc303',
+                    department: 'CSC',
+                    description: 'This is a description',
+                    image: bkimg,
+                },
+            ],
+            onSearchString: "",
+        }
+    }
 
-    state = {
-        courses: [
-            {
-                courseName: 'csc309',
-                department: 'CSC',
-                description: 'This is a description',
-                image: bkimg,
-            },
-            {
-                courseName: 'csc301',
-                department: 'CSC',
-                description: 'This is a description',
-                image: bkimg,
-            },
-            {
-                courseName: 'csc302',
-                department: 'CSC',
-                description: 'This is a description',
-                image: bkimg,
-            },
-            {
-                courseName: 'csc303',
-                department: 'CSC',
-                description: 'This is a description',
-                image: bkimg,
-            },
-        ],
-        displayedCourses: [
-            {
-                courseName: 'csc309',
-                department: 'CSC',
-                description: 'This is a description',
-                image: bkimg,
-            },
-            {
-                courseName: 'csc301',
-                department: 'CSC',
-                description: 'This is a description',
-                image: bkimg,
-            },
-            {
-                courseName: 'csc302',
-                department: 'CSC',
-                description: 'This is a description',
-                image: bkimg,
-            },
-            {
-                courseName: 'csc303',
-                department: 'CSC',
-                description: 'This is a description',
-                image: bkimg,
-            },
-        ],
-        onSearchString: "",
-
-    };
 
 
     render() {
+        const filteredCourses = this.state.courses.filter(course => {
+            return course.courseName.includes(this.state.onSearchString)})
         return (
             <>
                 <Row type="flex" align="middle">
@@ -103,12 +81,13 @@ export class AdminGrid extends React.Component {
                         xl: 5,
                         xxl: 6,
                     }}
-                    dataSource={this.state.displayedCourses}
+                    dataSource={filteredCourses}
                     renderItem={item => (
                         <List.Item>
                             <CourseCard
                                 page={this}
                                 course={item}
+                                key={item.courseName}
                             />
                         </List.Item>
                     )}
