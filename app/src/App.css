@@ -1,58 +1,49 @@
 @import "~antd/dist/antd.css";
 
-* {
-  box-sizing: border-box;
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
-/* HomeView  */
-.homeViewSideMenu {
-  text-align: center;
-  background-color: aliceblue;
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  padding: 10rem 20px 0px 20px;
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
 }
-.homeViewContent {
-  padding: 0px 20px 0px 20px;
-  margin-top: 2rem;
-  width: 100%;
+
+.theme-background-color {
+  background-color: var(--main-bg-color);
 }
-.homeViewContainer {
-  height: 100vh;
+
+.theme-bar-color {
+  background-color: var(--main-btn-color);
 }
-.homeViewFooter > ul {
-  height: 5rem;
-  display: flex;
-  width: 100%;
-  justify-content: space-between;
-  align-items: center;
-  padding-inline-start: 0px;
-  border-top: 1px solid gray;
+
+.theme-btn-color {
+  background-color: var(--sed-btn-color);
+  color: #fff;
+  opacity: 0.9;
 }
-.hoemViewFooter {
-  width: 100%;
+
+.theme-content {
+  background-color: #f1fafa;
 }
-.footerItem {
-  list-style: none;
-  height: 1rem;
-  width: auto;
+
+:root {
+  --main-bg-color: #d5f3f4;
+  --sed-bg-color: #66cccc;
+  --main-btn-color: #66cccc;
+  --sed-btn-color: #8aebe5;
+  --content-color: #f1fafa;
 }
-.classTitle {
-  border: 3px solid black;
-}
-.teamCardContainer {
-  width: 100%;
-  margin-bottom: 2rem;
-  padding: 2rem;
-}
-.teamCardDivider {
-  background: gray;
-}
-.teamCardHeader {
-  display: flex;
-  justify-content: space-between;
-}
-#homeViewBackButton {
-  margin-bottom: 1rem;
+
+/*global ant design parimary button setting*/
+.ant-btn-primary {
+  background-color: #66cccc;
+  border: 0;
+  box-shadow: 1px 1px 0 grey;
+  border-radius: 5px;
 }

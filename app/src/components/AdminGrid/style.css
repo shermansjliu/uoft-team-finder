@@ -1,0 +1,18 @@
+.center__{
+    text-align: center;
+
+}
+
+.ant-card-hoverable {
+    cursor: auto;
+}
+.card {
+    min-width: 200px;
+    /*height: 300px;*/
+}
+
+.ant-input-search-button{
+    background-color: #66CCCC;
+    /*opacity: 0.9;*/
+    border: 0;
+}

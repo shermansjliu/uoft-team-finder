@@ -1,5 +1,4 @@
 .login-warp{
-    margin: auto;
 }
 
 .forget {
@@ -8,5 +7,22 @@
 }
 
 .padding {
-    padding: 8em;
+    padding: 15vh;
+}
+
+.red{
+    color: red;
+}
+
+.green{
+    color: green;
+}
+
+.btn {
+    margin: 8px;
+}
+
+.login-card{
+    text-align: center;
+    width: 400px;
 }

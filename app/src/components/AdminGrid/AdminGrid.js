@@ -4,58 +4,73 @@ import 'antd/dist/antd.css';
 import {
     FileAddOutlined
 } from '@ant-design/icons';
-import CourseCard from "./CourseCard";
-import {addCourse} from "./action";
-import {Tooltip} from "antd";
+import CourseCard from "./AdminCourseCard";
+import {Tooltip, Input } from "antd";
+import bkimg from "../../img/home-books.jpg";
+import {addCourse, onSearch} from "./action";
+
+
 const {Title} = Typography;
-
+const { Search } = Input;
 export class AdminGrid extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            courses: [
+                {
+                    courseName: 'csc309',
+                    department: 'CSC',
+                    description: 'This is a description',
+                    image: bkimg,
+                },
+                {
+                    courseName: 'csc301',
+                    department: 'CSC',
+                    description: 'This is a description',
+                    image: bkimg,
+                },
+                {
+                    courseName: 'csc302',
+                    department: 'CSC',
+                    description: 'This is a description',
+                    image: bkimg,
+                },
+                {
+                    courseName: 'csc303',
+                    department: 'CSC',
+                    description: 'This is a description',
+                    image: bkimg,
+                },
+            ],
+            onSearchString: "",
+        }
+    }
 
-    state = {
-        courses: [
-            {
-                courseName: 'csc309',
-                department: 'CSC',
-                description: 'This is a description',
-                image: "https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png",
-            },
-            {
-                courseName: 'csc301',
-                department: 'CSC',
-                description: 'This is a description',
-                image: "https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png",
-            },
-            {
-                courseName: 'csc302',
-                department: 'CSC',
-                description: 'This is a description',
-                image: "https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png",
-            },
-            {
-                courseName: 'csc303',
-                department: 'CSC',
-                description: 'This is a description',
-                image: "https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png",
-            },
-        ],
-        courseName: "333",
-
-    };
 
 
     render() {
+        const filteredCourses = this.state.courses.filter(course => {
+            return course.courseName.includes(this.state.onSearchString)})
         return (
             <>
                 <Row type="flex" align="middle">
                     <Space>
                         <Title>Course</Title>
-                        <Tooltip title="add more courses" style={{margin: 2}}>
+                        <Tooltip title="add more courses" >
                             <Button shape="circle"
                                     icon={<FileAddOutlined
-                                        onClick={() => addCourse(this)}/>}/>
+                                        onClick={() => addCourse(this, bkimg)}/>}/>
                         </Tooltip>
+                        <Search  placeholder="search a course here"
+                                 onSearch={() => onSearch(this, this.state.onSearchString)}
+                                 value={this.state.onSearchString}
+                                 onChange={(e)=>{this.setState({onSearchString: e.target.value})}}
+                                 enterButton
+
+                        />
                     </Space>
                 </Row>
+
                 <List
                     grid={{
                         gutter: 16,
@@ -66,12 +81,13 @@ export class AdminGrid extends React.Component {
                         xl: 5,
                         xxl: 6,
                     }}
-                    dataSource={this.state.courses}
+                    dataSource={filteredCourses}
                     renderItem={item => (
                         <List.Item>
                             <CourseCard
                                 page={this}
                                 course={item}
+                                key={item.courseName}
                             />
                         </List.Item>
                     )}
@@ -81,6 +97,4 @@ export class AdminGrid extends React.Component {
             </>
         );
     }
-
-
 }

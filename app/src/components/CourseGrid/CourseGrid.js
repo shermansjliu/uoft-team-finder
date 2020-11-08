@@ -1,8 +1,9 @@
 import {Card, List} from 'antd';
 import React from 'react'
 import 'antd/dist/antd.css';
-import "./styles.css"
+import "./style.css"
 import {Link} from "react-router-dom";
+import bkimg from "../../img/home-books.jpg";
 
 const {Meta} = Card;
 
@@ -13,26 +14,26 @@ class CourseGrid extends React.Component {
                 courseName: 'csc309',
                 department: 'CSC',
                 description: 'This is a description',
-                image: "https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png",
+                image: bkimg,
             },
             {
-                courseName: 'csc309',
+                courseName: 'csc301',
                 department: 'CSC',
                 description: 'This is a description',
-                image: "https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png",
+                image: bkimg,
             },
             {
-                courseName: 'csc309',
+                courseName: 'csc302',
                 department: 'CSC',
                 description: 'This is a description',
-                image: "https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png",
+                image: bkimg,
             },
             {
-                courseName: 'csc309',
+                courseName: 'csc303',
                 department: 'CSC',
                 description: 'This is a description',
-                image: "https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png",
-            }
+                image: bkimg,
+            },
         ],
         numColumns: 5,
     };
@@ -55,9 +56,8 @@ class CourseGrid extends React.Component {
                         <List.Item>
                             <Link to='/Course' params={{ course: item }}>
                                 <Card hoverable
-                                    style={{}}
                                     cover={
-                                        <img
+                                        <img className={"courseCard"}
                                             alt="Cannot load"
                                             src={item.image}
                                         />
