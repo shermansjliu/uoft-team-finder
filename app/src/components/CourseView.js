@@ -3,11 +3,13 @@ import { Layout, Space, Typography, Divider } from "antd";
 import TeamCard from "./TeamCard";
 import HomeViewFooter from "./CourseViewFooter";
 
+
 import "../App.css";
+import {withRouter} from "react-router-dom";
 
 const { Sider, Content } = Layout;
 const { Title } = Typography;
-export default class Course extends Component {
+ class Course extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -74,3 +76,5 @@ export default class Course extends Component {
     );
   }
 }
+
+export default withRouter(Course)

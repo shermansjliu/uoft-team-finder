@@ -1,14 +1,17 @@
 import React from 'react';
 import {Input, Card} from 'antd';
 import {DeleteOutlined, EditOutlined, SaveOutlined} from '@ant-design/icons';
-import {removeCourse} from "./action";
+import {edit, removeCourse, save} from "./action";
 import 'antd/dist/antd.css';
-
-import {Upload, message} from 'antd';
-import {LoadingOutlined, PlusOutlined} from '@ant-design/icons';
-import {Link} from "react-router-dom";
+import './index.css';
+import  {withRouter,Link} from "react-router-dom";
+import ImageUploader from "../ImageUploader";
 const {Meta} = Card;
 const {TextArea} = Input;
+
+const ConditionalLink = ({ children, to, condition }) => (!!condition && to)
+    ? <Link to={to} >{children}</Link>
+    : <>{children}</>;
 
 class CourseCard extends React.Component {
     constructor(props) {
@@ -20,96 +23,59 @@ class CourseCard extends React.Component {
             newDescription: course.description,
             newImg: course.image,
             newDepartment: course.department,
-            loading: false,
         };
     }
 
-
-    edit() {
-        console.log(this.state);
-        this.setState({isEditing: true});
-    }
-
-    save(course) {
-        console.log(this.state);
-        this.setState({isEditing: false});
-        course.courseName = this.state.newCourseName
-        course.department = this.state.newDepartment
-        course.description = this.state.newDescription
-        course.image = this.state.newImg
-        console.log(this.state);
-    }
-
     render() {
-        let editIcon;
         const {page, course} = this.props;
-        let img = (
-            <img
-                alt="No image yet"
-                src={course.image}
-
-            />)
-        const loading = this.state.loading;
-        const imageUrl = this.state.imageUrl;
-        const uploadButton = (
-            <div>
-                {loading ? <LoadingOutlined /> : <PlusOutlined />}
-                <div style={{ marginTop: 8 }}>Upload</div>
-            </div>
-        );
+        // if not editing, all elements should be displayed
+        let img = (<img alt="No image yet" src={course.image} />)
         let courseName = course.courseName;
         let description = course.description;
+        let editIcon = (<EditOutlined onClick={() => edit(this)}/>)
 
+        // if is editing, all element change to edit mode
         if (this.state.isEditing) {
+            // editable courseName
             courseName = <Input value={this.state.newCourseName}
                                 name={"newCourseName"}
                                 onChange={this.handleInputChange}/>
+            // editable description
             description = <TextArea value={this.state.newDescription}
                                     name={"newDescription"}
                                     onChange={this.handleInputChange}/>
+            // upload photo if editing, need backend here
             img = (
-                <div style={{textAlign: "center"}}>
-                    <Upload
-                        name="avatar"
-                        listType="picture-card"
-                        className="avatar-uploader"
-                        showUploadList={false}
-                        action="/api/courseImg"
-                        beforeUpload={beforeUpload}
-                        onChange={this.handleChange}
-                    >
-                        {imageUrl ? <img src={imageUrl} alt="avatar" style={{ width: '100%' }} /> : uploadButton}
-                    </Upload>
+                <div className={"center"}>
+                    <ImageUploader api={"implement latter"} />
                 </div>
                 )
-
-
-            editIcon = (<SaveOutlined onClick={() => this.save(course)}/>)
-        } else {
-            editIcon = (<EditOutlined onClick={() => this.edit()}/>)
+            // change icon to save mode
+            editIcon = (<SaveOutlined onClick={() => save(this, course)}/>)
         }
         return (
-            <Card hoverable
-                  style={{Width: 200, minWidth: 200, height: 300,cursor: "auto"}}
+            <Card hoverable className="card"
                   cover={
                       [img]
                   }
                   actions={[
                       [editIcon],
-                      <DeleteOutlined onClick={() => removeCourse(page, course)}/>,
-
+                      <DeleteOutlined onClick={() => removeCourse(page, course, this)}/>,
                   ]}
             >
-                <Link to='/Course' params={{ course: course }}>
+                {/*if is not editing, pass the course we entered, and go to the next page*/}
+                <ConditionalLink to={{pathname: '/Course', query :{ course: course }}} condition={!this.state.isEditing}>
                 <Meta hoverable
                     title={courseName}
                     description={description}
                 />
-                </Link>
+                </ConditionalLink>
             </Card>
 
         );
     }
+
+
 
     handleInputChange = event => {
         const target = event.target;
@@ -120,40 +86,6 @@ class CourseCard extends React.Component {
             [name]: value
         });
     };
-
-    handleImageChange = info => {
-        if (info.file.status === 'uploading') {
-            this.setState({loading: true});
-            return;
-        }
-        if (info.file.status === 'done') {
-            // Get this url from response in real world.
-            getBase64(info.file.originFileObj, imageUrl =>
-                this.setState({
-                    imageUrl,
-                    loading: false,
-                }),
-            );
-        }
-    };
 }
 
-function getBase64(img, callback) {
-    const reader = new FileReader();
-    reader.addEventListener('load', () => callback(reader.result));
-    reader.readAsDataURL(img);
-}
-
-function beforeUpload(file) {
-    const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
-    if (!isJpgOrPng) {
-        message.error('You can only upload JPG/PNG file!');
-    }
-    const isLt2M = file.size / 1024 / 1024 < 2;
-    if (!isLt2M) {
-        message.error('Image must smaller than 2MB!');
-    }
-    return isJpgOrPng && isLt2M;
-}
-
-export default CourseCard;
+export default withRouter(CourseCard);

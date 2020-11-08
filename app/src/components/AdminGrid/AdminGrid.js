@@ -5,10 +5,12 @@ import {
     FileAddOutlined
 } from '@ant-design/icons';
 import CourseCard from "./CourseCard";
-import {addCourse} from "./action";
 import {Tooltip} from "antd";
-const {Title} = Typography;
+import bkimg from "../../img/home-books.jpg";
+import {addCourse} from "./action";
 
+
+const {Title} = Typography;
 export class AdminGrid extends React.Component {
 
     state = {
@@ -17,25 +19,25 @@ export class AdminGrid extends React.Component {
                 courseName: 'csc309',
                 department: 'CSC',
                 description: 'This is a description',
-                image: "https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png",
+                image: bkimg,
             },
             {
                 courseName: 'csc301',
                 department: 'CSC',
                 description: 'This is a description',
-                image: "https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png",
+                image: bkimg,
             },
             {
                 courseName: 'csc302',
                 department: 'CSC',
                 description: 'This is a description',
-                image: "https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png",
+                image: bkimg,
             },
             {
                 courseName: 'csc303',
                 department: 'CSC',
                 description: 'This is a description',
-                image: "https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png",
+                image: bkimg,
             },
         ],
         courseName: "333",
@@ -49,10 +51,10 @@ export class AdminGrid extends React.Component {
                 <Row type="flex" align="middle">
                     <Space>
                         <Title>Course</Title>
-                        <Tooltip title="add more courses" style={{margin: 2}}>
+                        <Tooltip title="add more courses" >
                             <Button shape="circle"
                                     icon={<FileAddOutlined
-                                        onClick={() => addCourse(this)}/>}/>
+                                        onClick={() => addCourse(this, bkimg)}/>}/>
                         </Tooltip>
                     </Space>
                 </Row>

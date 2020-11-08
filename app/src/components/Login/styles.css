@@ -10,3 +10,20 @@
 .padding {
     padding: 8em;
 }
+
+.red{
+    color: red;
+}
+
+.green{
+    color: green;
+}
+
+.btn {
+    margin: 8px;
+}
+
+.login-card{
+    text-align: center;
+    width: 400px;
+}

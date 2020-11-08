@@ -10,31 +10,6 @@ const {Title} = Typography;
 
 
 class Home extends Component {
-    state = {
-        className: "CSC236",
-        teams: [
-            {
-                teamName: "The John Wicks",
-                members: [
-                    {userID: "DavidID", name: "David"},
-                    {userID: "ShermanID", name: "Sherman"},
-                    {userID: "QuincyID", name: "Quincy"},
-                    {userID: "JesseID", name: "Jesse"},
-                ],
-                capacity: 4,
-            },
-            {
-                teamName: "BA Forever",
-                members: [],
-                capacity: 4,
-            },
-        ],
-    };
-    toggle = () => {
-        this.setState({
-            collapsed: !this.state.collapsed,
-        });
-    };
 
     render() {
         console.log(this.props)
@@ -45,7 +20,7 @@ class Home extends Component {
                         <div className="homeViewSideMenu">
                             <div>
                                 <Title className="classTitle" level={2}>
-                                    {this.state.className}
+                                    {"Home"}
                                 </Title>
                                 <Title className="totalTeams" level={3}>
                                     {" "}

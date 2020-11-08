@@ -3,7 +3,6 @@ import React from "react";
 import {Route, Switch, BrowserRouter} from "react-router-dom";
 import "./App.css";
 import "antd/dist/antd.css";
-import Setting from "./components/Setting";
 import Course from "./components/CourseView";
 import Home from './components/Home/Home';
 import Login from './components/Login/Login';
@@ -39,8 +38,6 @@ class App extends React.Component {
                             path="/Course"
                             render={() => <Course appState={this.state}/>}
                         />
-                        <Route exact path='/setting' render={() =>
-                            (<Setting appState={this.state}/>)}/>
                         <Route exact path='/Team' render={() =>
                             (<Team appState={this.state}/>)}/>
                         <Route exact path='/Profile' render={() =>

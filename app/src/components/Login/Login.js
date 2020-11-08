@@ -17,7 +17,8 @@ class LoginView extends React.Component {
             msg: "",
             msgColor: "red",
             users: [
-                {username: "Jack", password: "123456", admin: false},
+                {username: "user", password: "user", admin: false},
+                {username: "user2", password: "user2", admin: false},
                 {username: "admin", password: "admin", admin: true},
             ],
         }
@@ -29,16 +30,15 @@ class LoginView extends React.Component {
         return (
             <div
                 className="login-wrap"
-                style={{Margin: "auto"}}
             >
                 <div className="padding"/>
                 <Row align="center">
-                    <span style={{color: this.state.msgColor}}>{this.state.msg}</span>
+                    <span className={this.state.msgColor}>{this.state.msg}</span>
                 </Row>
                 <Row align="center">
                     <Col>
                         <Card title="Login"
-                              style={{textAlign: 'center', width: 400}}>
+                              className="login-card">
                             <Input
                                 size="large"
                                 name="userName"
@@ -59,7 +59,6 @@ class LoginView extends React.Component {
                                 className="btn"
                                 type="primary"
                                 size={"large"}
-                                style={{margin: 8}}
                                 onClick={() => login(this)}>
                                 Login
                             </Button>
@@ -67,7 +66,6 @@ class LoginView extends React.Component {
                                 className="btn"
                                 type="primary"
                                 size={"large"}
-                                style={{margin: 8}}
                                 onClick={() => register(this)}>
                                 Sign up
                             </Button>
