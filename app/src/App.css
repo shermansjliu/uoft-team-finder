@@ -56,3 +56,17 @@
 #homeViewBackButton {
   margin-bottom: 1rem;
 }
+
+.theme-background-color {
+  background-color:  #D5F3F4;
+}
+
+.theme-bar-color {
+  background-color:  #66CCCC;
+}
+
+.theme-btn-color{
+  background-color:  #8AEBE5;
+  color: #FFF;
+  opacity: 0.9;
+}
