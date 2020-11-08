@@ -47,7 +47,7 @@ class CourseCard extends React.Component {
             <img
                 alt="No image yet"
                 src={course.image}
-                height={100}
+
             />)
         const loading = this.state.loading;
         const imageUrl = this.state.imageUrl;
