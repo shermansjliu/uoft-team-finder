@@ -17,7 +17,7 @@ export default class Course extends Component {
 
     this.state = {
       searchRes: "",
-      className: "CSC236",
+      courseCode: "CSC236",
       teams: [
         {
           teamName: "The John Wicks",
@@ -59,9 +59,12 @@ export default class Course extends Component {
 
           <Content hasSider={true} className="homeViewContent">
             <h1 className="courseCode green-dark-title">
-              {this.state.className}
+              {this.state.courseCode}
             </h1>
-            <SearchBar />
+            <SearchBar
+              searchRes={this.state.searchRes}
+              handleInputChange={this.handleInputChange}
+            />
             <Row gutter={16}>
               {this.state.teams.map((team) => {
                 return (

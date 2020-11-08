@@ -23,6 +23,8 @@ const columns = [
   },
   {
     title: "Members",
+    dataIndex: "members",
+    key: "members",
   },
   {
     title: "Action",
@@ -39,7 +41,10 @@ const columns = [
 export default class CourseAdmin extends Component {
   constructor(props) {
     super(props);
+
     this.state = {
+      searchRes: "",
+      courseCode: "CSC236",
       teams: [
         {
           teamName: "The John Wicks",
@@ -76,14 +81,25 @@ export default class CourseAdmin extends Component {
       ],
     };
   }
+  handleInputChange = (e) => {
+    this.setState({ searchRes: e.target.value });
+    console.log(this.state.searchRes);
+  };
 
   render() {
     return (
-      <Layout>
+      <Layout className="homeViewContainer theme-background-color">
         <Sider></Sider>
-        <SearchBar />
-        <Content>
-          <Table></Table>
+
+        <Content hasSider={true}>
+          <h1 className="courseCode green-dark-title">
+            {this.state.courseCode}
+          </h1>
+          <SearchBar
+            searchRes={this.state.searchRes}
+            handleInputChange={this.handleInputChange}
+          />
+          <Table columns={columns}></Table>
         </Content>
       </Layout>
     );
