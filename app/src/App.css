@@ -15,15 +15,27 @@ code {
 }
 
 .theme-background-color {
-  background-color:  #D5F3F4;
+  background-color: #d5f3f4;
 }
 
 .theme-bar-color {
-  background-color:  #66CCCC;
+  background-color: #66cccc;
 }
 
-.theme-btn-color{
-  background-color:  #8AEBE5;
-  color: #FFF;
+.theme-btn-color {
+  background-color: #8aebe5;
+  color: #fff;
   opacity: 0.9;
+}
+
+.green-dark-title {
+  color: #4c9494;
+}
+
+.searchBar {
+  position: relative;
+  left: 25%;
+  margin-right: 325px;
+  margin-bottom: 2rem;
+  width: 50%;
 }
