@@ -16,24 +16,27 @@ const columns = [
     dataIndex: "teamLeader",
     key: "teamLeader",
   },
-  {
-    title: "Id",
-    dataIndex: "teamId",
-    key: "teamId",
-  },
+
   {
     title: "Members",
     dataIndex: "members",
     key: "members",
   },
   {
+    title: "Id",
+    dataIndex: "teamId",
+    key: "teamId",
+  },
+  {
     title: "Action",
     key: "action",
     render: () => {
-      <Space size="middle">
-        <a>Edit</a>git
-        <a>Delete</a>
-      </Space>;
+      return (
+        <Space size="middle">
+          <a>Edit</a>
+          <a>Delete</a>
+        </Space>
+      );
     },
   },
 ];
@@ -48,6 +51,7 @@ export default class CourseAdmin extends Component {
       teams: [
         {
           teamName: "The John Wicks",
+          teamLeader: "John Wick",
           members: [
             { userID: "DavidID", name: "David" },
             { userID: "ShermanID", name: "Sherman" },
@@ -81,12 +85,29 @@ export default class CourseAdmin extends Component {
       ],
     };
   }
+
   handleInputChange = (e) => {
     this.setState({ searchRes: e.target.value });
     console.log(this.state.searchRes);
   };
 
   render() {
+    const data = this.state.teams
+      .map((team, index) => {
+        const { teamName, teamLeader, members, capacity, teamId } = team;
+        return {
+          key: index + 1,
+          teamLeader: teamLeader,
+          teamName: teamName,
+          teamId: teamId,
+          members: `${members.length}/${capacity}`,
+        };
+      })
+      .filter((team, index) => {
+        let regex = RegExp(`${this.state.searchRes}`, "gi");
+        return regex.test(team.teamName);
+      });
+
     return (
       <Layout className="homeViewContainer theme-background-color">
         <Sider></Sider>
@@ -99,7 +120,9 @@ export default class CourseAdmin extends Component {
             searchRes={this.state.searchRes}
             handleInputChange={this.handleInputChange}
           />
-          <Table columns={columns}></Table>
+          <Table columns={columns} dataSource={data}>
+            {" "}
+          </Table>
         </Content>
       </Layout>
     );
