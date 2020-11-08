@@ -1,45 +1,11 @@
 import React, { Component } from "react";
 import { Layout, Space, Table } from "antd";
 import SearchBar from "./SearchBar";
+
 import "../../App.css";
 import "./index.css";
 
 const { Sider, Content } = Layout;
-const columns = [
-  {
-    title: "Team Name",
-    dataIndex: "teamName",
-    key: "teamName",
-  },
-  {
-    title: "Team Leader",
-    dataIndex: "teamLeader",
-    key: "teamLeader",
-  },
-
-  {
-    title: "Members",
-    dataIndex: "members",
-    key: "members",
-  },
-  {
-    title: "Id",
-    dataIndex: "teamId",
-    key: "teamId",
-  },
-  {
-    title: "Action",
-    key: "action",
-    render: () => {
-      return (
-        <Space size="middle">
-          <a>Edit</a>
-          <a>Delete</a>
-        </Space>
-      );
-    },
-  },
-];
 
 export default class CourseAdmin extends Component {
   constructor(props) {
@@ -80,6 +46,33 @@ export default class CourseAdmin extends Component {
           teamLeader: "Sherman",
           members: [],
           capacity: 4,
+          teamId: 4,
+        },
+        {
+          teamName: "March March",
+          teamLeader: "Quincy",
+          members: [
+            { userID: "QuincyID", name: "Quincy" },
+            { userID: "JesseID", name: "Jesse" },
+          ],
+          capacity: 4,
+          teamId: 5,
+        },
+        {
+          teamName: "March March",
+          teamLeader: "Jesse",
+          members: [
+            { userID: "QuincyID", name: "Quincy" },
+            { userID: "JesseID", name: "Jesse" },
+          ],
+          capacity: 4,
+          teamId: 6,
+        },
+        {
+          teamName: "March March",
+          teamLeader: "Sherman",
+          members: [],
+          capacity: 4,
           teamId: 3,
         },
       ],
@@ -90,6 +83,16 @@ export default class CourseAdmin extends Component {
     this.setState({ searchRes: e.target.value });
     console.log(this.state.searchRes);
   };
+
+  handleDeleteTeam = (e) => {
+    const deletedTeamId = e.target;
+    console.log(e.target);
+    //   const newTeams = this.state.teams.filter(team => {
+    //   return team.
+    //   })
+    //   this.setState()
+  };
+  handleEditTeam = (e) => {};
 
   render() {
     const data = this.state.teams
@@ -108,6 +111,42 @@ export default class CourseAdmin extends Component {
         return regex.test(team.teamName);
       });
 
+    const columns = [
+      {
+        title: "Team Name",
+        dataIndex: "teamName",
+        key: "teamName",
+      },
+      {
+        title: "Team Leader",
+        dataIndex: "teamLeader",
+        key: "teamLeader",
+      },
+
+      {
+        title: "Members",
+        dataIndex: "members",
+        key: "members",
+      },
+      {
+        title: "Id",
+        dataIndex: "teamId",
+        key: "teamId",
+      },
+      {
+        title: "Action",
+        key: "action",
+        render: () => {
+          return (
+            <Space size="middle">
+              <a onClick={this.handleEditTeam}>Edit</a>
+              <a onClick={this.handleDeleteTeam}>Delete</a>
+            </Space>
+          );
+        },
+      },
+    ];
+
     return (
       <Layout className="homeViewContainer theme-background-color">
         <Sider></Sider>
@@ -120,7 +159,11 @@ export default class CourseAdmin extends Component {
             searchRes={this.state.searchRes}
             handleInputChange={this.handleInputChange}
           />
-          <Table columns={columns} dataSource={data}>
+          <Table
+            className="courseAdminTable"
+            columns={columns}
+            dataSource={data}
+          >
             {" "}
           </Table>
         </Content>

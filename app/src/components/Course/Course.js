@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Layout, Row, Col, Input } from "antd";
 import TeamCard from "./TeamCard";
 import SearchBar from "./SearchBar";
+import uuid from "react-uuid";
 import "../../App.css";
 import "./index.css";
 
@@ -68,7 +69,7 @@ export default class Course extends Component {
             <Row gutter={16}>
               {this.state.teams.map((team) => {
                 return (
-                  <Col span={8}>
+                  <Col key={uuid()} span={8}>
                     <div>
                       <TeamCard
                         teamName={team.teamName}

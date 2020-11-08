@@ -2,7 +2,11 @@
   box-sizing: border-box;
 }
 
-/* HomeView  */
+/*CourseViewAdmin*/
+.courseAdminTable {
+  padding: 0 2rem 0 2rem;
+}
+/* CourseView  */
 .homeViewSideMenu {
   text-align: center;
   background-color: aliceblue;
