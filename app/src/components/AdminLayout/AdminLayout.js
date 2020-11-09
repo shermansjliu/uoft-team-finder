@@ -1,11 +1,9 @@
 import React from 'react'
-import {LogoutOutlined, SettingOutlined, TeamOutlined, UserOutlined} from "@ant-design/icons";
-import {Col, Row, Layout, Space, Button, Typography} from "antd";
+import {LogoutOutlined} from "@ant-design/icons";
+import {Row, Layout, Space, Button, Typography} from "antd";
 import "./style.css"
 import "../../App.css";
 import {Link} from "react-router-dom";
-import {Group, User} from "grommet-icons";
-import bkimg from "../../img/home-books.jpg";
 
 const {Sider, Content} = Layout;
 const {Title} = Typography;
@@ -34,7 +32,7 @@ class AdminLayout extends React.Component {
                             </Space>
 
                             <Title level={2}>
-                                <Link to={{ pathname: '/Admin' , state : { name: '两百斤' }}}>
+                                <Link to={{ pathname: '/Admin' , state : { user: {username: "admin", password: "admin", admin: true} }}}>
                                     <Button type="primary" className="round" size="large">
                                         {/*All Courses: {this.state.courses.length}*/}
                                         All Courses:  {appState.courses.length}

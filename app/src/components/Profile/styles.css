@@ -1,0 +1,74 @@
+.wholeBackGround{
+    min-height: 100vh;
+}
+
+.profileFont{
+    font-size: large;
+}
+
+.rightLayout{
+    padding: 24px;
+}
+
+.informationBar {
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.descriptionTable{
+    padding:10px;
+}
+
+.profileImg{
+    position: relative;
+    top: 5%;
+    left: 30%;
+    margin: 0;
+}
+
+.profilePadding{
+    height:5%;
+}
+
+.addButton{
+    position: relative;
+    left: 40px;
+}s
+
+.courseNameInput{
+    width: 10%;
+}
+
+.teamNameInput{
+    width: 120px;
+}
+
+.expNameInput{
+    width: 220px;
+}
+
+.formText{
+    position: relative;
+    top:6px;
+}
+
+.infoIconFootBar{
+    font-size: 30px;
+    margin-top: auto;
+    margin-bottom: auto;
+    color: #FFF;
+}
+
+
+.infoHomeIcon{
+    color: black;
+}
+
+.infoLogoutIcon{
+    color: black;
+}
+
+.displayButton{
+    position: relative;
+    bottom: 10px;
+}

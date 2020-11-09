@@ -1,44 +1,58 @@
-import { List, Card, Button, Input} from 'antd';
+import { List, Card, Button, Input, Row, Space, Tooltip, Sapce, Typography} from 'antd';
 import React from 'react';
+import "./styles.css"
+import "../../App.css"
+import {
+    FileAddOutlined
+} from '@ant-design/icons';
+import {addTeam} from './Action.js'
+import bkimg from "../../img/home-books.jpg";
+import TeamCard from './TeamCard.js';
 
-import {removeTeam} from './Action.js'
+const { Search } = Input;
+const {Title} = Typography;
+
 
 class TeamTable extends React.Component{
+    state={
+        onSearchString: '',
+    }
     render() {
-        let newTeamName = 'Team Name'
         const {infos} = this.props;
-        const teams = infos.state.teams;
+        const filteredTeams = infos.state.teams.filter(team => {
+            return team.teamName.includes(this.state.onSearchString)})
         return (
             <div>
-                <h3 style={{fontSize: 30}}>All Teams:</h3>
-                <div style={{padding:10}}>
-                    <Input placeholder={newTeamName} style={{width:120}} allowClear={true} onChange={e => {newTeamName = e.target.value}}/>
-                    <Button type="primary" shape="round" style={{position:"relative", left:40}} onClick={() => {
-                        if (newTeamName.length >= 10) {
-                            alert("Please enter a team name with less than 10 characters.");
-                            newTeamName ='';
-                        } else {
-                            teams.push({teamName:newTeamName})
-                            infos.setState({teams: teams});}}}>add</Button>
-                </div>
+                <Row type="flex" align="middle">
+                    <Space>
+                        <Title>Your Teams</Title>
+                        <Tooltip title="add more teams" onClick={() => addTeam(infos, bkimg)} >
+                            <Button shape="circle"
+                                    icon={<FileAddOutlined
+                                        />}/>
+                        </Tooltip>
+                        <Search  placeholder="search a team here"
+                                 value={this.state.onSearchString}
+                                 onChange={(e)=>{this.setState({onSearchString: e.target.value})}}
+                                 enterButton
+                        />
+                    </Space>
+                </Row>
                 <List
                     grid={{
-                    span:2,
-                    gutter: 32,
-                    xs: 1,
-                    sm: 2,
-                    md: 4,
-                    lg: 4,
-                    xl: 6,
-                    xxl: 3,
+                        gutter: 16,
+                        xs: 1,
+                        sm: 1,
+                        md: 2,
+                        lg: 3,
+                        xl: 4,
+                        xxl: 5,
                     }}
-                    dataSource={teams}
+                    dataSource={filteredTeams}
                     renderItem={item => (
                     <List.Item>
-                        <Card title={item.teamName}>
-                            
-                            <Button onClick={() => removeTeam(infos, item)} type="primary" shape="round" style={{float: 'right'}}>Remove</Button>
-                        </Card>
+                        <TeamCard team={item}
+                                    page={infos} />
                     </List.Item>
                     )}
                 />  
