@@ -106,11 +106,11 @@ export default class Course extends Component {
                                 return (
                                     <Col key={uuid()} span={8}>
                                         <div>
-                                            <TeamCard
-                                                teamName={team.teamName}
-                                                members={team.members}
-                                                capacity={team.capacity}
-                                            />
+                                                <TeamCard
+                                                    teamName={team.teamName}
+                                                    members={team.members}
+                                                    capacity={team.capacity}
+                                                />
                                         </div>
                                     </Col>
                                 );
