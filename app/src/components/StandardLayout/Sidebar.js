@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Layout, Image } from "antd";
 import { Link } from "react-router-dom";
-import { LogoutOutlined, TeamOutlined, UserOutlined } from "@ant-design/icons";
+import {HomeOutlined, LogoutOutlined, UserOutlined} from "@ant-design/icons";
 import "./index.css";
 import profilePic from "./profile_pic.jpg";
 export default class Sidebar extends Component {
@@ -26,7 +26,7 @@ export default class Sidebar extends Component {
             <UserOutlined className="sb-btn" />
           </Link>
           <Link to={"/Home"}>
-            <TeamOutlined className="sb-btn" />
+            <HomeOutlined className="sb-btn" />
           </Link>
           <Link to={"/"}>
             <LogoutOutlined className="sb-btn" />

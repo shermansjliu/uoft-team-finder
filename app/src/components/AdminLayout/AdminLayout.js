@@ -76,10 +76,6 @@ class AdminLayout extends React.Component {
                 </Button>
                 {/*</Link>*/}
               </Title>
-              <Space direction="vertical">
-                <Title level={5}> Project: 5</Title>
-                <Title level={5}> Study: 5</Title>
-              </Space>
             </div>
 
             <footer>
