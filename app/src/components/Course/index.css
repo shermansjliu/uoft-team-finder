@@ -75,10 +75,21 @@
   display: flex;
   justify-content: center;
 }
+.teamCardHeader > h3 {
+  max-width: 200px;
+}
 .memberNumber {
   position: relative;
   left: 20px;
 }
 #homeViewBackButton {
   margin-bottom: 1rem;
+}
+.searchBarContainer {
+  justify-content: center;
+  display: flex;
+}
+.searchBar {
+  margin-bottom: 2rem;
+  width: 50%;
 }

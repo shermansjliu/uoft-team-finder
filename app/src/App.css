@@ -32,6 +32,10 @@ code {
   background-color: #f1fafa;
 }
 
+.theme-title {
+  color: #4c9494;
+}
+
 :root {
   --main-bg-color: #d5f3f4;
   --sed-bg-color: #66cccc;

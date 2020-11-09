@@ -1,56 +1,52 @@
-
 .sideBar {
-    background-color: #D5F3F4;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    padding-top: 60px;
-    min-height: 100vh;
+  background-color: #d5f3f4;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding-top: 60px;
+  min-height: 100vh;
 }
 
-.profilePictureContainer {
-    display: inline-block;
-    position: relative;
-    width: 75px;
-    height: 75px;
-    overflow: hidden;
-    border-radius: 50%;
-    border: 5px solid #F1FAFA;
-    /* box-shadow: 0px 3px 3px #4C9494; */
+.sb-profilePictureContainer {
+  display: inline-block;
+  position: relative;
+  width: 75px;
+  height: 75px;
+  overflow: hidden;
+  border-radius: 50%;
+  /* box-shadow: 0px 3px 3px #4C9494; */
 }
 .profilePicture {
-    width: auto;
-    height: 100%;
-    margin-left: -18.75px;
+  width: auto;
+  height: 100%;
+  margin-left: -18.75px;
 }
 .sideBarButtons {
-    width: 30px;
-    font-size: 30px;
-    line-height: 100px;
-    margin-top: 20vh;
-    margin-left: auto;
-    margin-right: auto;
-    color: var(--main-btn-color);
+  width: 30px;
+  line-height: 100px;
+  margin-top: 5vh;
+  margin-left: auto;
+  margin-right: auto;
 }
-.side-btn-color{
-    color: var(--main-btn-color);
-}
-.content{
-    margin-left: 5vw;
-    margin-top: 3vh;
-}
-.text-center{
-    text-align: center;
-    justify-content: center;
-    align-items: center;
-    color: var(--main-btn-color);
-    margin: 0 auto;
-    display: block;
-    font-size: 1.9em;
+.sb-btn {
+  height: 20px;
+  font-size: 20px;
+  color: #010042;
 }
 
-.admin-footer{
-    color: white;
-    background-color: var(--main-bg-color);
+.content {
+  margin-left: 5vw;
+  margin-top: 3vh;
+}
+.text-center {
+  text-align: center;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.admin-footer {
+  color: white;
+  background-color: var(--main-bg-color);
 }

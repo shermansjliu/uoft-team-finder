@@ -6,14 +6,18 @@ export default class SearchBar extends Component {
   render() {
     const { searchRes, handleInputChange } = this.props;
     return (
-      <Input
-        className="searchBar"
-        value={searchRes}
-        size="large"
-        onChange={handleInputChange}
-        placeholder="search team name"
-        prefix={<SearchOutlined />}
-      />
+      <div className="searchBarContainer">
+        {/* <div> */}
+        <Input
+          className="searchBar"
+          value={searchRes}
+          size="large"
+          onChange={handleInputChange}
+          placeholder="search team name"
+          prefix={<SearchOutlined />}
+        />
+        {/* </div> */}
+      </div>
     );
   }
 }

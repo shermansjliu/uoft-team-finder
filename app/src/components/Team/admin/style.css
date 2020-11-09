@@ -72,15 +72,6 @@ body {
   margin-left: -18.75px;
 }
 
-.sideBarButtons {
-  width: 30px;
-  font-size: 30px;
-  line-height: 100px;
-  margin-top: 20vh;
-  margin-left: auto;
-  margin-right: auto;
-}
-
 .ant-card-meta-title {
   margin-top: 34px;
   font-size: 20px;
