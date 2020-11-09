@@ -29,7 +29,11 @@ class Team extends React.Component {
     // const currentUser = {userID: "SpectatorID", name: "Spectator"}
     // const currentUser = {userID: "ShermanID", name: "Sherman"}
     this.state = {
-      currentUser: { userID: "ShermanID", name: "Sherman" },
+      currentUser: {
+        userID: "ShermanID",
+        name: "Sherman",
+        description: "REEEEEEEEEEEEEE",
+      },
       teamLeaderID: "ShermanID",
       members: [
         // list of users
@@ -151,7 +155,6 @@ class Team extends React.Component {
                 isLeaderView={this.state.view === "teamLeaderView"}
                 setDescription={this.setDescription}
               />
-              <p style={{ textAlign: "center" }}>({this.state.view})</p>
               <MemberTable
                 view={this.state.view}
                 teamLeaderID={this.state.teamLeaderID}

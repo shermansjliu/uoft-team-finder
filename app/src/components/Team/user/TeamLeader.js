@@ -1,13 +1,24 @@
 import React from "react";
 import { Card, Avatar, Button } from "antd";
 import { StarTwoTone } from "@ant-design/icons";
+import { Redirect } from "react-router-dom";
 import "./style.css";
 
 const { Meta } = Card;
 
 class TeamLeader extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { profileClick: false };
+    this.handleProfileClick = this.handleProfileClick.bind(this);
+  }
+
+  handleProfileClick() {
+    this.setState({ profileClick: true });
+  }
+
   render() {
-    const { teamLeader, view, members } = this.props;
+    const { teamLeader, view } = this.props;
     // const picture = this.props.pictureURL
     const renderLockButton = () => {
       if (view === "teamLeaderView") {
@@ -18,6 +29,10 @@ class TeamLeader extends React.Component {
         );
       }
     };
+
+    if (this.state.profileClick) {
+      return <Redirect push to="/Profile" />;
+    }
 
     return (
       <div>
@@ -35,7 +50,7 @@ class TeamLeader extends React.Component {
                 />
               }
               title={teamLeader.name}
-              onClick={() => alert("to profile view")}
+              onClick={this.handleProfileClick}
             />
           </div>
           <div className="memberButtonsContainer">{renderLockButton()}</div>

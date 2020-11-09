@@ -1,0 +1,9 @@
+.user-search{
+    width:50%;
+    margin-bottom:1em;
+    color:var(--main-btn-color);
+}
+.user-table-wrapper{
+    justify-content: center;
+    display: flex;
+}
