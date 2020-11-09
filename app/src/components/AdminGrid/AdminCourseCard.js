@@ -53,6 +53,8 @@ class AdminCourseCard extends React.Component {
             // change icon to save mode
             editIcon = (<SaveOutlined onClick={() => save(this, course)}/>)
         }
+
+
         return (
             <Card hoverable className="card"
                   cover={

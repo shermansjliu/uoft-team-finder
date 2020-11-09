@@ -53,7 +53,7 @@ class AdminLayout extends React.Component {
 
                             <Title className="totalTeams" level={2}>
                                 {/*<Link to={"/AdminTeams"}>*/}
-                                    <Button type="primary" className="round" size="large" clickable={false}>
+                                    <Button type="primary" className="round unclickable-button" size="large" clickable={false}>
                                         {/*All Teams: {this.state.teams.length}*/}
                                         {/*All Teams:  {appState.teams.length}*/}
                                         All Teams:  {10}
