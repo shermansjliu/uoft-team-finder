@@ -3,11 +3,12 @@ import { Layout, Row, Col } from "antd";
 import TeamCard from "./TeamCard";
 import SearchBar from "./SearchBar";
 import uuid from "react-uuid";
+import { Link } from "react-router-dom";
 import Sidebar from "../StandardLayout/Sidebar";
 import "../../App.css";
 import "./index.css";
 
-const { Sider, Content } = Layout;
+const { Content } = Layout;
 
 export default class Course extends Component {
   constructor(props) {
@@ -103,13 +104,15 @@ export default class Course extends Component {
               {cards.map((team) => {
                 return (
                   <Col key={uuid()} span={8}>
-                    <div>
-                      <TeamCard
-                        teamName={team.teamName}
-                        members={team.members}
-                        capacity={team.capacity}
-                      />
-                    </div>
+                    <Link to="/Team">
+                      <div>
+                        <TeamCard
+                          teamName={team.teamName}
+                          members={team.members}
+                          capacity={team.capacity}
+                        />
+                      </div>
+                    </Link>
                   </Col>
                 );
               })}
