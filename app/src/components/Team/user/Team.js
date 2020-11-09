@@ -151,7 +151,6 @@ class Team extends React.Component {
                 isLeaderView={this.state.view === "teamLeaderView"}
                 setDescription={this.setDescription}
               />
-              <p style={{ textAlign: "center" }}>({this.state.view})</p>
               <MemberTable
                 view={this.state.view}
                 teamLeaderID={this.state.teamLeaderID}
