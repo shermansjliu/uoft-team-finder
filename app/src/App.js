@@ -10,6 +10,7 @@ import Login from "./components/Login/Login";
 import Team from "./components/Team/user/Team";
 import Admin from "./components/Admin/Admin";
 import Profile from "./components/Profile/Profile";
+import AdminTeam from "./components/Team/admin/Team";
 
 
 class App extends React.Component {
@@ -64,6 +65,11 @@ class App extends React.Component {
               exact
               path="/Profile"
               render={() => <Profile appState={this.state} />}
+            />
+            <Route
+                exact
+                path="/teamAdmin"
+                render={() => <AdminTeam appState={this.state} />}
             />
           </Switch>
         </BrowserRouter>
