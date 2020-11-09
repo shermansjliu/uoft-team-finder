@@ -37,6 +37,30 @@ class CourseGrid extends React.Component {
                 description: 'This is a description',
                 image: bkimg,
             },
+            {
+                courseName: 'csc369',
+                department: 'CSC',
+                description: 'This is a description',
+                image: bkimg,
+            },
+            {
+                courseName: 'csc373',
+                department: 'CSC',
+                description: 'This is a description',
+                image: bkimg,
+            },
+            {
+                courseName: 'csc320',
+                department: 'CSC',
+                description: 'This is a description',
+                image: bkimg,
+            },
+            {
+                courseName: 'csc343',
+                department: 'CSC',
+                description: 'This is a description',
+                image: bkimg,
+            },
         ],
         onSearchString: "",
     };

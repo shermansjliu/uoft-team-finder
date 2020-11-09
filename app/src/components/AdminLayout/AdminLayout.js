@@ -31,7 +31,7 @@ class AdminLayout extends React.Component {
                                 </Link>
                             </Title>
                             <Space direction="vertical">
-                                <Title level={5}> Normal Users: {0}</Title>
+                                <Title level={5}> Normal Users: {4}</Title>
                                 <Title level={5}> Admin: {1}</Title>
                             </Space>
 

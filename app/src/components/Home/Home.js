@@ -13,7 +13,10 @@ export default class Home extends Component {
     console.log(this.props);
     return (
       <>
-        <StandardLayout img={""} title={"Courses"} content={<CourseGrid />} />
+        <StandardLayout
+            img={""}
+            title={""}
+            content={<CourseGrid />} />
       </>
     );
   }
