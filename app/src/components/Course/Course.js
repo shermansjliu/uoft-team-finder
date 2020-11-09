@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import Sidebar from "../StandardLayout/Sidebar";
 import "../../App.css";
 import "./index.css";
+import StandardLayout from "../StandardLayout/layout";
 
 const { Content } = Layout;
 
@@ -81,6 +82,7 @@ export default class Course extends Component {
       ],
     };
   }
+
   handleInputChange = (e) => {
     this.setState({ searchRes: e.target.value });
   };
@@ -91,10 +93,10 @@ export default class Course extends Component {
       return regex.test(team.teamName);
     });
     return (
-      <div>
-        <Layout className="homeViewContainer theme-content">
-          <Sidebar image={""} />
-          <Content hasSider={true} className="homeViewContent">
+      <StandardLayout
+        appState={this.state}
+        content={
+          <div className="homeViewContent">
             <h1 className="courseCode theme-title">{this.state.courseCode}</h1>
             <SearchBar
               searchRes={this.state.searchRes}
@@ -104,22 +106,20 @@ export default class Course extends Component {
               {cards.map((team) => {
                 return (
                   <Col key={uuid()} span={8}>
-                    <Link to="/Team">
-                      <div>
-                        <TeamCard
-                          teamName={team.teamName}
-                          members={team.members}
-                          capacity={team.capacity}
-                        />
-                      </div>
-                    </Link>
+                    <div>
+                      <TeamCard
+                        teamName={team.teamName}
+                        members={team.members}
+                        capacity={team.capacity}
+                      />
+                    </div>
                   </Col>
                 );
               })}
             </Row>
-          </Content>
-        </Layout>
-      </div>
+          </div>
+        }
+      />
     );
   }
 }

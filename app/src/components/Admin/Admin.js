@@ -6,6 +6,7 @@ import "../../App.css";
 import "./style.css";
 import bkimg from "../../img/home-books.jpg";
 import AdminLayout from "../AdminLayout/AdminLayout";
+import CourseAdmin from "../Course/CourseAdmin";
 
 const { Sider, Content } = Layout;
 const { Title } = Typography;
@@ -67,8 +68,10 @@ class Admin extends Component {
     if (this.props.location.state) {
       return (
         <AdminLayout
-          title={"AdminCourses"}
-          content={<AdminGrid />}
+          title={""}
+          content={
+            <AdminGrid />
+          }
           appState={this.state}
         />
       );
