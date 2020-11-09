@@ -1,12 +1,12 @@
 import React from "react";
 
-import { Col, Row, Layout } from "antd";
+import { Row, Layout } from "antd";
 
 import "../../App.css";
 import "./index.css";
 import Sidebar from "./Sidebar.js";
 
-const { Sider, Content } = Layout;
+const { Content } = Layout;
 
 class StandardLayout extends React.Component {
   state = {};
