@@ -31,13 +31,17 @@ export default class Sidebar extends Component {
           </Link>
 
           <Link to={"/Profile"}>
-            <UserOutlined className="sb-btn" />
+            <Tooltip placement="right" title="Profile">
+              <UserOutlined className="sb-btn" />
+            </Tooltip>
           </Link>
           <Link to={"/Home"}>
-            <TeamOutlined className="sb-btn" />
+            <Tooltip placement="right" title="My Courses">
+              <TeamOutlined className="sb-btn" />
+            </Tooltip>
           </Link>
           <Link to={"/"}>
-            <Tooltip>
+            <Tooltip placement="right" title="Logout">
               <LogoutOutlined className="sb-btn" />
             </Tooltip>
           </Link>
