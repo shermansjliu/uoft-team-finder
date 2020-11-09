@@ -12,6 +12,7 @@ import Admin from "./components/Admin/Admin";
 import Profile from "./components/Profile/Profile";
 import StandardLayout from "./components/StandardLayout/layout";
 import AdminLayout from "./components/AdminLayout/AdminLayout";
+import AdminUsers from "./components/AdminUsers/AdminUsers";
 
 class App extends React.Component {
   state = {
@@ -30,6 +31,11 @@ class App extends React.Component {
               exact
               path="/"
               render={() => <Login appState={this.state} />}
+            />
+            <Route
+              exact
+              path="/AdminUsers"
+              render={() => <AdminUsers appState={this.state} />}
             />
             <Route
               exact

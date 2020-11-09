@@ -1,10 +1,16 @@
 import React, { Component } from "react";
-import { Table } from "antd";
+import { Table, Layout } from "antd";
 import { data } from "./UserData.json";
+import AdminLayout from "../AdminLayout/AdminLayout";
 
 export default class AdminUsers extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      userdata: data,
+    };
+  }
   render() {
-    console.log(data);
     const columns = [
       {
         title: "Team Name",
@@ -23,6 +29,10 @@ export default class AdminUsers extends Component {
         key: "members",
       },
     ];
-    return <div></div>;
+
+    const data = this.state.userdata.map((team) => {
+      console.log(team);
+    });
+    return <AdminLayout image={""} content={<Table columns={columns} />} />;
   }
 }
