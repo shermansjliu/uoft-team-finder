@@ -25,7 +25,7 @@ class ExperienceTable extends React.Component{
             <div>
                 <Row type="flex" align="middle">
                     <Space>
-                        <Title>Experiences</Title>
+                        <Title>Your Experiences</Title>
                         <Tooltip title="add more experiences" onClick={() => addExperience(infos, bkimg)} >
                             <Button shape="circle"
                                     icon={<FileAddOutlined

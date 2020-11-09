@@ -10,6 +10,8 @@ import bkimg from "../../img/home-books.jpg";
 const { Sider } = Layout;
 class Profile extends React.Component {
     state = {
+        username:"user",
+        isVisiter:false,
         name:"Enter your name here.",
         major:"Enter your specialist or major here.",
         description:"Write something about you!",

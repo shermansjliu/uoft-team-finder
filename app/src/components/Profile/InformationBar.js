@@ -1,5 +1,5 @@
 import React from 'react';
-import {Avatar, Form, Typography, Layout, InputNumber, Input, Space} from 'antd'
+import {Avatar, Form, Typography, Layout, InputNumber, Input, Space, Button} from 'antd'
 import {UserOutlined, HomeOutlined, LogoutOutlined} from '@ant-design/icons';
 import 'antd/dist/antd.css';
 import './styles.css';
@@ -24,7 +24,12 @@ class InformationBar extends React.Component{
                     </Link>
                     <Link className="infoLogoutIcon" to={'/'}>
                         <LogoutOutlined className={"btn-color infoLogoutIcon"}/>
-                    </Link></Space>
+                    </Link>
+                    <Button className="ant-btn-primary displayButton" onClick={ ()=>{
+                        infos.setState({isVisiter: !infos.state.isVisiter})
+                    }
+                    }>changeMode(for phase1 display)</Button>
+                    </Space>
                 </div>
                 <Avatar className="profileImg" size={180} icon={<UserOutlined/>}/>
                 <div className='profilePadding'></div>
@@ -37,13 +42,13 @@ class InformationBar extends React.Component{
                         <Paragraph className="formText" editable={{onChange: e => setMajor(infos, e)}}> {major} </Paragraph>
                     </Form.Item>
                     <Form.Item label="Year">
-                        <InputNumber min={1} max={10} defaultValue={year} onChange={e => setYear(infos, e)} />
+                        <InputNumber min={1} max={10} defaultValue={infos.state.year} disabled={infos.state.isVisiter} onChange={e => setYear(infos, e)} />
                     </Form.Item>
                     <Form.Item label="cGPA">
-                        <InputNumber min={1} max={4} defaultValue={gpa} onChange={e => setGPA(infos, e)} />
+                        <InputNumber min={1} max={4} defaultValue={infos.state.cGPA} disabled={infos.state.isVisiter} onChange={e => setGPA(infos, e)} />
                     </Form.Item>
                     <Form.Item label="About me">
-                        <TextArea showCount maxLength={200} onChange={e => setDescription(infos, e)} autoSize={true}> {description} </TextArea>
+                        <TextArea showCount maxLength={200} onChange={e => setDescription(infos, e)} disabled={infos.state.isVisiter} autoSize={true}> {infos.state.description} </TextArea>
                     </Form.Item>
                 </Form>
                

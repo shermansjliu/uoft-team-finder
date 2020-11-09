@@ -24,7 +24,7 @@ class CourseTable extends React.Component{
             <div>
                 <Row type="flex" align="middle">
                     <Space>
-                        <Title>Course</Title>
+                        <Title>Your Course</Title>
                         <Tooltip title="add more courses" onClick={() => addCourse(infos, bkimg)} >
                             <Button shape="circle"
                                     icon={<FileAddOutlined

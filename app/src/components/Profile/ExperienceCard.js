@@ -31,7 +31,7 @@ class ExpCard extends React.Component {
         let img = (<img alt="No image yet" src={exp.image} />)
         let expName = exp.expName;
         let description = exp.description;
-        let editIcon = (<EditOutlined onClick={() => edit(this)}/>)
+        let editIcon = (<EditOutlined onClick={() => edit(page, this)}/>)
 
         // if is editing, all element change to edit mode
         if (this.state.isEditing) {

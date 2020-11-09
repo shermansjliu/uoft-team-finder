@@ -1,38 +1,51 @@
+const checkIdentity = (infos) => {
+    if (infos.state.isVisiter){
+        alert('You cannot edit information of other users.')
+    }
+    return !infos.state.isVisiter
+}
+
 export const setUserName = (infos, newName) => {
-    if (newName === "") {
-        alert("Please enter a non-empty name")
-    } else {
-        infos.setState({name: newName})
+    if (checkIdentity(infos)){
+        if (newName === "") {
+            alert("Please enter a non-empty name")
+        } else {
+            infos.setState({name: newName})
+        }
     }
 }   
 
 export const setMajor = (infos, newMajor) => {
-    if (newMajor === "") {
-        alert("Please enter a non-empty specialist/major name")
-    } else {
-        infos.setState({major: newMajor})
+    if (checkIdentity(infos)){
+        if (newMajor === "") {
+            alert("Please enter a non-empty specialist/major name")
+        } else {
+            infos.setState({major: newMajor})
+        }
     }
 }
 
 export const setDescription = (infos, newDescription) => {
-    if (newDescription === "") {
-        alert("Please enter a non-empty description")
-    } else {
-        infos.setState({description: newDescription})
-    }
+        if (newDescription === "") {
+            alert("Please enter a non-empty description")
+        } else {
+            infos.setState({description: newDescription})
+        }
 }
 
 export const setYear = (infos, newYear) => {
-    infos.setState({year: newYear})
+        infos.setState({year: newYear})
 }
 
 export const setGPA = (infos, newGPA) => {
-    infos.setState({cGPA: newGPA})
+        infos.setState({cGPA: newGPA})
 }
 
 
-export const edit = (card) =>{
-    card.setState({isEditing: true});
+export const edit = (infos, card) =>{
+    if (checkIdentity(infos)){
+        card.setState({isEditing: true});
+    }
 }
 
 export const saveCourse = (card, course) => {
@@ -45,6 +58,7 @@ export const saveCourse = (card, course) => {
 
 export const addCourse = (infos, img) => {
 
+    if(checkIdentity(infos)){
     // filters out the student we don't want.
     let courses = infos.state.courses
      courses.push({
@@ -55,19 +69,20 @@ export const addCourse = (infos, img) => {
     })
     infos.setState({
         courses: courses
-    });
+    });}
 };
 
 
-export const removeCourse = (page, course,card) => {
+export const removeCourse = (infos, course,card) => {
+    if (checkIdentity(infos)){
     // filters out the student we don't want.
     card.setState({isEditing:false})
-    const filteredCourses = page.state.courses.filter(c => {
+    const filteredCourses = infos.state.courses.filter(c => {
         return c !== course;
     });
-    page.setState({
+    infos.setState({
         courses: filteredCourses
-    });
+    });}
 }
 
 
@@ -80,6 +95,7 @@ export const saveTeam = (card, team) => {
 
 
 export const addTeam = (infos, img) => {
+    if (checkIdentity(infos)){
     // filters out the student we don't want.
     let teams = infos.state.teams
      teams.push({
@@ -89,19 +105,20 @@ export const addTeam = (infos, img) => {
     })
     infos.setState({
         teams: teams
-    });
+    });}
 };
 
 
-export const removeTeam = (page, team,card) => {
+export const removeTeam = (infos, team,card) => {
+    if (checkIdentity(infos)){
     // filters out the student we don't want.
     card.setState({isEditing:false})
-    const filteredTeams = page.state.teams.filter(c => {
+    const filteredTeams = infos.state.teams.filter(c => {
         return c !== team;
     });
-    page.setState({
+    infos.setState({
         teams: filteredTeams
-    });
+    });}
 };
 
 
@@ -114,7 +131,7 @@ export const saveExp = (card, exp) => {
 
 
 export const addExperience = (infos, img) => {
-
+    if (checkIdentity(infos)){
     // filters out the student we don't want.
     let exps = infos.state.exps
      exps.push({
@@ -124,17 +141,18 @@ export const addExperience = (infos, img) => {
     })
     infos.setState({
         exps: exps
-    });
+    });}
 };
 
 
-export const removeExp = (page, exp,card) => {
+export const removeExp = (infos, exp,card) => {
+    if (checkIdentity(infos)){
     // filters out the student we don't want.
     card.setState({isEditing:false})
-    const filteredExps = page.state.exps.filter(c => {
+    const filteredExps = infos.state.exps.filter(c => {
         return c !== exp;
     });
-    page.setState({
+    infos.setState({
         exps: filteredExps
-    });
+    });}
 };

@@ -25,7 +25,7 @@ class TeamTable extends React.Component{
             <div>
                 <Row type="flex" align="middle">
                     <Space>
-                        <Title>Team</Title>
+                        <Title>Your Teams</Title>
                         <Tooltip title="add more teams" onClick={() => addTeam(infos, bkimg)} >
                             <Button shape="circle"
                                     icon={<FileAddOutlined

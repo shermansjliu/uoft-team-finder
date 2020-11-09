@@ -67,3 +67,8 @@
 .infoLogoutIcon{
     color: black;
 }
+
+.displayButton{
+    position: relative;
+    bottom: 10px;
+}
