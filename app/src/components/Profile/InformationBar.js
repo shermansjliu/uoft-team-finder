@@ -1,10 +1,11 @@
 import React from 'react';
-import {Avatar, Form, Typography, Layout, InputNumber, Input} from 'antd'
-import {UserOutlined } from '@ant-design/icons';
+import {Avatar, Form, Typography, Layout, InputNumber, Input, Space} from 'antd'
+import {UserOutlined, HomeOutlined, LogoutOutlined} from '@ant-design/icons';
 import 'antd/dist/antd.css';
 import './styles.css';
 import '../../App.css'
 import { setUserName, setMajor, setDescription, setYear, setGPA }from './Action.js'
+import {Link} from "react-router-dom";
 
 const { Sider } = Layout;
 const { Paragraph } = Typography;
@@ -16,6 +17,15 @@ class InformationBar extends React.Component{
 
         return (
             <Sider width="30%" className="informationBar theme-background-color">
+                <div className="infoIconFootBar">
+                    <Space size="large" direction="horizontal">
+                    <Link to={'/Home'}>
+                        <HomeOutlined className={"btn-color infoHomeIcon"}/>
+                    </Link>
+                    <Link className="infoLogoutIcon" to={'/'}>
+                        <LogoutOutlined className={"btn-color infoLogoutIcon"}/>
+                    </Link></Space>
+                </div>
                 <Avatar className="profileImg" size={180} icon={<UserOutlined/>}/>
                 <div className='profilePadding'></div>
                 <h3>USER INFO</h3>
@@ -36,6 +46,7 @@ class InformationBar extends React.Component{
                         <TextArea showCount maxLength={200} onChange={e => setDescription(infos, e)} autoSize={true}> {description} </TextArea>
                     </Form.Item>
                 </Form>
+               
             </Sider>
         )
     }

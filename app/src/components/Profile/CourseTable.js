@@ -1,46 +1,57 @@
-import { List, Card, Button, Input} from 'antd';
+import { List, Card, Button, Input, Row, Space, Tooltip, Sapce, Typography} from 'antd';
 import React from 'react';
 import "./styles.css"
 import "../../App.css"
-import {removeCourse} from './Action.js'
+import {
+    FileAddOutlined
+} from '@ant-design/icons';
+import {onSearchCourse, addCourse} from './Action.js'
+import bkimg from "../../img/home-books.jpg";
+import CourseCard from './CourseCard';
 
+const { Search } = Input;
+const {Title} = Typography;
 
 class CourseTable extends React.Component{
+    state={
+        onSearchString: '',
+    }
     render() {
-        let newCourseTitle = 'Course Title'
         const {infos} = this.props;
-        const courses = infos.state.courses;
+        const filteredCourses = infos.state.courses.filter(course => {
+            return course.courseName.includes(this.state.onSearchString)})
         return (
             <div>
-                <h3 style={{fontSize: 30}}>Courses Currently Taking:</h3>
-                <div style={{padding:10}}>
-                    <Input className="courseNameInput" placeholder={newCourseTitle} allowClear={true} onChange={e => {newCourseTitle = e.target.value}}/>
-                    <Button className="profileFont theme-btn-color addButton" size={"large"} type="primary" shape="round" onClick={() => {
-                        if (newCourseTitle.length >= 10) {
-                            alert("Please enter a course title with less than 10 characters.");
-                            newCourseTitle ='';
-                        } else {
-                            courses.push({courseTitle:newCourseTitle})
-                            infos.setState({courses: courses});}}}>ADD</Button>
-                </div>
+                <Row type="flex" align="middle">
+                    <Space>
+                        <Title>Course</Title>
+                        <Tooltip title="add more courses" onClick={() => addCourse(infos, bkimg)} >
+                            <Button shape="circle"
+                                    icon={<FileAddOutlined
+                                        />}/>
+                        </Tooltip>
+                        <Search  placeholder="search a course here"
+                                 value={this.state.onSearchString}
+                                 onChange={(e)=>{this.setState({onSearchString: e.target.value})}}
+                                 enterButton
+                        />
+                    </Space>
+                </Row>
                 <List
                     grid={{
-                    span:2,
-                    gutter: 32,
-                    xs: 1,
-                    sm: 2,
-                    md: 4,
-                    lg: 4,
-                    xl: 6,
-                    xxl: 3,
+                        gutter: 16,
+                        xs: 1,
+                        sm: 1,
+                        md: 2,
+                        lg: 3,
+                        xl: 4,
+                        xxl: 5,
                     }}
-                    dataSource={courses}
+                    dataSource={filteredCourses}
                     renderItem={item => (
                     <List.Item>
-                        <Card title={item.courseTitle}>
-                            
-                            <Button className="profileFont theme-btn-color" size={"large"} onClick={() => removeCourse(infos, item)} type="primary" shape="round" style={{float: 'right'}}>Remove</Button>
-                        </Card>
+                        <CourseCard course={item}
+                                    page={infos} />
                     </List.Item>
                     )}
                 />  

@@ -1,3 +1,7 @@
+.wholeBackGround{
+    min-height: 100vh;
+}
+
 .profileFont{
     font-size: large;
 }
@@ -7,9 +11,8 @@
 }
 
 .informationBar {
-    height: 100vh;
+    min-height: 100vh;
     padding: 20px;
-    position: fixed;
 }
 
 .descriptionTable{
@@ -24,17 +27,16 @@
 }
 
 .profilePadding{
-    width:100px;
-    height:150px;
+    height:5%;
 }
 
 .addButton{
     position: relative;
     left: 40px;
-}
+}s
 
 .courseNameInput{
-    width: 120px;
+    width: 10%;
 }
 
 .teamNameInput{
@@ -48,4 +50,20 @@
 .formText{
     position: relative;
     top:6px;
+}
+
+.infoIconFootBar{
+    font-size: 30px;
+    margin-top: auto;
+    margin-bottom: auto;
+    color: #FFF;
+}
+
+
+.infoHomeIcon{
+    color: black;
+}
+
+.infoLogoutIcon{
+    color: black;
 }

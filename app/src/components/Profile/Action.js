@@ -30,46 +30,111 @@ export const setGPA = (infos, newGPA) => {
     infos.setState({cGPA: newGPA})
 }
 
-export const removeCourse = (queue, course) => {
-    // filters out the course we don't want.
-    const filteredCourses = queue.state.courses.filter(s => {
-      return s !== course;
-    });
-    queue.setState({
-      courses: filteredCourses
-    });
-};
 
-export const removeTeam = (queue, team) => {
-    // filters out the team we don't want.
-    const filteredTeams = queue.state.teams.filter(s => {
-      return s !== team;
-    });
-    queue.setState({
-      teams: filteredTeams
-    });
-};
-
-export const removeExp = (queue, exp) => {
-    // filters out the experience we don't want.
-    const filteredExps = queue.state.exps.filter(s => {
-      return s !== exp;
-    });
-    queue.setState({
-      exps: filteredExps
-    });
-};
-
-export const setExpContent = (infos, exp, newContent) => {
-    if (newContent === "") {
-        alert("Please enter a non-empty description")
-    } else {
-        const exps = infos.state.exps
-        var index = exps.indexOf(exp);
-        if (~index) {
-            exp.content = newContent;
-            exps[index] = exp;
-            infos.setState({exps: exps})   
-        }
-    }
+export const edit = (card) =>{
+    card.setState({isEditing: true});
 }
+
+export const saveCourse = (card, course) => {
+    card.setState({isEditing: false});
+    course.courseName = card.state.newCourseName
+    course.department = card.state.newDepartment
+    course.description = card.state.newDescription
+    course.image = card.state.newImg
+}
+
+export const addCourse = (infos, img) => {
+
+    // filters out the student we don't want.
+    let courses = infos.state.courses
+     courses.push({
+        courseName: 'new course name',
+        department: 'department',
+        description: 'This is a description',
+        image: img,
+    })
+    infos.setState({
+        courses: courses
+    });
+};
+
+
+export const removeCourse = (page, course,card) => {
+    // filters out the student we don't want.
+    card.setState({isEditing:false})
+    const filteredCourses = page.state.courses.filter(c => {
+        return c !== course;
+    });
+    page.setState({
+        courses: filteredCourses
+    });
+}
+
+
+export const saveTeam = (card, team) => {
+    card.setState({isEditing: false});
+    team.teamName = card.state.newTeamName
+    team.description = card.state.newDescription
+    team.image = card.state.newImg
+}
+
+
+export const addTeam = (infos, img) => {
+    // filters out the student we don't want.
+    let teams = infos.state.teams
+     teams.push({
+        teamName: 'new team name',
+        description: 'This is a description',
+        image: img,
+    })
+    infos.setState({
+        teams: teams
+    });
+};
+
+
+export const removeTeam = (page, team,card) => {
+    // filters out the student we don't want.
+    card.setState({isEditing:false})
+    const filteredTeams = page.state.teams.filter(c => {
+        return c !== team;
+    });
+    page.setState({
+        teams: filteredTeams
+    });
+};
+
+
+export const saveExp = (card, exp) => {
+    card.setState({isEditing: false});
+    exp.expName = card.state.newExpName
+    exp.description = card.state.newDescription
+    exp.image = card.state.newImg
+};
+
+
+export const addExperience = (infos, img) => {
+
+    // filters out the student we don't want.
+    let exps = infos.state.exps
+     exps.push({
+        expName: 'new exp name',
+        description: 'This is a description',
+        image: img,
+    })
+    infos.setState({
+        exps: exps
+    });
+};
+
+
+export const removeExp = (page, exp,card) => {
+    // filters out the student we don't want.
+    card.setState({isEditing:false})
+    const filteredExps = page.state.exps.filter(c => {
+        return c !== exp;
+    });
+    page.setState({
+        exps: filteredExps
+    });
+};
