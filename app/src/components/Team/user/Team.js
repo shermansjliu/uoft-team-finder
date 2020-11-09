@@ -29,7 +29,11 @@ class Team extends React.Component {
     // const currentUser = {userID: "SpectatorID", name: "Spectator"}
     // const currentUser = {userID: "ShermanID", name: "Sherman"}
     this.state = {
-      currentUser: { userID: "ShermanID", name: "Sherman" },
+      currentUser: {
+        userID: "ShermanID",
+        name: "Sherman",
+        description: "REEEEEEEEEEEEEE",
+      },
       teamLeaderID: "ShermanID",
       members: [
         // list of users
