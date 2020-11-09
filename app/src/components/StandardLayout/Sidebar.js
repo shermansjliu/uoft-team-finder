@@ -16,8 +16,12 @@ export default class Sidebar extends Component {
 
     this.state = {
       modalVisible: false,
+      collapsed: false,
     };
   }
+  toggleCollapsed = () => {
+    this.setState({ collapsed: !this.state.collapsed });
+  };
   openModal = () => {
     this.setState({ modalVisible: true });
   };
@@ -54,6 +58,8 @@ export default class Sidebar extends Component {
           className="sideBar theme-background-color"
           width={120}
           collapsible={true}
+          collapsed={this.state.collapsed}
+          onCollapse={this.toggleCollapsed}
           collapsedWidth={0}
         >
           <div className="sb-profilePictureContainer">
