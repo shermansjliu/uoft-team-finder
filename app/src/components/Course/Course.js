@@ -94,9 +94,7 @@ export default class Course extends Component {
         <Layout className="homeViewContainer theme-content">
           <Sidebar image={""} />
           <Content hasSider={true} className="homeViewContent">
-            <h1 className="courseCode green-dark-title">
-              {this.state.courseCode}
-            </h1>
+            <h1 className="courseCode theme-title">{this.state.courseCode}</h1>
             <SearchBar
               searchRes={this.state.searchRes}
               handleInputChange={this.handleInputChange}
