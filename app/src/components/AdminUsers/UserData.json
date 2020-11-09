@@ -1,0 +1,115 @@
+{
+  "data": [
+    {
+      "username": "JC",
+      "isVisiter": false,
+      "name": "Enter your name here.",
+      "major": "Enter your specialist or major here.",
+      "description": "Write something about you!",
+      "year": "3",
+      "cGPA": "",
+      "courses": [
+        {
+          "courseName": "csc309",
+          "department": "CSC",
+          "description": "This is a description",
+          "image": "img"
+        },
+        {
+          "courseName": "csc301",
+          "department": "CSC",
+          "description": "This is a description",
+          "image": "img"
+        }
+      ],
+      "teams": [
+        {
+          "teamName": "The john wicks",
+          "description": "TEAM!!!",
+          "image": "img"
+        }
+      ],
+      "exps": [
+        {
+          "expName": "Fellowship of the ring",
+          "description": "Was a hard trip. But we did it!!",
+          "image": "img"
+        }
+      ]
+    },
+    {
+      "username": "Quincy",
+      "isVisiter": false,
+      "name": "Enter your name here.",
+      "major": "Enter your specialist or major here.",
+      "description": "Write something about you!",
+      "year": "3",
+      "cGPA": "",
+      "courses": [
+        {
+          "courseName": "csc309",
+          "department": "CSC",
+          "description": "This is a description",
+          "image": "img"
+        },
+        {
+          "courseName": "csc301",
+          "department": "CSC",
+          "description": "This is a description",
+          "image": "img"
+        }
+      ],
+      "teams": [
+        {
+          "teamName": "The john wicks",
+          "description": "TEAM!!!",
+          "image": "img"
+        }
+      ],
+      "exps": [
+        {
+          "expName": "Fellowship of the ring",
+          "description": "Was a hard trip. But we did it!!",
+          "image": "img"
+        }
+      ]
+    },
+    {
+      "username": "Daveedo",
+      "isVisiter": false,
+      "name": "Enter your name here.",
+      "major": "Enter your specialist or major here.",
+      "description": "Write something about you!",
+      "year": "3",
+      "cGPA": "",
+      "courses": [
+        {
+          "courseName": "csc309",
+          "department": "CSC",
+          "description": "This is a description",
+          "image": "img"
+        },
+        {
+          "courseName": "csc301",
+          "department": "CSC",
+          "description": "This is a description",
+          "image": "img"
+        }
+      ],
+      "teams": [
+        {
+          "teamName": "The john wicks",
+          "description": "TEAM!!!",
+          "image": "img"
+        }
+      ],
+      "exps": [
+        {
+          "expName": "Fellowship of the ring",
+          "description": "Was a hard trip. But we did it!!",
+          "image": "img"
+        }
+      ]
+    }
+  ]
+}
