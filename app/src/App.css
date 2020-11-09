@@ -48,6 +48,17 @@ code {
 .ant-btn-primary {
   background-color: #66cccc;
   border: 0;
-  box-shadow: 1px 1px 0 grey;
-  border-radius: 5px;
+}
+.ant-btn:active {
+  background-color: #66cccc;
+  border: 0;
+}
+.ant-btn:hover {
+  color: var(--main-btn-color);
+  border-color: var(--main-btn-color);
+}
+.ant-btn-primary:hover {
+  background-color: var(--main-btn-color);
+  color: white;
+  opacity: 0.8;
 }

@@ -30,7 +30,7 @@ class MemberTable extends React.Component {
       this.props.members.length > 1
     ) {
       // the member to be removed is the team leader
-      alert("You have to pick a new team leader first before you leave!");
+      alert("You have to pick a new team leader first before you kick!");
     } else if (this.props.members.length === 1) {
       alert("This team will be deleted and return to course admin view");
       this.setState({ willBeDeleted: true });
