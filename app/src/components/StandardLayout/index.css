@@ -5,7 +5,7 @@
   flex-direction: column;
   justify-content: space-between;
   padding-top: 60px;
-  min-height: 100vh;
+  height: 100%;
 }
 
 .sb-profilePictureContainer {
@@ -51,4 +51,7 @@
 .admin-footer {
   color: white;
   background-color: var(--main-bg-color);
+}
+.selectClass {
+  width: 50%;
 }
