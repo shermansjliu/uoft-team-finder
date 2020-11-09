@@ -1,8 +1,7 @@
 import React, { Component } from "react";
-import { Table, Layout } from "antd";
+import { Table } from "antd";
 import { data } from "./UserData.json";
 import AdminLayout from "../AdminLayout/AdminLayout";
-import uuid from "react-uuid";
 
 export default class AdminUsers extends Component {
   constructor(props) {

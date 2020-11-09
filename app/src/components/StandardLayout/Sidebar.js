@@ -5,9 +5,6 @@ import { LogoutOutlined, TeamOutlined, UserOutlined } from "@ant-design/icons";
 import "./index.css";
 import profilePic from "./profile_pic.jpg";
 export default class Sidebar extends Component {
-  constructor(props) {
-    super(props);
-  }
   render() {
     const { image } = this.props;
     const { Sider } = Layout;
