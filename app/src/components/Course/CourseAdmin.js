@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 
 import "../../App.css";
 import "./index.css";
+import StandardLayout from "../StandardLayout/layout";
 
 const { Sider, Content } = Layout;
 
@@ -82,7 +83,6 @@ export default class CourseAdmin extends Component {
 
   handleInputChange = (e) => {
     this.setState({ searchRes: e.target.value });
-    console.log(this.state.searchRes);
   };
 
   handleDeleteTeam = (key) => {
@@ -94,6 +94,7 @@ export default class CourseAdmin extends Component {
   };
 
   render() {
+    let regex = RegExp(`${this.state.searchRes}`, "gi");
     const data = this.state.teams
       .map((team, index) => {
         const { teamName, teamLeader, members, capacity, teamId } = team;
@@ -106,7 +107,6 @@ export default class CourseAdmin extends Component {
         };
       })
       .filter((team, index) => {
-        let regex = RegExp(`${this.state.searchRes}`, "gi");
         return regex.test(team.teamName);
       });
 
@@ -141,9 +141,13 @@ export default class CourseAdmin extends Component {
               <Link to="/teamAdmin">
                 {/* Goes to a specific teamAdmin page based on the teamId 
                 This bevahour is not possible with react-router and so it goes to a default page for now*/}
-                <a onClick={this.handleEditTeam}>Edit</a>
+                <a href="#" onClick={this.handleEditTeam}>
+                  Edit
+                </a>
               </Link>
-              <a onClick={() => this.handleDeleteTeam(record)}>Delete</a>
+              <a href="#" onClick={() => this.handleDeleteTeam(record)}>
+                Delete
+              </a>
             </Space>
           );
         },
