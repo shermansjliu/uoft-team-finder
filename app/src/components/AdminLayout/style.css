@@ -23,3 +23,6 @@
 .unclickable-button {
   cursor: default;
 }
+.round{
+  border-radius:5px;
+}

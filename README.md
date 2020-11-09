@@ -85,6 +85,7 @@ For Admin user: `admin`/`admin`
   - The Third Button is unclickable, just a way to highlight
     - display the total number of teams in our database
   - All numbers will be dynamically changed when we have real data
+- Admin can add new Course by clicking the small add button next to the title "Course"
 - Admin can log out by clicking the Log out button at the bottom
 - Each course card is editable
   - ![image-20201109163419838](README.assets/image-20201109163419838.png)
