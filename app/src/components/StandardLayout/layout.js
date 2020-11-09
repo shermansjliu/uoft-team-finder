@@ -1,9 +1,9 @@
 import React from "react";
 
 import { Col, Row, Layout } from "antd";
-import "./index.css";
+
 import "../../App.css";
-import { Link } from "react-router-dom";
+import "./index.css";
 import Sidebar from "./Sidebar.js";
 
 const { Sider, Content } = Layout;
