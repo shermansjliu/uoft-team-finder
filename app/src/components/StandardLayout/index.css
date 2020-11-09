@@ -8,7 +8,9 @@
   min-height: 100vh;
   height: 100%;
 }
-
+.ant-layout-sider-zero-width-trigger {
+  background-color: #376868;
+}
 .sb-profilePictureContainer {
   display: inline-block;
   position: relative;
@@ -16,7 +18,6 @@
   height: 75px;
   overflow: hidden;
   border-radius: 50%;
-  /* box-shadow: 0px 3px 3px #4C9494; */
 }
 .profilePicture {
   width: auto;

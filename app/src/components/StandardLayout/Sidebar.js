@@ -6,6 +6,8 @@ import {
   TeamOutlined,
   UserOutlined,
   PlusOutlined,
+  MenuUnfoldOutlined,
+  MenuFoldOutlined,
 } from "@ant-design/icons";
 import "./index.css";
 import CreateTeamForm from "./CreateTeamForm";
@@ -16,7 +18,7 @@ export default class Sidebar extends Component {
 
     this.state = {
       modalVisible: false,
-      collapsed: false,
+      collapsed: true,
     };
   }
   toggleCollapsed = () => {
@@ -57,7 +59,7 @@ export default class Sidebar extends Component {
         <Sider
           className="sideBar theme-background-color"
           width={120}
-          collapsible={true}
+          collapsible
           collapsed={this.state.collapsed}
           onCollapse={this.toggleCollapsed}
           collapsedWidth={0}
