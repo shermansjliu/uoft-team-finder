@@ -31,10 +31,10 @@
     margin-top: 20vh;
     margin-left: auto;
     margin-right: auto;
-    color: #FFF;
+    color: var(--main-btn-color);
 }
-.btn-color{
-    color: #66CCCC;
+.side-btn-color{
+    color: var(--main-btn-color);
 }
 .content{
     margin-left: 5vw;

@@ -24,13 +24,13 @@ class StandardLayout extends React.Component {
                         </div>
                         <div className="sideBarButtons" >
                             <Link to={'/Profile'}>
-                                <UserOutlined className={"btn-color"}/>
+                                <UserOutlined className={"side-btn-color"}/>
                             </Link>
                             <Link to={'/Home'}>
-                                <TeamOutlined className={"btn-color"}/>
+                                <TeamOutlined className={"side-btn-color"}/>
                             </Link>
                             <Link to={'/'}>
-                                <LogoutOutlined className={"btn-color"}/>
+                                <LogoutOutlined className={"side-btn-color"}/>
                             </Link>
                         </div>
                     </Sider>
