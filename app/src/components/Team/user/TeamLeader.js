@@ -39,6 +39,7 @@ class TeamLeader extends React.Component {
             />
           </div>
           <div className="memberButtonsContainer">{renderLockButton()}</div>
+          <div className="teamLeaderDescription">{teamLeader.description}</div>
         </Card>
       </div>
     );

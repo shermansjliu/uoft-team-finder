@@ -52,6 +52,7 @@ class TeamMember extends React.Component {
           <div className="memberButtonsContainer">
             {view === "teamLeaderView" && renderLeaderButtons()}
           </div>
+          <div className="memberDescription">{member.description}</div>
         </Card>
       </div>
     );
