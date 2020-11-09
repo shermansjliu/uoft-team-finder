@@ -155,7 +155,7 @@ export default class CourseAdmin extends Component {
     ];
 
     return (
-      <Layout className="homeViewContainer theme-background-color">
+      <Layout className="homeViewContainer theme-content">
         <Sidebar />
         <Content hasSider={true}>
           <h1 className="courseCode green-dark-title">

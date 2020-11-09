@@ -91,7 +91,7 @@ export default class Course extends Component {
     });
     return (
       <div>
-        <Layout className="homeViewContainer theme-background-color">
+        <Layout className="homeViewContainer theme-content">
           <Sidebar image={""} />
           <Content hasSider={true} className="homeViewContent">
             <h1 className="courseCode green-dark-title">
