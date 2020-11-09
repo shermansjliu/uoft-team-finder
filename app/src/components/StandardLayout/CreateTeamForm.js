@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Form, Input, Button, Select, message } from "antd";
+import { Form, Input, Select, InputNumber } from "antd";
 import uuid from "react-uuid";
 const { Option } = Select;
 export default class CreateTeamForm extends Component {
@@ -18,12 +18,12 @@ export default class CreateTeamForm extends Component {
           label="Team Name"
           name="Team Name"
         >
-          <Input />
+          <Input placeholder="Awesome sauce" />
         </Form.Item>
         <Form.Item
-          rules={[{ required: true, message: "Please pick a course" }]}
           label="Course Code"
           className="selectClass"
+          required
           hasFeedback
         >
           <Select placeholder="Course Code">
@@ -35,6 +35,9 @@ export default class CreateTeamForm extends Component {
               );
             })}
           </Select>
+        </Form.Item>
+        <Form.Item label="Number of members" required>
+          <InputNumber min={1} max={10} placeholder="1 - 10" required />
         </Form.Item>
       </Form>
     );
