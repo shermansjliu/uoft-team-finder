@@ -34,14 +34,8 @@
   height: 20px;
   font-size: 20px;
   color: #010042;
-  transform: translate(0px, 0);
-  transition: ease-in-out 200ms;
 }
 
-.sb-btn:hover {
-  transform: translate(8px, 0);
-  transition: ease-in-out 200ms;
-}
 .content {
   margin-left: 5vw;
   margin-right: 2vw;
