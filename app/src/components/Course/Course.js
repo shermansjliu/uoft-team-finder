@@ -3,7 +3,7 @@ import { Layout, Row, Col } from "antd";
 import TeamCard from "./TeamCard";
 import SearchBar from "./SearchBar";
 import uuid from "react-uuid";
-import StandardLayout from "../StandardLayout/layout";
+import Sidebar from "../StandardLayout/Sidebar";
 import "../../App.css";
 import "./index.css";
 
@@ -92,8 +92,7 @@ export default class Course extends Component {
     return (
       <div>
         <Layout className="homeViewContainer theme-background-color">
-          <Sider></Sider>
-
+          <Sidebar image={""} />
           <Content hasSider={true} className="homeViewContent">
             <h1 className="courseCode green-dark-title">
               {this.state.courseCode}

@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 
 import "../../App.css";
 import "./index.css";
-import StandardLayout from "../StandardLayout/layout";
+import Sidebar from "../StandardLayout/Sidebar";
 
 const { Sider, Content } = Layout;
 
@@ -156,8 +156,7 @@ export default class CourseAdmin extends Component {
 
     return (
       <Layout className="homeViewContainer theme-background-color">
-        <Sider></Sider>
-
+        <Sidebar />
         <Content hasSider={true}>
           <h1 className="courseCode green-dark-title">
             {this.state.courseCode}
