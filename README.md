@@ -1,12 +1,19 @@
 # team4
+
 This is a web app used to help users find teammates for their personal projects. The app will target primarily university students. University students can access the premade course teams created by the Admin, create their profiles, and search for their ideal teammates based on their profiles.
 
 # Phase 1
+
 ### Data:
- all data is hardcoded in the js files.
-### Sidebars: 
+
+all data is hardcoded in the js files.
+
+### Sidebars:
+
 Most pages have the same sidebar to keep a consistent layout. Since we are not dealing with the data transforming right now, all sidebars are hardcoded but will be dynamically changed depending on data in phase 2.
+
 ## Views:
+
 ### Login view, path:`/`
 
 Login username and password:
@@ -15,15 +22,15 @@ For Admin user: `admin`/`admin`
 
 ![image-20201109160010627](README.assets/image-20201109160010627.png)
 
-- All usernames are unique. 
-- All normal users can find their passwords  by the `Don't remember the password` button (Admin cannot).
+- All usernames are unique.
+- All normal users can find their passwords by the `Don't remember the password` button (Admin cannot).
 - Users can sign up by entering the username, password, and then click the `sign up` button
 
 ### Home View (User) path: `/Home`
 
 ![image-20201109160418699](README.assets/image-20201109160418699.png)
 
-- User can search for a particular course by using the search bar. The search result will be dynamically updated when use types. 
+- User can search for a particular course by using the search bar. The search result will be dynamically updated when use types.
 - There are three buttons on the sidebar
   - First one goes to the profile page of this user
   - Second one goes to the home page which is this page
@@ -31,6 +38,7 @@ For Admin user: `admin`/`admin`
 - Click on any course go to the Team page where you can find a team and join them.
 
 ## Teams View (User) path: `/Course`
+
 ![image-20201109160813461](README.assets/image-20201109160813461.png)
 
 - Those are the teams in course csc236
@@ -42,22 +50,26 @@ For Admin user: `admin`/`admin`
 
 ![image-20201109161201602](README.assets/image-20201109161201602.png)
 
-- Team Leader can lock the team, so that other user cannot join this team
-- Team Leader can kick any team member by clicking kick button
-- Team Leader cannot leave the team until he make other member become the leader or this team has no other team member.
-- Team Leader can change the Tittle of the team and the description of the team.
+- Team Leader can lock the team, so that other user cannot join this team.
+- Team Leader can kick any team member by clicking kick button.
+- Team Leader cannot leave the team until he makes another member the new leader, or this team has no other team member.
+- Team Leader can change the title and description of the team.
 
 ### (Team member view) same path
 
 ![image-20201109162315612](README.assets/image-20201109162315612.png)
 
-- Team member can leave the team by clicking leave button
+- Team member can leave the team by clicking leave button.
+
+### (Team member view) same path
+
+![otheruser.png](README.assets/otheruser.png)
+
+- Users not part of the team can join the team (if capacity allows) by clicking join button.
 
 ### Profile path: `/Profile`
 
- ![857fe9a100c63dc323b8c1b519542eb](README.assets/857fe9a100c63dc323b8c1b519542eb-1604956912296.png)
-
-
+![857fe9a100c63dc323b8c1b519542eb](README.assets/857fe9a100c63dc323b8c1b519542eb-1604956912296.png)
 
 ## Admin Pages
 
@@ -70,8 +82,8 @@ For Admin user: `admin`/`admin`
 - There are three buttons in the sidebar
   - Click first one will go to `/AdminUsers` page to show all users in the database
   - Click Second one will go to `/Admin` page to show all Courses that are open for teaming
-  - The Third Button is unclickable, just a way to highlight 
-    - display the total number of teams in our database 
+  - The Third Button is unclickable, just a way to highlight
+    - display the total number of teams in our database
   - All numbers will be dynamically changed when we have real data
 - Admin can log out by clicking the Log out button at the bottom
 - Each course card is editable
@@ -83,16 +95,16 @@ For Admin user: `admin`/`admin`
 
 ![image-20201109164132550](README.assets/image-20201109164132550.png)
 
-- sider bar is the same as the Admin page one, but the third button will display all the teams in this particular course 
+- sider bar is the same as the Admin page one, but the third button will display all the teams in this particular course
 - Admin can search a team by team name
 - Admin can delete a team by clicking delete button
 - Admin can edit a team by clicking Edit. This goes to the `teamAdmin` Page
 
-### Admin Team page path: `\teamAdmin`
+### Admin Team page path: `/teamAdmin`
 
 ![image-20201109164545111](README.assets/image-20201109164545111.png)
 
-- This page is very similar to Team page of the Team Leader except that we can kick team leader also. 
+- This page is very similar to Team page of the Team Leader except that we can kick team leader also.
 - Before you kick the team leader, you have to pick a new team leader first.
 
 ### Admin Users page path: `AdminUsers`
