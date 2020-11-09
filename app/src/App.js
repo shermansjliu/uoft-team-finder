@@ -68,9 +68,9 @@ class App extends React.Component {
               render={() => <Profile appState={this.state} />}
             />
             <Route
-                exact
-                path="/teamAdmin"
-                render={() => <AdminTeam appState={this.state} />}
+              exact
+              path="/teamAdmin"
+              render={() => <AdminTeam appState={this.state} />}
             />
             <Route
                 exact

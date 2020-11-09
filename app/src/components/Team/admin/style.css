@@ -49,6 +49,7 @@ body {
 
 .teamMemberCard:hover {
   box-shadow: none;
+  position: relative;
 }
 
 .memberInfo {
@@ -83,6 +84,22 @@ body {
 
 .leaderIconContainer {
   margin-right: 10px;
+}
+
+.teamLeaderDescription {
+  width: 200px;
+  position: absolute;
+  top: 54.5%;
+  left: 250px;
+  color: #929292;
+}
+
+.memberDescription {
+  width: 200px;
+  position: absolute;
+  top: 44.5%;
+  left: 250px;
+  color: #929292;
 }
 
 .memberButtonsContainer {

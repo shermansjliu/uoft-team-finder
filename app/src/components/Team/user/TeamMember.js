@@ -1,18 +1,27 @@
 import React from "react";
 import { Card, Avatar, Button } from "antd";
+import { Redirect } from "react-router-dom";
 import "./style.css";
 
 const { Meta } = Card;
 class TeamMember extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { profileClick: false };
+    this.handleProfileClick = this.handleProfileClick.bind(this);
+  }
+
+  handleProfileClick() {
+    this.setState({ profileClick: true });
+  }
+
   render() {
     const {
       member,
-      currentUser,
       view,
       handleKickRequest,
       handleMakeLeaderRequest,
     } = this.props;
-    // const picture = this.props.pictureURL
 
     const renderLeaderButtons = () => {
       return [
@@ -33,6 +42,10 @@ class TeamMember extends React.Component {
       ];
     };
 
+    if (this.state.profileClick) {
+      return <Redirect push to="/Profile" />;
+    }
+
     return (
       <div>
         <Card className="teamMemberCard">
@@ -46,12 +59,13 @@ class TeamMember extends React.Component {
                 />
               }
               title={member.name}
-              onClick={() => alert("to profile view")}
+              onClick={this.handleProfileClick}
             />
           </div>
           <div className="memberButtonsContainer">
             {view === "teamLeaderView" && renderLeaderButtons()}
           </div>
+          <div className="memberDescription">{member.description}</div>
         </Card>
       </div>
     );
