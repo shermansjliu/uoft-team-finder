@@ -11,7 +11,7 @@ import Team from "./components/Team/user/Team";
 import Admin from "./components/Admin/Admin";
 import Profile from "./components/Profile/Profile";
 import AdminTeam from "./components/Team/admin/Team";
-
+import AdminUsers from "./components/AdminUsers/AdminUsers";
 class App extends React.Component {
   state = {
     users: [
