@@ -41,6 +41,7 @@ class TeamLeader extends React.Component {
             />
           </div>
           <div className="memberButtonsContainer">{renderAdminButtons()}</div>
+          <div className="teamLeaderDescription">{teamLeader.description}</div>
         </Card>
       </div>
     );
