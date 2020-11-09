@@ -3,9 +3,8 @@ import { Layout, Modal, Image, Tooltip, Button } from "antd";
 import { Link } from "react-router-dom";
 import {
   LogoutOutlined,
-  TeamOutlined,
   UserOutlined,
-  PlusOutlined,
+  PlusOutlined, HomeOutlined,
 } from "@ant-design/icons";
 import "./index.css";
 import CreateTeamForm from "./CreateTeamForm";
@@ -60,22 +59,22 @@ export default class Sidebar extends Component {
             <Image src={profilePic} alt="profile picture" />
           </div>
           <div className="sideBarButtons">
-            <Link>
               <Tooltip placement="right" title="New Team">
                 <PlusOutlined className="sb-btn" onClick={this.openModal} />
               </Tooltip>
-            </Link>
 
             <Link to={"/Profile"}>
               <Tooltip placement="right" title="Profile">
                 <UserOutlined className="sb-btn" />
               </Tooltip>
             </Link>
+
             <Link to={"/Home"}>
               <Tooltip placement="right" title="My Courses">
-                <TeamOutlined className="sb-btn" />
+                <HomeOutlined className="sb-btn"/>
               </Tooltip>
             </Link>
+
             <Link to={"/"}>
               <Tooltip placement="right" title="Logout">
                 <LogoutOutlined className="sb-btn" />
