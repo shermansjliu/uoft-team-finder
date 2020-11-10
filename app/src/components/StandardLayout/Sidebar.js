@@ -16,7 +16,7 @@ export default class Sidebar extends Component {
 
     this.state = {
       modalVisible: false,
-      collapsed: true,
+      collapsed: false,
     };
   }
   toggleCollapsed = () => {
@@ -32,7 +32,7 @@ export default class Sidebar extends Component {
     this.setState({ modalVisible: false });
   };
   render() {
-    const { image } = this.props;
+    // const { image } = this.props;
     const { Sider } = Layout;
 
     return (

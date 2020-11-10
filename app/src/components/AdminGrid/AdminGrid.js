@@ -1,4 +1,4 @@
-import {Space, Button, Row, Typography, List} from 'antd';
+import {Space, Button, List} from 'antd';
 import React from 'react'
 import 'antd/dist/antd.css';
 import {
@@ -7,12 +7,8 @@ import {
 import CourseCard from "./AdminCourseCard";
 import {Tooltip, Input} from "antd";
 import bkimg from "../../img/home-books.jpg";
-import {addCourse, onSearch} from "./action";
+import {addCourse} from "./action";
 import "./style.css"
-
-
-const {Title} = Typography;
-const {Search} = Input;
 
 export class AdminGrid extends React.Component {
     constructor(props) {
@@ -56,7 +52,7 @@ export class AdminGrid extends React.Component {
         return (
             <>
                 <div>
-                    <div className={"admin-course-center-wrapper"}>
+                    <div className={"center-wrapper"}>
                         <Space >
                             <h1 className="courseCode theme-title">{"Courses"}</h1>
                             <Tooltip title="add more courses" onClick={() => addCourse(this, bkimg)}>
@@ -66,7 +62,7 @@ export class AdminGrid extends React.Component {
                             </Tooltip>
                         </Space>
                     </div>
-                    <div className={"admin-course-center-wrapper"}>
+                    <div className={"center-wrapper"}>
                         <Input
                             className="center__ admin-course-search"
                             placeholder="search a course here"

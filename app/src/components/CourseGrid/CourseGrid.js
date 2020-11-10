@@ -1,15 +1,13 @@
-import { Button, Card, Input, List, Row, Space, Tooltip, Typography} from 'antd';
+import { Card, Input, List} from 'antd';
 import React from 'react'
 import 'antd/dist/antd.css';
 import "./style.css"
 import {Link} from "react-router-dom";
 import bkimg from "../../img/home-books.jpg";
-import { onSearch} from "../AdminGrid/action";
-import {FileAddOutlined} from "@ant-design/icons";
+import {SearchOutlined} from "@ant-design/icons";
 
-const {Title} = Typography;
 const {Meta} = Card;
-const { Search } = Input;
+
 class CourseGrid extends React.Component {
     state = {
         courses: [
@@ -70,17 +68,21 @@ class CourseGrid extends React.Component {
             return course.courseName.includes(this.state.onSearchString)})
         return (
             <>
-                <Row type="flex" align="middle">
-                    <Space>
-                        <Title>Course</Title>
-                        <Search  placeholder="search a course here"
-                                 onSearch={() => onSearch(this, this.state.onSearchString)}
-                                 value={this.state.onSearchString}
-                                 onChange={(e)=>{this.setState({onSearchString: e.target.value})}}
-                                 enterButton
+                <div >
+                    <h1 className="courseCode theme-title">{"Courses"}</h1>
+                    <div className={"center-wrapper"}>
+                        <Input
+                            className="center__ admin-course-search"
+                            placeholder="search a course here"
+                            value={this.state.onSearchString}
+                            onChange={(e) => {
+                                this.setState({onSearchString: e.target.value})
+                            }}
+                            size="large"
+                            prefix={<SearchOutlined/>}
                         />
-                    </Space>
-                </Row>
+                    </div>
+                </div>
                 <List
                     grid={{
                         gutter: 16,

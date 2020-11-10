@@ -9,6 +9,11 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+.center-wrapper{
+  justify-content: center;
+  display: flex;
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
@@ -33,7 +38,7 @@ code {
 }
 
 .theme-title {
-  color: #4c9494;
+  color: #56b1b1;
 }
 
 :root {
