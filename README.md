@@ -119,4 +119,7 @@ For Admin user: `admin`/`admin`
 
 ## Third-party libraries used:
 
-Ant Design
+- Ant Design
+- [react uuid](https://www.npmjs.com/package/react-uuid)
+- [grommet icons](https://www.npmjs.com/package/grommet-icons)
+- [react router](https://www.npmjs.com/package/react-router)
