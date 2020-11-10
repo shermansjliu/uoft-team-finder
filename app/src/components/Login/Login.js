@@ -5,6 +5,7 @@ import "./styles.css";
 import { register, login } from "./action.js";
 import { withRouter } from "react-router-dom";
 import { forgetPWD } from "./action";
+import Sky from 'react-sky';
 
 class LoginView extends React.Component {
   constructor(props) {
@@ -78,6 +79,24 @@ class LoginView extends React.Component {
             </Card>
           </Col>
         </Row>
+        <Sky
+            images={{
+              /* FORMAT AS FOLLOWS */
+              0: "https://image.flaticon.com/icons/svg/141/141073.svg",
+              1: "https://image.flaticon.com/icons/svg/141/141070.svg",
+              2: "https://image.flaticon.com/icons/svg/141/141009.svg",
+              3: "https://image.flaticon.com/icons/svg/140/140993.svg",
+              4: "https://image.flaticon.com/icons/svg/141/141106.svg",
+              5: "https://image.flaticon.com/icons/svg/141/141015.svg",
+              6: "https://image.flaticon.com/icons/svg/141/141099.svg",
+              7: "https://image.flaticon.com/icons/svg/141/141008.svg",
+              8: "https://image.flaticon.com/icons/svg/141/141036.svg"
+            }}
+            how={130} /* Pass the number of images Sky will render chosing randomly */
+            time={40} /* time of animation */
+            size={'100px'} /* size of the rendered images */
+            background={'palettedvioletred'} /* color of background */
+        />
       </div>
     );
   }
