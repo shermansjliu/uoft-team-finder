@@ -6,7 +6,9 @@ This is a web app used to help users find teammates for their personal projects.
 
 ### Data:
 
-all data is hardcoded in the js files.
+All data is hardcoded in the js files.
+
+User Data should be pulled from server, but we hardcoded them in the state. 
 
 ### Sidebars:
 
