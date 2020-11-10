@@ -2,16 +2,18 @@ import {Space, Button, Row, Typography, List} from 'antd';
 import React from 'react'
 import 'antd/dist/antd.css';
 import {
-    FileAddOutlined
+    FileAddOutlined, SearchOutlined
 } from '@ant-design/icons';
 import CourseCard from "./AdminCourseCard";
-import {Tooltip, Input } from "antd";
+import {Tooltip, Input} from "antd";
 import bkimg from "../../img/home-books.jpg";
 import {addCourse, onSearch} from "./action";
+import "./style.css"
 
 
 const {Title} = Typography;
-const { Search } = Input;
+const {Search} = Input;
+
 export class AdminGrid extends React.Component {
     constructor(props) {
         super(props);
@@ -47,28 +49,36 @@ export class AdminGrid extends React.Component {
     }
 
 
-
     render() {
         const filteredCourses = this.state.courses.filter(course => {
-            return course.courseName.includes(this.state.onSearchString)})
+            return course.courseName.includes(this.state.onSearchString)
+        })
         return (
             <>
-                <Row type="flex" align="middle">
-                    <Space>
-                        <Title>Course</Title>
-                        <Tooltip title="add more courses" onClick={() => addCourse(this, bkimg)} >
-                            <Button shape="circle"
-                                    icon={<FileAddOutlined
+                <div>
+                    <div className={"admin-course-center-wrapper"}>
+                        <Space >
+                            <h1 className="courseCode theme-title">{"Courses"}</h1>
+                            <Tooltip title="add more courses" onClick={() => addCourse(this, bkimg)}>
+                                <Button shape="circle"
+                                        icon={<FileAddOutlined
                                         />}/>
-                        </Tooltip>
-                        <Search  placeholder="search a course here"
-                                 onSearch={() => onSearch(this, this.state.onSearchString)}
-                                 value={this.state.onSearchString}
-                                 onChange={(e)=>{this.setState({onSearchString: e.target.value})}}
-                                 enterButton
+                            </Tooltip>
+                        </Space>
+                    </div>
+                    <div className={"admin-course-center-wrapper"}>
+                        <Input
+                            className="center__ admin-course-search"
+                            placeholder="search a course here"
+                            value={this.state.onSearchString}
+                            onChange={(e) => {
+                                this.setState({onSearchString: e.target.value})
+                            }}
+                            size="large"
+                            prefix={<SearchOutlined/>}
                         />
-                    </Space>
-                </Row>
+                    </div>
+                </div>
 
                 <List
                     grid={{

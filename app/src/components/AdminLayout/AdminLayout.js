@@ -68,7 +68,6 @@ class AdminLayout extends React.Component {
                   type="primary"
                   className="round"
                   size="large"
-                  clickable={false}
                 >
                   {/*All Teams: {this.state.teams.length}*/}
                   {/*All Teams:  {appState.teams.length}*/}
