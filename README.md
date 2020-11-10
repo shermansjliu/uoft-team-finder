@@ -68,6 +68,7 @@ For Admin user: `admin`/`admin`
 - Users not part of the team can join the team (if capacity allows) by clicking join button.
 
 ### (Profile Course View) Profile path: `/Profile`
+![profile_course1.png](https://github.com/csc309-fall-2020/team04/blob/master/README.assets/profile_course1.png)
 These two pages are the first tab of the profile page. On the left hand side is the information bar displayed. UserId is fixed so users cannot change it. Users can change other informations as they want. Notice year and cGPA can only be numbers. The email address but inlcude '@' to be valid. The home button on the top left links to the home page. The button next to it indicates log out. The button 'changeMode for phase1 display' is only for phase displaying purpose. It will be deleted after phase1 finish. Clicking the button will change the current reader to a user other than the owner of the profile page. Hence the reader cannot modify the content of the profile page. By clicking the button again can change the reader back to the owner. On the right side, users can add his/her currently taking courses. The bottom two buttons can change the content of the course card. The image of the course card can be uploaded in phase2.
 ### (Profile Team View) same path
 ![profile_team.png](https://github.com/csc309-fall-2020/team04/blob/master/README.assets/Profile_team.png)
