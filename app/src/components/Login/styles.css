@@ -1,28 +1,33 @@
-.login-warp{
+.login-warp {
 }
 
 .forget {
-    margin: 1em;
-    color: gray;
+  margin: 1em;
+  color: gray;
 }
 
 .padding {
-    padding: 15vh;
+  padding: 15vh;
 }
 
-.red{
-    color: red;
+.red {
+  color: red;
 }
 
-.green{
-    color: green;
+.green {
+  color: green;
 }
-
+.btnRow {
+  margin-top: 5px;
+}
+.ant-input-affix-wrapper:hover {
+  border-color: #66cccc;
+}
 .btn {
-    margin: 8px;
+  margin: 8px;
 }
 
-.login-card{
-    text-align: center;
-    width: 400px;
+.login-card {
+  text-align: center;
+  width: 400px;
 }

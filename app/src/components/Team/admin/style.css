@@ -49,6 +49,7 @@ body {
 
 .teamMemberCard:hover {
   box-shadow: none;
+  position: relative;
 }
 
 .memberInfo {
@@ -72,15 +73,6 @@ body {
   margin-left: -18.75px;
 }
 
-.sideBarButtons {
-  width: 30px;
-  font-size: 30px;
-  line-height: 100px;
-  margin-top: 20vh;
-  margin-left: auto;
-  margin-right: auto;
-}
-
 .ant-card-meta-title {
   margin-top: 34px;
   font-size: 20px;
@@ -92,6 +84,22 @@ body {
 
 .leaderIconContainer {
   margin-right: 10px;
+}
+
+.teamLeaderDescription {
+  width: 200px;
+  position: absolute;
+  top: 54.5%;
+  left: 250px;
+  color: #929292;
+}
+
+.memberDescription {
+  width: 200px;
+  position: absolute;
+  top: 44.5%;
+  left: 250px;
+  color: #929292;
 }
 
 .memberButtonsContainer {

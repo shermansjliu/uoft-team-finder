@@ -1,6 +1,7 @@
 import React from "react";
 import TeamMember from "./TeamMember";
 import TeamLeader from "./TeamLeader";
+import { Redirect } from "react-router-dom";
 import { Button, Statistic, Typography } from "antd";
 
 import "./style.css";
@@ -10,6 +11,9 @@ const { Paragraph } = Typography;
 class MemberTable extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      willBeDeleted: false,
+    };
     this.handleAddRequest = this.handleAddRequest.bind(this);
     this.handleRemoveRequest = this.handleRemoveRequest.bind(this);
     this.handleChangeLeaderRequest = this.handleChangeLeaderRequest.bind(this);
@@ -21,15 +25,15 @@ class MemberTable extends React.Component {
   }
 
   handleRemoveRequest(rmMember) {
-    if (this.props.teamLeaderID === rmMember.userID) {
+    if (
+      this.props.teamLeaderID === rmMember.userID &&
+      this.props.members.length > 1
+    ) {
       // the member to be removed is the team leader
-      if (this.props.members.length > 1) {
-        alert("You have to pick a new team leader first before you kick!");
-      } else {
-        alert("the team will be deleted");
-        this.props.deleteMember(rmMember);
-        // goes back to course view (list of teams)
-      }
+      alert("You have to pick a new team leader first before you kick!");
+    } else if (this.props.members.length === 1) {
+      alert("This team will be deleted and return to course admin view");
+      this.setState({ willBeDeleted: true });
     } else {
       this.props.deleteMember(rmMember);
     }
@@ -67,6 +71,10 @@ class MemberTable extends React.Component {
         </Paragraph>
       );
     };
+
+    if (this.state.willBeDeleted) {
+      return <Redirect push to="/CourseAdmin" />;
+    }
 
     return (
       <div className="memberTableContainer">

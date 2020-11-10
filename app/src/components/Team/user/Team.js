@@ -11,6 +11,7 @@ import {
 } from "@ant-design/icons";
 
 import "./style.css";
+import StandardLayout from "../../StandardLayout/layout";
 
 const { Sider, Content } = Layout;
 const { Title } = Typography;
@@ -28,14 +29,30 @@ class Team extends React.Component {
     // const currentUser = {userID: "SpectatorID", name: "Spectator"}
     // const currentUser = {userID: "ShermanID", name: "Sherman"}
     this.state = {
-      currentUser: { userID: "ShermanID", name: "Sherman" },
+      currentUser: {
+        userID: "ShermanID",
+        name: "Sherman",
+        description: "REEEEEEEEEEEEEE",
+      },
       teamLeaderID: "ShermanID",
       members: [
         // list of users
-        { userID: "DavidID", name: "David" },
-        { userID: "ShermanID", name: "Sherman" },
-        { userID: "QuincyID", name: "Quincy" },
-        { userID: "JesseID", name: "Jesse" },
+        {
+          userID: "DavidID",
+          name: "David",
+          description: "Radiohead is the best",
+        },
+        {
+          userID: "ShermanID",
+          name: "Sherman",
+          description: "REEEEEEEEEEEEEE",
+        },
+        {
+          userID: "QuincyID",
+          name: "Quincy",
+          description: "Yasuo happy happy hahappy",
+        },
+        { userID: "JesseID", name: "Jesse", description: "LALALALALLALALALA" },
       ],
       teamName: "THE JOHN WICKS",
       teamDescription: "We seek revenge for our dogs",
@@ -124,52 +141,34 @@ class Team extends React.Component {
 
     return (
       <div>
-        <Layout className="teamViewContainer">
-          <Sider
-            className="teamViewSidebar"
-            width={100}
-            collapsible={true}
-            collapsedWidth={0}
-          >
-            <div className="profilePictureContainer">
-              <img
-                className="profilePicture"
-                src={
-                  "https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
-                }
+        <StandardLayout
+          appState={this.state}
+          content={
+            <div className="teamViewContent">
+              <TeamName
+                teamName={this.state.teamName}
+                isLeaderView={this.state.view === "teamLeaderView"}
+                setName={this.setName}
+              />
+              <TeamDescription
+                teamDescription={this.state.teamDescription}
+                isLeaderView={this.state.view === "teamLeaderView"}
+                setDescription={this.setDescription}
+              />
+              <MemberTable
+                view={this.state.view}
+                teamLeaderID={this.state.teamLeaderID}
+                teamCapacity={this.state.teamCapacity}
+                currentUser={this.state.currentUser}
+                members={this.state.members}
+                addMember={this.addMember}
+                deleteMember={this.deleteMember}
+                changeLeader={this.changeLeader}
+                setCapacity={this.setCapacity}
               />
             </div>
-            <div className="sideBarButtons">
-              <UserOutlined />
-              <TeamOutlined />
-              <LogoutOutlined />
-            </div>
-          </Sider>
-          <Content hasSider={true} className="teamViewContent">
-            <TeamName
-              teamName={this.state.teamName}
-              isLeaderView={this.state.view === "teamLeaderView"}
-              setName={this.setName}
-            />
-            <TeamDescription
-              teamDescription={this.state.teamDescription}
-              isLeaderView={this.state.view === "teamLeaderView"}
-              setDescription={this.setDescription}
-            />
-            <p style={{ textAlign: "center" }}>({this.state.view})</p>
-            <MemberTable
-              view={this.state.view}
-              teamLeaderID={this.state.teamLeaderID}
-              teamCapacity={this.state.teamCapacity}
-              currentUser={this.state.currentUser}
-              members={this.state.members}
-              addMember={this.addMember}
-              deleteMember={this.deleteMember}
-              changeLeader={this.changeLeader}
-              setCapacity={this.setCapacity}
-            />
-          </Content>
-        </Layout>
+          }
+        />
       </div>
     );
   }

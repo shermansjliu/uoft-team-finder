@@ -53,6 +53,8 @@ class AdminCourseCard extends React.Component {
             // change icon to save mode
             editIcon = (<SaveOutlined onClick={() => save(this, course)}/>)
         }
+
+
         return (
             <Card hoverable className="card"
                   cover={
@@ -64,7 +66,7 @@ class AdminCourseCard extends React.Component {
                   ]}
             >
                 {/*if is not editing, pass the course we entered, and go to the next page*/}
-                <ConditionalLink to={{pathname: '/Course', query :{ course: course }}} condition={!this.state.isEditing}>
+                <ConditionalLink to={{pathname: '/CourseAdmin', query :{ course: course }}} condition={!this.state.isEditing}>
                 <Meta hoverable
                     title={courseName}
                     description={description}

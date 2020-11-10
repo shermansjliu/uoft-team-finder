@@ -1,12 +1,15 @@
-import {Card, List} from 'antd';
+import { Button, Card, Input, List, Row, Space, Tooltip, Typography} from 'antd';
 import React from 'react'
 import 'antd/dist/antd.css';
 import "./style.css"
 import {Link} from "react-router-dom";
 import bkimg from "../../img/home-books.jpg";
+import { onSearch} from "../AdminGrid/action";
+import {FileAddOutlined} from "@ant-design/icons";
 
+const {Title} = Typography;
 const {Meta} = Card;
-
+const { Search } = Input;
 class CourseGrid extends React.Component {
     state = {
         courses: [
@@ -34,13 +37,50 @@ class CourseGrid extends React.Component {
                 description: 'This is a description',
                 image: bkimg,
             },
+            {
+                courseName: 'csc369',
+                department: 'CSC',
+                description: 'This is a description',
+                image: bkimg,
+            },
+            {
+                courseName: 'csc373',
+                department: 'CSC',
+                description: 'This is a description',
+                image: bkimg,
+            },
+            {
+                courseName: 'csc320',
+                department: 'CSC',
+                description: 'This is a description',
+                image: bkimg,
+            },
+            {
+                courseName: 'csc343',
+                department: 'CSC',
+                description: 'This is a description',
+                image: bkimg,
+            },
         ],
-        numColumns: 5,
+        onSearchString: "",
     };
 
     render() {
+        const filteredCourses = this.state.courses.filter(course => {
+            return course.courseName.includes(this.state.onSearchString)})
         return (
             <>
+                <Row type="flex" align="middle">
+                    <Space>
+                        <Title>Course</Title>
+                        <Search  placeholder="search a course here"
+                                 onSearch={() => onSearch(this, this.state.onSearchString)}
+                                 value={this.state.onSearchString}
+                                 onChange={(e)=>{this.setState({onSearchString: e.target.value})}}
+                                 enterButton
+                        />
+                    </Space>
+                </Row>
                 <List
                     grid={{
                         gutter: 16,
@@ -51,7 +91,7 @@ class CourseGrid extends React.Component {
                         xl: 4,
                         xxl: 5,
                     }}
-                    dataSource={this.state.courses}
+                    dataSource={filteredCourses}
                     renderItem={item => (
                         <List.Item>
                             <Link to='/Course' params={{ course: item }}>

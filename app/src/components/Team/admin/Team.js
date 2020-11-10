@@ -6,10 +6,11 @@ import { Layout } from "antd";
 import { UserOutlined, TeamOutlined, LogoutOutlined } from "@ant-design/icons";
 
 import "./style.css";
+import AdminLayout from "../../AdminLayout/AdminLayout";
 
 const { Sider, Content } = Layout;
 
-class Team extends React.Component {
+class AdminTeam extends React.Component {
   constructor(props) {
     super(props);
     /* ----------- HARD-CODED DATA ------------- */
@@ -26,10 +27,22 @@ class Team extends React.Component {
       teamLeaderID: "ShermanID",
       members: [
         // list of users
-        { userID: "DavidID", name: "David" },
-        { userID: "ShermanID", name: "Sherman" },
-        { userID: "QuincyID", name: "Quincy" },
-        { userID: "JesseID", name: "Jesse" },
+        {
+          userID: "DavidID",
+          name: "David",
+          description: "Radiohead is the best",
+        },
+        {
+          userID: "ShermanID",
+          name: "Sherman",
+          description: "REEEEEEEEEEEEEEEE",
+        },
+        {
+          userID: "QuincyID",
+          name: "Quincy",
+          description: "Yasuo happy happy",
+        },
+        { userID: "JesseID", name: "Jesse", description: "LALALALALALALALALA" },
       ],
       teamName: "THE JOHN WICKS",
       teamDescription: "We seek revenge for our dogs",
@@ -90,30 +103,10 @@ class Team extends React.Component {
     }
 
     return (
-      <div>
-        <Layout className="teamViewContainer">
-          <Sider
-            className="teamViewSidebar"
-            width={100}
-            collapsible={true}
-            collapsedWidth={0}
-          >
-            <div className="profilePictureContainer">
-              <img
-                className="profilePicture"
-                src={
-                  "https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
-                }
-                alt="not found"
-              />
-            </div>
-            <div className="sideBarButtons">
-              <UserOutlined />
-              <TeamOutlined />
-              <LogoutOutlined />
-            </div>
-          </Sider>
-          <Content hasSider={true} className="teamViewContent">
+      <AdminLayout
+        appState={this.state}
+        content={
+          <div>
             <TeamName
               teamName={this.state.teamName}
               isLeaderView={this.state.view === "teamLeaderView"}
@@ -135,11 +128,11 @@ class Team extends React.Component {
               changeLeader={this.changeLeader}
               setCapacity={this.setCapacity}
             />
-          </Content>
-        </Layout>
-      </div>
+          </div>
+        }
+      />
     );
   }
 }
 
-export default Team;
+export default AdminTeam;
