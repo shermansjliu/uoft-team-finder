@@ -25,6 +25,18 @@ export const setMajor = (infos, newMajor) => {
     }
 }
 
+export const setEmail = (infos, newEmail) => {
+    if (checkIdentity(infos)){
+        if (newEmail === "") {
+            alert("Please enter a non-empty email address")
+        } else if(!newEmail.includes('@')) {
+            alert("Please enter a valid email address")
+        } else {
+            infos.setState({email: newEmail})
+        }
+    }
+}   
+
 export const setDescription = (infos, newDescription) => {
         if (newDescription === "") {
             alert("Please enter a non-empty description")
@@ -41,6 +53,30 @@ export const setGPA = (infos, newGPA) => {
         infos.setState({cGPA: newGPA})
 }
 
+export const sendComment = (card, exp) => {
+    if ((card.state.newComment).length > 50) {
+        alert("please send a comment with less than 50 characters")
+    } else {
+        const newComment = {
+            commenter:"commenter",
+            content:card.state.newComment,
+        }
+        const comments = exp.comments;
+        comments.push(newComment)
+        exp.comments = comments;
+        card.setState({newComment: card.state.newComment})
+    }
+}
+
+export const removeComment = (infos, exp, comment) => {
+    if (checkIdentity(infos)){
+        const filteredComments = exp.comments.filter(c => {
+            return c !== comment;
+        });
+        exp.comments = filteredComments
+        infos.setState({exps: infos.state.exps})
+    }
+}
 
 export const edit = (infos, card) =>{
     if (checkIdentity(infos)){
@@ -52,7 +88,11 @@ export const saveCourse = (card, course) => {
     card.setState({isEditing: false});
     course.courseName = card.state.newCourseName
     course.department = card.state.newDepartment
-    course.description = card.state.newDescription
+    if ((card.state.newDescription).length > 16) {
+        alert("please enter a description with less than 16 characters")
+    } else {
+        course.description = card.state.newDescription
+    }
     course.image = card.state.newImg
 }
 
@@ -89,7 +129,11 @@ export const removeCourse = (infos, course,card) => {
 export const saveTeam = (card, team) => {
     card.setState({isEditing: false});
     team.teamName = card.state.newTeamName
-    team.description = card.state.newDescription
+    if ((card.state.newDescription).length > 16) {
+        alert("please enter a description with less than 16 characters")
+    } else {
+        team.description = card.state.newDescription
+    }
     team.image = card.state.newImg
 }
 

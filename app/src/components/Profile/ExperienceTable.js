@@ -11,7 +11,6 @@ import ExpCard from './ExperienceCard.js';
 
 const { Search } = Input;
 const {Title} = Typography;
-
 class ExperienceTable extends React.Component{
     state={
         onSearchString: '',
@@ -38,21 +37,14 @@ class ExperienceTable extends React.Component{
                         />
                     </Space>
                 </Row>
+                
                 <List
-                    grid={{
-                        gutter: 16,
-                        xs: 1,
-                        sm: 1,
-                        md: 2,
-                        lg: 3,
-                        xl: 4,
-                        xxl: 5,
-                    }}
                     dataSource={filteredExps}
                     renderItem={item => (
                     <List.Item>
+                        {/* <List.Item.Meta title={item.expName} description={item.description}/> */}
                         <ExpCard exp={item}
-                                         page={infos} />
+                                 page={infos} />
                     </List.Item>
                     )}
                 />  
