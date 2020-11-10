@@ -1,14 +1,20 @@
 import React from 'react';
-import {Input, Card} from 'antd';
-import {DeleteOutlined, EditOutlined, SaveOutlined} from '@ant-design/icons';
-import {edit, removeExp, saveExp} from "./Action";
+import {Button, Avatar, Comment, Space, List, Input, Card} from 'antd';
+import {DeleteOutlined, MessageOutlined, EditOutlined, SaveOutlined, DeleteTwoTone} from '@ant-design/icons';
+import {sendComment,removeComment, edit, removeExp, saveExp} from "./Action";
 import 'antd/dist/antd.css';
 import './styles.css';
+import '../../App.css';
 import  {withRouter,Link} from "react-router-dom";
 import ImageUploader from "../ImageUploader";
 const {Meta} = Card;
 const {TextArea} = Input;
-
+const IconText = ({ icon, text }) => (
+    <Space>
+      {React.createElement(icon)}
+      {text}
+    </Space>
+  );
 const ConditionalLink = ({ children, to, condition }) => (!!condition && to)
     ? <Link to={to} >{children}</Link>
     : <>{children}</>;
@@ -19,9 +25,11 @@ class ExpCard extends React.Component {
         const exp = this.props.exp;
         this.state = {
             isEditing: false,
+            showComment: false,
             newExpName: exp.expName,
             newDescription: exp.description,
             newImg: exp.image,
+            newComment: '',
         };
     }
 
@@ -52,20 +60,67 @@ class ExpCard extends React.Component {
             // change icon to save mode
             editIcon = (<SaveOutlined onClick={() => saveExp(this, exp)}/>)
         }
-        return (
-            <Card hoverable className="card"
-                  cover={
-                      [img]
-                  }
-                  actions={[
-                      [editIcon],
-                      <DeleteOutlined onClick={() => removeExp(page, exp, this)}/>,
-                  ]}
-            >
-                <h3>{expName}</h3>
-                <description>{description}</description>
-            </Card>
 
+        let comments = null
+        if (this.state.showComment) {
+            comments = (<List
+                dataSource={exp.comments}
+                renderItem={item => (
+                    <List.Item>
+                        <Comment
+                                author={<a>{item.commenter}</a>}
+                                avatar={<Avatar
+                                            src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
+                                            size={30}/>}
+                                content={<div>
+                                    {item.content}
+                                </div>}>
+                                <DeleteOutlined
+                                        onClick={()=>removeComment(page,exp,item)}
+                                        className="commentDeleteButton"/>
+                        </Comment>
+                    </List.Item>)}
+            />) 
+        }
+
+        let addComment = null
+        if (this.state.showComment){
+            addComment = <TextArea 
+            className="expCommentInput"
+            autoSize={true}
+            allowClear={true}
+            value={this.state.new}
+            name={"newComment"}
+            onChange={this.handleInputChange}/> 
+        }
+
+        let sendCommentButton = null
+        if (this.state.showComment){
+            sendCommentButton = <Button
+            className="expCommentSend ant-btn-primary"
+            onClick={() => {sendComment(this, exp)}}>Send</Button>
+        }
+
+        return (
+        <List.Item.Meta title={<h3>{expName}</h3>} description={
+                <div>
+                    <p>{description}</p>
+                    <div className="expIconBar">
+                        <Space>
+                            {editIcon}
+                            <DeleteOutlined className={"iconColor"} onClick={() => removeExp(page, exp, this)}/>
+                            <MessageOutlined className={"iconColor"} onClick={() => {
+                                this.setState({showComment: !this.state.showComment})
+                            }}/>
+                        </Space>
+                    </div>
+                        <div className="expCommentInputBar">
+                            {addComment} 
+                            {sendCommentButton}
+                        </div>
+                    {comments}
+                </div>
+            }/>
         );
     }
 

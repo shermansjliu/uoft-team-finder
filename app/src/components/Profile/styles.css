@@ -52,23 +52,37 @@
     top:6px;
 }
 
-.infoIconFootBar{
+.infoIconBar{
     font-size: 30px;
     margin-top: auto;
     margin-bottom: auto;
-    color: #FFF;
 }
 
-
-.infoHomeIcon{
-    color: black;
-}
-
-.infoLogoutIcon{
-    color: black;
+.expIconBar{
+    font-size: 20px;
+    margin-top: auto;
+    margin-bottom: auto;
 }
 
 .displayButton{
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.iconColor{
+    color: black；
+}
+
+.expCommentInput{
+    width: 300px;
+}
+
+.expCommentSend{
     position: relative;
-    bottom: 10px;
+    top:5px;
+    left: 10px;
+}
+
+.commentDeleteButton{
+    float: right;
 }
