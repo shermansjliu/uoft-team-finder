@@ -31,20 +31,20 @@ For Admin user: `admin`/`admin`
 ![image-20201109160418699](README.assets/image-20201109160418699.png)
 
 - User can search for a particular course by using the search bar. The search result will be dynamically updated when use types.
-- There are three buttons on the sidebar
-  - First one goes to the profile page of this user
-  - Second one goes to the home page which is this page
-  - Third one Log this user out, and goes to login page
+- There are four buttons on the sidebar
+  1. prompts a modal to create a team
+  2. Navigates to the user's profile page
+  3. Goes to the home page which is this page
+  4. Log this user out, and goes to login page
 - Click on any course go to the Team page where you can find a team and join them.
 
-## Teams View (User) path: `/Course`
+### Course View (User) path: `/Course`
 
 ![image-20201109160813461](README.assets/image-20201109160813461.png)
 
-- Those are the teams in course csc236
-- Each card represent a team, and their team logo and title are displayed on the card
-- Click the title of the card to see the detail of this team.
-- A user can create a Team
+- Teams of a paritcular course. E.g CSC236
+- Each card represent a team, and their team logo and name are displayed on the card
+- Each card can be clicked into so that a user can view or join a team if there is space
 
 ### Single Team View (TeamLeader) path `/Team`
 
@@ -96,10 +96,10 @@ For Admin user: `admin`/`admin`
 
 ![image-20201109164132550](README.assets/image-20201109164132550.png)
 
-- sider bar is the same as the Admin page one, but the third button will display all the teams in this particular course
-- Admin can search a team by team name
+- side bar is the same as usual, but the third button displays all the teams in this course
+- Admin can search teams by name
 - Admin can delete a team by clicking delete button
-- Admin can edit a team by clicking Edit. This goes to the `teamAdmin` Page
+- Admin can edit a team by clicking Edit. This goes`teamAdmin` Page.
 
 ### Admin Team page path: `/teamAdmin`
 
