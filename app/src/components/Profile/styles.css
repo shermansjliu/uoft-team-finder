@@ -13,6 +13,7 @@
 .informationBar {
     min-height: 100vh;
     padding: 20px;
+    
 }
 
 .descriptionTable{
@@ -56,6 +57,10 @@
     font-size: 30px;
     margin-top: auto;
     margin-bottom: auto;
+}
+
+.linkIconColor{
+    color: var(--main-btn-color);
 }
 
 .expIconBar{

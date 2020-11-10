@@ -3,10 +3,10 @@ import {Avatar, Form, Typography, Layout, InputNumber, Input, Space, Button} fro
 import {UserOutlined, HomeOutlined, LogoutOutlined} from '@ant-design/icons';
 import 'antd/dist/antd.css';
 import './styles.css';
+import '../../App'
 import '../../App.css'
 import { setUserName, setMajor, setEmail, setDescription, setYear, setGPA }from './Action.js'
 import {Link} from "react-router-dom";
-import '../StandardLayout/index.css'
 
 
 const { Sider } = Layout;
@@ -22,10 +22,10 @@ class InformationBar extends React.Component{
                 <div className="infoIconBar">
                     <Space size="large" direction="horizontal">
                     <Link to={'/Home'}>
-                        <HomeOutlined className={"side-btn-color"}/>
+                        <HomeOutlined className={"linkIconColor"}/>
                     </Link>
-                    <Link className="infoLogoutIcon" to={'/'}>
-                        <LogoutOutlined className={"side-btn-color"}/>
+                    <Link  to={'/'}>
+                        <LogoutOutlined className={"linkIconColor"}/>
                     </Link>
                     <Button className="ant-btn-primary displayButton" onClick={ ()=>{
                         infos.setState({isVisiter: !infos.state.isVisiter})
