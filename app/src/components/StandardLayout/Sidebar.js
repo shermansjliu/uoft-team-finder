@@ -3,9 +3,9 @@ import { Layout, Modal, Image, Tooltip, Button } from "antd";
 import { Link } from "react-router-dom";
 import {
   LogoutOutlined,
-  TeamOutlined,
   UserOutlined,
   PlusOutlined,
+  HomeOutlined,
 } from "@ant-design/icons";
 import "./index.css";
 import CreateTeamForm from "./CreateTeamForm";
@@ -16,8 +16,12 @@ export default class Sidebar extends Component {
 
     this.state = {
       modalVisible: false,
+      collapsed: false,
     };
   }
+  toggleCollapsed = () => {
+    this.setState({ collapsed: !this.state.collapsed });
+  };
   openModal = () => {
     this.setState({ modalVisible: true });
   };
@@ -28,7 +32,7 @@ export default class Sidebar extends Component {
     this.setState({ modalVisible: false });
   };
   render() {
-    const { image } = this.props;
+    // const { image } = this.props;
     const { Sider } = Layout;
 
     return (
@@ -53,29 +57,31 @@ export default class Sidebar extends Component {
         <Sider
           className="sideBar theme-background-color"
           width={120}
-          collapsible={true}
+          collapsible
+          collapsed={this.state.collapsed}
+          onCollapse={this.toggleCollapsed}
           collapsedWidth={0}
         >
           <div className="sb-profilePictureContainer">
             <Image src={profilePic} alt="profile picture" />
           </div>
           <div className="sideBarButtons">
-            <Link>
-              <Tooltip placement="right" title="New Team">
-                <PlusOutlined className="sb-btn" onClick={this.openModal} />
-              </Tooltip>
-            </Link>
+            <Tooltip placement="right" title="New Team">
+              <PlusOutlined className="sb-btn" onClick={this.openModal} />
+            </Tooltip>
 
             <Link to={"/Profile"}>
               <Tooltip placement="right" title="Profile">
                 <UserOutlined className="sb-btn" />
               </Tooltip>
             </Link>
+
             <Link to={"/Home"}>
               <Tooltip placement="right" title="My Courses">
-                <TeamOutlined className="sb-btn" />
+                <HomeOutlined className="sb-btn" />
               </Tooltip>
             </Link>
+
             <Link to={"/"}>
               <Tooltip placement="right" title="Logout">
                 <LogoutOutlined className="sb-btn" />
