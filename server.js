@@ -175,7 +175,7 @@ app.get("*", (req, res) => {
     }
 
     // send index.html
-    res.sendFile(path.join(__dirname, "/client/build/index.html"));
+    res.sendFile(path.join(__dirname, "/app/build/index.html"));
 });
 
 /*************************************************/
