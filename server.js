@@ -245,7 +245,7 @@ params team_id
 
 send: team with team_id
  */
-app.get('/api/teams/:team_id', async(req, res)=> {
+app.get('/api/teams/:team_id', mongoChecker, authenticate, async(req, res)=> {
     try{
 
        const team = await Team.findById(req.params.id)
@@ -261,7 +261,33 @@ app.get('/api/teams/:team_id', async(req, res)=> {
 
 
 })
-app.post('/api/teams', async(req, res)=> {})
+
+/*
+params: course_id
+body{
+ proper parameters of a team
+}
+send: {team: <created team sub document> course: <updated course sub document>
+* */
+app.post('/api/teams:course_id', mongoChecker, authenticate, async(req, res)=> {
+    try{
+        const course = Course.findById(req.params.course_id)
+        if(!course){
+            res.status(404).send("Missing Resource")
+            return
+        }
+        const team = new Team(req.body)
+        const savedTeam = await team.save()
+        course.teams.new(req.body)
+        if (!savedTeam){
+            res.status(400).send("Bad Parameter Input")
+        }else{
+            res.status(200).send({team: savedTeam, course: course })
+        }
+    }catch(error){
+        res.status(500).send("Internal Server Error")
+    }
+})
 app.put('/api/teams', async(req, res)=> {})
 app.delete('/api/teams', async(req, res)=> {})
 
