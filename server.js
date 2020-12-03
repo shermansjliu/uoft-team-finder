@@ -220,9 +220,34 @@ app.put("/api/users/", mongoChecker, authenticateAdmin, async (req, res) => {
     } catch (error) {
         res.status(500).send("Internal Server Error")
     }
-
-
 });
+
+/*
+Params: None (sending user credentials over params is dangerous)
+
+body {
+
+    username: username of deleted user
+    password: pwd of deleted user
+}
+send {deletedUser}
+ */
+
+app.delete('/api/users', mongoChecker, authenticateAdmin, async (req, res) => {
+    try {
+
+        const delUser = await User.findByIdAndRemove({username: req.body.username, password: req.body.password})
+        if (!delUser) {
+            res.status(404).send('Missing resource')
+        } else {
+            res.status(200).send(delUser)
+        }
+    } catch (error) {
+
+    }
+
+})
+
 
 // API routes can go here...
 
