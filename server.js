@@ -13,6 +13,8 @@ mongoose.set("useFindAndModify", false); // for some deprecation issues
 
 // import the mongoose models
 const {User} = require("./models/user");
+const {Course} = require("./models/course")
+const {Team} = require("./models/team")
 
 //Import local environment variables
 require("dotenv").config();
@@ -102,7 +104,7 @@ app.post("/users/login", (req, res) => {
             // We can check later if this exists to ensure we are logged in.
             req.session.user = user._id;
             req.session.username = user.username; // we will later send the username to the browser when checking if someone is logged in through GET /check-session (we will display it on the frontend dashboard. You could however also just send a boolean flag).
-            req.session.admin = user.admin
+            req.session.admin = user.admin;
             res.send({currentUser: user.username});
         })
         .catch((error) => {
@@ -137,8 +139,6 @@ app.get("/users/check-session", (req, res) => {
 // a GET route to get all users
 app.get("/api/users", mongoChecker, authenticate, async (req, res) => {
     // Get the students
-
-
     try {
         const users = await User.find();
         res.send(users); // just the array
@@ -149,8 +149,12 @@ app.get("/api/users", mongoChecker, authenticate, async (req, res) => {
 })
 
 // User API Route
-app.post("/api/users", mongoChecker, authenticate, authenticateAdmin, async (req, res) => {
+app.post("/api/users", mongoChecker, authenticate, async (req, res) => {
     // Create a new user
+    if(!req.session.admin){
+        res.status(401).send("User not Authorized")
+        return
+    }
     const user = new User(req.body)
 
     try {
@@ -170,12 +174,13 @@ app.post("/api/users", mongoChecker, authenticate, authenticateAdmin, async (req
 
 
 /*
-Params
+Params: user id that will be edited
+
 body {
   New data that will updated the user
 }
  */
-app.put("/api/users/", mongoChecker, authenticate, async (req, res) => {
+app.put("/api/users/:id", mongoChecker, authenticate, async (req, res) => {
 
     if (!req.session.admin){
         res.status(401).send("User not authorized")
@@ -183,7 +188,7 @@ app.put("/api/users/", mongoChecker, authenticate, async (req, res) => {
     }
     try {
 
-        let user = await User.findByUsernamePassword(req.body.usename, req.body.password)
+        let user = await User.findByIdAndRemove(req.params.id)
         if (!user) {
             res.status(404).send("Missing resource")
         } else {
@@ -201,8 +206,7 @@ app.put("/api/users/", mongoChecker, authenticate, async (req, res) => {
 });
 
 /*
-Params: None (sending user credentials over params is dangerous)
-
+Params: deleted user id
 body {
 
     username: username of deleted user
@@ -211,21 +215,21 @@ body {
 send {deletedUser}
  */
 
-app.delete('/api/users', mongoChecker, authenticate, async (req, res) => {
+app.delete('/api/users/:id', mongoChecker, authenticate, async (req, res) => {
     if (!req.session.admin){
         res.status(401).send("User not authorized")
         return
     }
     try {
 
-        const delUser = await User.findByIdAndRemove({username: req.body.username, password: req.body.password})
+        const delUser = await User.findByIdAndRemove(req.params.id)
         if (!delUser) {
             res.status(404).send('Missing resource')
         } else {
             res.status(200).send(delUser)
         }
     } catch (error) {
-
+        res.status(500).send("Internal Server Error")
     }
 
 })
@@ -236,8 +240,27 @@ app.post('/api/courses', async(req, res)=> {})
 app.put('/api/courses', async(req, res)=> {})
 app.delete('/api/courses', async(req, res)=> {})
 
+/*
+params team_id
 
-app.get('/api/teams', async(req, res)=> {})
+send: team with team_id
+ */
+app.get('/api/teams/:team_id', async(req, res)=> {
+    try{
+
+       const team = await Team.findById(req.params.id)
+        if(!team) {
+            res.status(404).send("Missing resource")
+        }
+        else {
+            res.status(200).send(team)
+        }
+    }catch(error){
+        res.status(500).send("Internal server error")
+    }
+
+
+})
 app.post('/api/teams', async(req, res)=> {})
 app.put('/api/teams', async(req, res)=> {})
 app.delete('/api/teams', async(req, res)=> {})
