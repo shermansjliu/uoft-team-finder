@@ -72,30 +72,8 @@ const authenticate = (req, res, next) => {
     }
 };
 
-const authenticateAdmin = (req, res, next) => {
-    if (req.session.user) {
 
-        User.findById(req.session.user)
-            .then((user) => {
-                if (!user) {
-                    res.status(404).send("Missing resource");
-                    return Promise.reject();
-                } else if (!req.session.admin) {
-                    res.status(404).send("Missing resource");
-                    return Promise.reject();
 
-                } else {
-                    next()
-                }
-            })
-            .catch((error) => {
-                res.status(401).send("Unauthorized");
-            });
-    } else {
-        res.status(401).send("Unauthorized");
-    }
-
-};
 /*** Session handling **************************************/
 // Create a session and session cookie
 app.use(
@@ -124,6 +102,7 @@ app.post("/users/login", (req, res) => {
             // We can check later if this exists to ensure we are logged in.
             req.session.user = user._id;
             req.session.username = user.username; // we will later send the username to the browser when checking if someone is logged in through GET /check-session (we will display it on the frontend dashboard. You could however also just send a boolean flag).
+            req.session.admin = user.admin
             res.send({currentUser: user.username});
         })
         .catch((error) => {
@@ -191,21 +170,20 @@ app.post("/api/users", mongoChecker, authenticate, authenticateAdmin, async (req
 
 
 /*
-Params: None (sending user credentials over params is dangerous)
+Params
 body {
-    userLogin{
-        username: username of the user that will be updated
-        password: password of the user that will be updated
-    }
-    data: New data that will updated the user
+  New data that will updated the user
 }
  */
-app.put("/api/users/", mongoChecker, authenticateAdmin, async (req, res) => {
+app.put("/api/users/", mongoChecker, authenticate, async (req, res) => {
 
-
+    if (!req.session.admin){
+        res.status(401).send("User not authorized")
+        return
+    }
     try {
-        const {username, pwd} = req.body.userLogin
-        let user = await User.findByUsernamePassword(username, pwd)
+
+        let user = await User.findByUsernamePassword(req.body.usename, req.body.password)
         if (!user) {
             res.status(404).send("Missing resource")
         } else {
@@ -233,7 +211,11 @@ body {
 send {deletedUser}
  */
 
-app.delete('/api/users', mongoChecker, authenticateAdmin, async (req, res) => {
+app.delete('/api/users', mongoChecker, authenticate, async (req, res) => {
+    if (!req.session.admin){
+        res.status(401).send("User not authorized")
+        return
+    }
     try {
 
         const delUser = await User.findByIdAndRemove({username: req.body.username, password: req.body.password})
@@ -249,7 +231,17 @@ app.delete('/api/users', mongoChecker, authenticateAdmin, async (req, res) => {
 })
 
 
-// API routes can go here...
+app.get('/api/courses', async(req, res)=> {})
+app.post('/api/courses', async(req, res)=> {})
+app.put('/api/courses', async(req, res)=> {})
+app.delete('/api/courses', async(req, res)=> {})
+
+
+app.get('/api/teams', async(req, res)=> {})
+app.post('/api/teams', async(req, res)=> {})
+app.put('/api/teams', async(req, res)=> {})
+app.delete('/api/teams', async(req, res)=> {})
+
 
 /*** Webpage routes below **********************************/
 // Serve the build
