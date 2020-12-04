@@ -288,8 +288,59 @@ app.post('/api/teams:course_id', mongoChecker, authenticate, async(req, res)=> {
         res.status(500).send("Internal Server Error")
     }
 })
-app.put('/api/teams', async(req, res)=> {})
-app.delete('/api/teams', async(req, res)=> {})
+
+/*
+params: team_id
+Body: New team attributes
+send : Updated team sub document
+ */
+app.put('/api/teams/:team_id', async(req, res)=> {
+    if(!res.session.admin){
+        res.status(401).send("user is not authorized")
+    }else {
+        try{
+            let team = await Team.findById(req.params.team_id)
+            if (!team){
+                res.status(404).send("Missing resource")
+
+            }else {
+                team = {
+                    ...team,
+                    ...req.body
+                }
+                const updatedTeam = await team.save()
+                res.status(200).send(updatedTeam)
+            }
+
+        }catch(error){
+            res.status(500).send("internal server error")
+        }
+    }
+
+})
+
+/*
+ params: team_id
+
+ send: The team that was deleted
+ */
+app.delete('/api/teams:team_id', async(req, res)=> {
+    if(!res.session.admin){
+        res.status(401).send("user is not authorized")
+    }else {
+        try {
+            let team = await Team.findByIdAndRemove(req.params.team_id)
+            if (!team) {
+                res.status(404).send("Missing resource")
+
+            } else {
+                res.status(200).send(team)
+            }
+        }catch(error) {
+           res.stats(500).send("Internal server error")
+        }
+    }
+})
 
 
 /*** Webpage routes below **********************************/
