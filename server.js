@@ -104,7 +104,8 @@ app.post("/users/login", (req, res) => {
             // We can check later if this exists to ensure we are logged in.
             req.session.user = user._id;
             req.session.username = user.username; // we will later send the username to the browser when checking if someone is logged in through GET /check-session (we will display it on the frontend dashboard. You could however also just send a boolean flag).
-            req.session.admin = user.admin;
+            // req.session.admin = user.admin;
+            req.session.admin = true
             res.send({currentUser: user.username});
         })
         .catch((error) => {
@@ -325,6 +326,7 @@ app.put('/api/teams/:team_id', async(req, res)=> {
  send: The team that was deleted
  */
 app.delete('/api/teams:team_id', async(req, res)=> {
+
     if(!res.session.admin){
         res.status(401).send("user is not authorized")
     }else {

@@ -2,7 +2,7 @@
 
 const mongoose = require('mongoose');
 
-const mongoURI = process.env.MONGODB_URI || "mongodb+srv://shermansjliu:csc309team04@cluster0.f7u4c.mongodb.net/Cluster0?retryWrites=true&w=majority"
+const mongoURI = "mongodb://127.0.0.1:27017/cluster0"|| process.env.MONGODB_URI
 
 mongoose.connect(mongoURI, { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true});
 
