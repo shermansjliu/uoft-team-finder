@@ -88,7 +88,7 @@ export default class Course extends Component {
   async componentDidMount() {
     try {
       const response = await axios.get(`${ENDPOINT}/api/courses/`,{ method: "get"})
-      const data = await response.json()
+      const data = await response.json().response
       console.log(data)
 
     }catch(error){

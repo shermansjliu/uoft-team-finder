@@ -7,6 +7,9 @@ const express = require("express");
 const app = express();
 const path = require("path");
 
+const cors = require('cors');
+app.use(cors());
+
 // mongoose and mongo connection
 const {mongoose} = require("./db/mongoose");
 mongoose.set("useFindAndModify", false); // for some deprecation issues
@@ -25,6 +28,7 @@ const {ObjectID} = require("mongodb");
 // body-parser: middleware for parsing HTTP JSON body into a usable object
 const bodyParser = require("body-parser");
 app.use(bodyParser.json());
+
 
 // express-session for managing user sessions
 const session = require("express-session");
@@ -142,7 +146,7 @@ app.get("/api/users", mongoChecker, authenticate, async (req, res) => {
     // Get the students
     try {
         const users = await User.find();
-        res.send(users); // just the array
+        res.send({users}); // just the array
     } catch (error) {
         log(error);
         res.status(498).send("Internal Server Error");
@@ -218,7 +222,7 @@ send {deletedUser}
 
 app.delete('/api/users/:id', mongoChecker, authenticate, async (req, res) => {
     if (!req.session.admin){
-        res.status(401).send("User not authorized")
+        res.status(401).send("ssss not authorized")
         return
     }
     try {
@@ -235,7 +239,21 @@ app.delete('/api/users/:id', mongoChecker, authenticate, async (req, res) => {
 
 })
 
+//GET all courses
 
+app.get('/api/courses',mongoChecker,authenticate, async(req, res)=> {
+        try {
+            const courses = await Course.find()
+            if (!courses) {
+                res.status(404).send("Missing Resource")
+                return
+            }
+            res.status(200).send({courses})
+        } catch (error) {
+            res.status(500).send("Internal Server error")
+        }
+    }
+)
 /*
 params: id
 send: course with corresponding id
