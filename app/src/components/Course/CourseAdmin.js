@@ -157,7 +157,7 @@ export default class CourseAdmin extends Component {
 
         return (
             <AdminLayout
-                appState={this.state}
+                app={this.props.app}
                 content={
                     <div>
                     <h1 className="courseCode theme-title">{this.state.courseCode}</h1>

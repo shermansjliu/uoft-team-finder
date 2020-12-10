@@ -92,7 +92,7 @@ export default class Course extends Component {
     });
     return (
       <StandardLayout
-        appState={this.state}
+        app={this.props.app}
         content={
           <div className="homeViewContent">
             <h1 className="courseCode theme-title">{this.state.courseCode}</h1>

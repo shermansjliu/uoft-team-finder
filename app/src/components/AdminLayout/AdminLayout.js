@@ -4,6 +4,7 @@ import { Row, Layout, Space, Button, Typography } from "antd";
 import "./style.css";
 import "../../App.css";
 import { Link } from "react-router-dom";
+import {logout} from "../Login/action";
 
 const { Sider, Content } = Layout;
 const { Title } = Typography;
@@ -12,7 +13,7 @@ const { Title } = Typography;
 
 class AdminLayout extends React.Component {
   render() {
-    const { title, content, appState } = this.props;
+    const { title, content, app } = this.props;
     return (
       <div>
         <Layout className="theme-content">
@@ -80,7 +81,10 @@ class AdminLayout extends React.Component {
             <footer>
               <Link to={"/"}>
                 <div className={"admin-footer"}>
-                  <LogoutOutlined className={"btn-color"} /> Log Out
+                  <Button shape="circle"
+                          icon={<LogoutOutlined className="sb-btn"/>}
+                          onClick={() => logout(app)}/>
+                 Log Out
                 </div>
               </Link>
             </footer>

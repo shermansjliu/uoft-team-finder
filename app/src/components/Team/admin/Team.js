@@ -104,7 +104,7 @@ class AdminTeam extends React.Component {
 
     return (
       <AdminLayout
-        appState={this.state}
+        app={this.props.app}
         content={
           <div>
             <TeamName

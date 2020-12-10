@@ -10,6 +10,7 @@ import Sky from 'react-sky';
 class LoginView extends React.Component {
   constructor(props) {
     super(props);
+    this.props.history.push("/");
     this.state = {
       autoLogin: false,
       user: null,
@@ -17,15 +18,12 @@ class LoginView extends React.Component {
       userPassword: "",
       msg: "",
       msgColor: "red",
-      users: [
-        { username: "user", password: "user", admin: false },
-        { username: "user2", password: "user2", admin: false },
-        { username: "admin", password: "admin", admin: true },
-      ],
+
     };
   }
 
   render() {
+    const { app } = this.props
     return (
       <div className="login-wrap">
         <div className="padding" />
@@ -59,7 +57,7 @@ class LoginView extends React.Component {
                   className="btn"
                   type="primary"
                   size={"large"}
-                  onClick={() => login(this)}
+                  onClick={() => login(this, app)}
                 >
                   Login
                 </Button>
