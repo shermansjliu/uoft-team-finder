@@ -6,9 +6,12 @@ import uuid from "react-uuid";
 import "../../App.css";
 import "./index.css";
 import axios from "axios"
+import endpoint, {ENDPOINT} from "../requests"
 import StandardLayout from "../StandardLayout/layout";
 
+
 const { Content } = Layout;
+
 
 export default class Course extends Component {
   constructor(props) {
@@ -82,9 +85,20 @@ export default class Course extends Component {
     };
   }
 
-  componentDidMount(){
+  async componentDidMount() {
+    try {
+      const response = await axios.get(`${ENDPOINT}/api/courses/`,{ method: "get"})
+      const data = await response.json()
+      console.log(data)
 
+    }catch(error){
+      console.log("Could not get course ",error)
+    }
   }
+
+
+
+
 
 
   handleInputChange = (e) => {
