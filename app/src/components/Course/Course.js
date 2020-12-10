@@ -5,6 +5,7 @@ import SearchBar from "./SearchBar";
 import uuid from "react-uuid";
 import "../../App.css";
 import "./index.css";
+import axios from "axios"
 import StandardLayout from "../StandardLayout/layout";
 
 const { Content } = Layout;
@@ -80,6 +81,11 @@ export default class Course extends Component {
       ],
     };
   }
+
+  componentDidMount(){
+
+  }
+
 
   handleInputChange = (e) => {
     this.setState({ searchRes: e.target.value });
