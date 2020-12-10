@@ -236,11 +236,102 @@ app.delete('/api/users/:id', mongoChecker, authenticate, async (req, res) => {
 })
 
 
-app.get('/api/courses', async(req, res)=> {})
-app.post('/api/courses', async(req, res)=> {})
-app.put('/api/courses', async(req, res)=> {})
-app.delete('/api/courses', async(req, res)=> {})
+/*
+params: id
+send: course with corresponding id
+ */
+app.get('/api/courses/:id',mongoChecker, authenticate, async(req, res)=> {
+    try {
+        const course = await Course.findOne({_id: req.params.id})
+        if (!course) {
+            res.status(404).send("Resource not Found")
+        } else {
+            res.status(200).send(course)
+        }
+    }
+    catch(error){
+        res.status(500).send("Internal Server Error`")
+    }
+})
 
+/*
+parmas: code - course Code
+
+* */
+app.post('/api/courses/:code',mongoChecker, authenticate, async(req, res)=> {
+    if(!req.session.admin){
+        res.status(401).send("User is not authenticated")
+        return
+    }
+
+    const course = Course.create({
+        courseCode: req.params.code,
+        teams: []
+    })
+        try{
+            const savedCourse = course.save()
+            res.status(200).send(savedCourse)
+
+        }catch(error){
+            res.status(500).send("Internal Server error")
+
+    }
+
+})
+
+/*
+params: id - the course being edited
+body {
+    courseCode: new Course code,
+    teams: list of new teams
+}
+send: updated sub document
+*/
+app.put('/api/courses/:id', mongoChecker, authenticate, async(req, res)=> {
+    if(!req.session.admin){
+        res.status(401).send("User is not authenticated")
+        return
+    }try {
+        const course = await Course.findById(req.params.id)
+        if (!course){
+            res.status(404).send("Resource not found")
+
+        }else {
+            course.courseCode = req.body.courseCode
+            course.teams = req.body.teams
+        }
+        const updatedCourse = await course.save()
+        res.status(200).send(updatedCourse)
+
+    }catch(error){
+        res.status(500).send("Internal Server Error")
+    }
+
+})
+
+// params: id - the course being deleted
+//Send: {deletedCourse: <deletedCourse>, courses: <updated Courses document>}
+app.delete('/api/courses/:id', mongoChecker, authenticate, async(req, res)=> {
+    if(!req.session.admin){
+        res.status(401).send("User is not authenticated")
+        return
+    }
+
+    try {
+        const deletedCourse = Course.findByIdAndRemove();
+        if (!deletedCourse){
+            res.status(404).send("Resource not found")
+        }else{
+            const courses = await Course.find()
+            res.status(200).send({deletedCourse: deletedCourse, Courses: courses})
+        }
+
+
+    }catch (error) {
+        res.status(500).send("Internal Server Error")
+    }
+
+})
 /*
 params team_id
 
@@ -305,6 +396,7 @@ app.put('/api/teams/:team_id', async(req, res)=> {
                 res.status(404).send("Missing resource")
 
             }else {
+                //Spread operator creates a new object, but _id property is not updated so save updates original sub document4
                 team = {
                     ...team,
                     ...req.body
