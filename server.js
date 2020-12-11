@@ -272,7 +272,7 @@ app.delete('/api/users/:id', mongoChecker, authenticate, async (req, res) => {
 
 app.get('/api/courses', mongoChecker, async (req, res) => {
         try {
-            const courses = await Course.find()
+            const courses = await Course.find().populate("teams")
             if (!courses) {
                 res.status(404).send("Missing Resource")
                 return
@@ -390,7 +390,7 @@ app.get("/api/teams/", mongoChecker, authenticate, async (req, res) => {
     } catch (error) {
         res.status(500).send("Internal server error");
     }
-})
+    })
 
     /*
     params team_id
@@ -434,8 +434,9 @@ app.get("/api/teams/", mongoChecker, authenticate, async (req, res) => {
             }
             const team = new Team(req.body.teamInfo)
             course.teams.push(team._id)
-            if (!teamLeader) {
-                course.user_id = req.session.user
+
+            if (!req.body.teamLeader) {
+                course.user_id = req.session.user_id
             } else {
                 const teamLeader = await User.findOne({username: req.body.teamLeader})
                 if (!teamLeader) {
