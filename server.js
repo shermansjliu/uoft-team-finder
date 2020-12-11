@@ -379,7 +379,7 @@ body{
 }
 send: {team: <created team sub document> course: <updated course sub document>
 * */
-app.post('/api/teams:course_id', mongoChecker, authenticate, async(req, res)=> {
+app.post('/api/teams/:course_id', mongoChecker, authenticate, async(req, res)=> {
     try{
         const course = Course.findById(req.params.course_id)
         if(!course){
@@ -388,7 +388,7 @@ app.post('/api/teams:course_id', mongoChecker, authenticate, async(req, res)=> {
         }
         const team = new Team(req.body)
         const savedTeam = await team.save()
-        course.teams.new(req.body)
+        course.teams.push(team._id)
         if (!savedTeam){
             res.status(400).send("Bad Parameter Input")
         }else{
@@ -487,4 +487,4 @@ app.get("*", (req, res) => {
 const port = process.env.PORT || 5000;
 app.listen(port, () => {
     log(`Listening on port ${port}...`);
-});
+})
