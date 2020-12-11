@@ -17,6 +17,7 @@ class AdminTeam extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      teamID: "",
       currentUser: { _id: "ShermanID", name: "Sherman" },
       teamLeaderID: "ShermanID",
       members: [

@@ -23,6 +23,7 @@ class Team extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      teamID: "",
       currentUser: {
         _id: "ShermanID",
         name: "Sherman",
