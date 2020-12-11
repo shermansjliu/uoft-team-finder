@@ -287,9 +287,10 @@ app.get('/api/courses', mongoChecker, async (req, res) => {
 params: course_code
 send: A single course document with the corresponding course code
  */
-app.get('/api/courses/:course_code', mongoChecker, authenticate, async (req, res) => {
+app.get('/api/courses/:courseCode', mongoChecker, authenticate, async (req, res) => {
     try {
-        const course = await Course.findOne({_id: req.params.id})
+        const course = await Course.findOne({courseCode: req.params.courseCode})
+
         if (!course) {
             res.status(404).send("Resource not Found")
         } else {
