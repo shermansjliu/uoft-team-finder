@@ -12,70 +12,79 @@ import Admin from "./components/Admin/Admin";
 import Profile from "./components/Profile/Profile";
 import AdminTeam from "./components/Team/admin/Team";
 import AdminUsers from "./components/AdminUsers/AdminUsers";
+import {checkSession} from "./actions/users";
 
 
 class App extends React.Component {
+  constructor(props) {
+    super(props);
+    checkSession(this); // sees if a user is logged in.
+  }
+  // global state passed down includes the current logged in user.
   state = {
-    users: [
-      { username: "Jack", password: "123456", admin: false },
-      { username: "admin", password: "admin", admin: true },
-    ],
-  };
+    currentUser: null,
+    admin: false
+  }
 
   render() {
+    const {currentUser, admin} = this.state;
     return (
       <div>
         <BrowserRouter>
           <Switch>
             <Route
-              exact
-              path="/"
-              render={() => <Login appState={this.state} />}
+                exact path={["/", "/login", "/Home"] /* any of these URLs are accepted. */ }
+                render={ props => (
+                    <div className="app">
+                      { /* Different componenets rendered depending on if someone is logged in. */}
+                      {!currentUser ? <Login {...props} app={this} /> : <Home {...props} app={this} />}
+                    </div>
+                )}
             />
+
             <Route
-              exact
-              path="/Home"
-              render={() => <Home appState={this.state} />}
+                exact path="/Admin"
+                render={props => (
+                    <div className="app">
+                      {(this.state.currentUser && this.state.admin) ? <Admin app={this} /> : <Login  app={this} />}
+                    </div>
+                )}
             />
-            <Route
-              exact
-              path="/Admin"
-              render={() => <Admin appState={this.state} />}
-            />
+
             <Route
               exact
               path="/Profile"
-              render={() => <Profile appState={this.state} />}
+              render={() => <Profile app={this} />}
             />
             <Route
               exact
               path="/Course"
-              render={() => <Course appState={this.state} />}
+              render={() => <Course app={this} />}
             />
             <Route
               exact
               path="/CourseAdmin"
-              render={() => <CourseAdmin appState={this.state} />}
+              render={() => <CourseAdmin app={this} />}
             />
             <Route
               exact
               path="/Team"
-              render={() => <Team appState={this.state} />}
+              render={() => <Team app={this} />}
             />
             <Route
               exact
               path="/Profile"
-              render={() => <Profile appState={this.state} />}
+              render={() => <Profile app={this} />}
             />
             <Route
               exact
               path="/teamAdmin"
-              render={() => <AdminTeam appState={this.state} />}
+              render={() => <AdminTeam app={this} />}
             />
             <Route
                 exact
                 path="/AdminUsers"
-                render={() => <AdminUsers appState={this.state} />}
+                render={() => <AdminUsers app={this} />}
             />
           </Switch>
         </BrowserRouter>

@@ -72,7 +72,7 @@ class Admin extends Component {
           content={
             <AdminGrid />
           }
-          appState={this.state}
+          app={this.props.app}
         />
       );
     } else {

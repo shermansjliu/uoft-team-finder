@@ -142,7 +142,7 @@ class Team extends React.Component {
     return (
       <div>
         <StandardLayout
-          appState={this.state}
+          app={this.props.app}
           content={
             <div className="teamViewContent">
               <TeamName

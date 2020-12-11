@@ -97,6 +97,7 @@ class AdminUsers extends React.Component {
         console.log("filtered", filteredData);
         return (
             <AdminLayout
+                app = {this.props.app}
                 content={
                     <div>
                         <h1 className="courseCode theme-title">{"Users"}</h1>

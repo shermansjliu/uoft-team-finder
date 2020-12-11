@@ -57,7 +57,7 @@ const mongoChecker = (req, res, next) => {
     }
 };
 
-// Middleware for authentication of resources
+// Middleware for authentication
 const authenticate = (req, res, next) => {
     // if (req.session.user) {
     //     User.findById(req.session.user)
@@ -77,14 +77,12 @@ const authenticate = (req, res, next) => {
     //     res.status(401).send("Unauthorized");
     // }
     next()
-};
+}
 
 function createDummyAdmin(req, res, next) {
     req.session.admin = true
-    req.session.username =
-        next()
+    next()
 }
-
 
 /*** Session handling **************************************/
 // Create a session and session cookie
@@ -117,11 +115,12 @@ app.post("/users/login", (req, res) => {
             // We can check later if this exists to ensure we are logged in.
             req.session.user = user._id;
             req.session.username = user.username; // we will later send the username to the browser when checking if someone is logged in through GET /check-session (we will display it on the frontend dashboard. You could however also just send a boolean flag).
-            // req.session.admin = user.admin;
-            req.session.admin = true
-            res.send({currentUser: user.username});
+            req.session.admin = user.admin;
+            // req.session.admin = true
+            res.send({currentUser: user.username, admin: user.admin});
         })
         .catch((error) => {
+            console.log(error);
             res.status(400).send();
             //TODO prompt Invalid Login in front end
         });
@@ -142,17 +141,22 @@ app.get("/users/logout", (req, res) => {
 // A route to check if a user is logged in on the session
 app.get("/users/check-session", (req, res) => {
     if (req.session.user) {
-        res.send({currentUser: req.session.username});
+        res.send({
+            currentUser: req.session.username,
+            admin: req.session.admin
+        });
     } else {
         res.status(401).send();
     }
 });
 
 /*********************************************************/
+
 /*** API Routes below ************************************/
 // a GET route to get all users
 app.get("/api/users", mongoChecker, authenticate, async (req, res) => {
-    // Get the students
+    // Get all the user
+    // only admin can get all users info
     try {
         const users = await User.find();
         res.send({users}); // just the array
@@ -163,19 +167,19 @@ app.get("/api/users", mongoChecker, authenticate, async (req, res) => {
 })
 
 // User API Route
-/*
-body {
-    username:
-    password:
-    admin:
-    major
-    description
-    year
-    CGPA
-}
+    /*
+    body {
+        username:
+        password:
+        admin:
+        major
+        description
+        year
+        CGPA
+    }
 
- */
-app.post("/api/users", mongoChecker, authenticate, async (req, res) => {
+     */
+    app.post("/api/users", mongoChecker, authenticate, async (req, res) => {
     // Create a new user
 
     const user = new User({
@@ -206,6 +210,24 @@ app.post("/api/users", mongoChecker, authenticate, async (req, res) => {
     }
 });
 
+/*
+Params: username that will be viewed
+ */
+app.get("/api/users/:username", mongoChecker, async (req, res) => {
+
+    try {
+        const user = await User.find({username: req.params.username})
+        if (!user) {
+            res.status(404).send("No such a user")
+        } else {
+            res.status(200).send(user)
+        }
+
+    } catch (error) {
+        log(error)
+        res.status(500).send("Internal Server Error")
+    }
+});
 
 /*
 Params: user id that will be edited
@@ -298,7 +320,7 @@ app.get('/api/courses/:courseCode', mongoChecker, authenticate, async (req, res)
         }
     } catch (error) {
         res.status(500).send("Internal Server Error`")
-    }
+}
 })
 /*
 parmas: code - course Code
@@ -531,6 +553,7 @@ app.get("*", (req, res) => {
     // check for page routes that we expect in the frontend to provide correct status code.
     const goodPageRoutes = [
         "/",
+        "/login",
         "/Home",
         "/Course",
         "/Team",

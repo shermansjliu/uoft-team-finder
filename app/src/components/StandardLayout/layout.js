@@ -12,11 +12,11 @@ class StandardLayout extends React.Component {
   state = {};
 
   render() {
-    const { image, title, content } = this.props;
+    const { image, title, content, app} = this.props;
     return (
       <div>
         <Layout className="theme-content">
-          <Sidebar image={image} />
+          <Sidebar app={app}/>
           <Content className="content">
             <div className={"text-center"}>
               <Row>
