@@ -7,6 +7,9 @@ const express = require("express");
 const app = express();
 const path = require("path");
 
+const cors = require('cors');
+app.use(cors());
+
 // mongoose and mongo connection
 const {mongoose} = require("./db/mongoose");
 mongoose.set("useFindAndModify", false); // for some deprecation issues
@@ -25,6 +28,7 @@ const {ObjectID} = require("mongodb");
 // body-parser: middleware for parsing HTTP JSON body into a usable object
 const bodyParser = require("body-parser");
 app.use(bodyParser.json());
+
 
 // express-session for managing user sessions
 const session = require("express-session");
@@ -55,25 +59,30 @@ const mongoChecker = (req, res, next) => {
 
 // Middleware for authentication
 const authenticate = (req, res, next) => {
-    if (req.session.user) {
-        User.findById(req.session.user)
-            .then((user) => {
-                if (!user) {
-                    res.status(404).send("User not found");
-                    return Promise.reject();
-                } else {
-                    req.user = user;
-                    next();
-                }
-            })
-            .catch((error) => {
-                res.status(401).send("Unauthorized");
-            });
-    } else {
-        res.status(401).send("Unauthorized");
-    }
-};
+    // if (req.session.user) {
+    //     User.findById(req.session.user)
+    //         .then((user) => {
+    //             if (!user) {
+    //                 res.status(404).send("Missing resource");
+    //                 return Promise.reject();
+    //             } else {
+    //                 req.user = user;
+    //                 next();
+    //             }
+    //         })
+    //         .catch((error) => {
+    //             res.status(401).send("Unauthorized");
+    //         });
+    // } else {
+    //     res.status(401).send("Unauthorized");
+    // }
+    next()
+}
 
+function createDummyAdmin(req, res, next) {
+    req.session.admin = true
+    next()
+}
 
 /*** Session handling **************************************/
 // Create a session and session cookie
@@ -88,6 +97,9 @@ app.use(
         },
     })
 );
+
+
+app.use(createDummyAdmin)
 
 // A route to login and create a session
 app.post("/users/login", (req, res) => {
@@ -147,7 +159,7 @@ app.get("/api/users", mongoChecker, authenticate, async (req, res) => {
     // only admin can get all users info
     try {
         const users = await User.find();
-        res.send(users); // just the array
+        res.send({users}); // just the array
     } catch (error) {
         log(error);
         res.status(498).send("Internal Server Error");
@@ -155,13 +167,37 @@ app.get("/api/users", mongoChecker, authenticate, async (req, res) => {
 })
 
 // User API Route
-app.post("/api/users", mongoChecker, async (req, res) => {
-    // Register a new user
-    // everyone can register, no need for authenticate
-    const user = new User(req.body)
+    /*
+    body {
+        username:
+        password:
+        admin:
+        major
+        description
+        year
+        CGPA
+    }
+
+     */
+    app.post("/api/users", mongoChecker, authenticate, async (req, res) => {
+    // Create a new user
+
+    const user = new User({
+        ...req.body,
+        courses: [],
+        teams: [],
+        exps: [],
+    })
+
     try {
         // Save the user
+        const existingUser = await User.findOne({username: req.body.username})
+        if (existingUser) {
+            res.status(400).send("Bad Request: username already exists")
+            return
+        }
         const newUser = await user.save();
+
         res.status(200).send(newUser);
     } catch (error) {
         if (isMongoError(error)) {
@@ -236,8 +272,8 @@ send {deletedUser}
  */
 
 app.delete('/api/users/:id', mongoChecker, authenticate, async (req, res) => {
-    if (!req.session.admin){
-        res.status(401).send("User not authorized")
+    if (!req.session.admin) {
+        res.status(401).send("ssss not authorized")
         return
     }
     try {
@@ -254,45 +290,58 @@ app.delete('/api/users/:id', mongoChecker, authenticate, async (req, res) => {
 
 })
 
+//GET all courses
 
+app.get('/api/courses', mongoChecker, async (req, res) => {
+        try {
+            const courses = await Course.find().populate("teams")
+            if (!courses) {
+                res.status(404).send("Missing Resource")
+                return
+            }
+            res.status(200).send({courses})
+        } catch (error) {
+            res.status(500).send("Internal Server error")
+        }
+    }
+)
 /*
-params: id
-send: course with corresponding id
+params: course_code
+send: A single course document with the corresponding course code
  */
-app.get('/api/courses/:id',mongoChecker, authenticate, async(req, res)=> {
+app.get('/api/courses/:courseCode', mongoChecker, authenticate, async (req, res) => {
     try {
-        const course = await Course.findOne({_id: req.params.id})
+        const course = await Course.findOne({courseCode: req.params.courseCode}).populate('teams')
+
         if (!course) {
             res.status(404).send("Resource not Found")
         } else {
             res.status(200).send(course)
         }
-    }
-    catch(error){
+    } catch (error) {
         res.status(500).send("Internal Server Error`")
-    }
+}
 })
-
 /*
 parmas: code - course Code
 
 * */
-app.post('/api/courses/:code',mongoChecker, authenticate, async(req, res)=> {
-    if(!req.session.admin){
+app.post('/api/courses/:code', mongoChecker, authenticate, async (req, res) => {
+    if (!req.session.admin) {
         res.status(401).send("User is not authenticated")
         return
     }
 
-    const course = Course.create({
+    const course = new Course({
         courseCode: req.params.code,
         teams: []
     })
-        try{
-            const savedCourse = course.save()
-            res.status(200).send(savedCourse)
+    try {
+        const savedCourse = await course.save()
+        res.status(200).send(savedCourse)
 
-        }catch(error){
-            res.status(500).send("Internal Server error")
+    } catch (error) {
+        res.status(500).send("Internal Server error")
 
     }
 
@@ -306,23 +355,24 @@ body {
 }
 send: updated sub document
 */
-app.put('/api/courses/:id', mongoChecker, authenticate, async(req, res)=> {
-    if(!req.session.admin){
+app.put('/api/courses/:id', mongoChecker, authenticate, async (req, res) => {
+    if (!req.session.admin) {
         res.status(401).send("User is not authenticated")
         return
-    }try {
+    }
+    try {
         const course = await Course.findById(req.params.id)
-        if (!course){
+        if (!course) {
             res.status(404).send("Resource not found")
 
-        }else {
+        } else {
             course.courseCode = req.body.courseCode
             course.teams = req.body.teams
         }
         const updatedCourse = await course.save()
         res.status(200).send(updatedCourse)
 
-    }catch(error){
+    } catch (error) {
         res.status(500).send("Internal Server Error")
     }
 
@@ -330,43 +380,57 @@ app.put('/api/courses/:id', mongoChecker, authenticate, async(req, res)=> {
 
 // params: id - the course being deleted
 //Send: {deletedCourse: <deletedCourse>, courses: <updated Courses document>}
-app.delete('/api/courses/:id', mongoChecker, authenticate, async(req, res)=> {
-    if(!req.session.admin){
+app.delete('/api/courses/:id', mongoChecker, authenticate, async (req, res) => {
+    if (!req.session.admin) {
         res.status(401).send("User is not authenticated")
         return
     }
 
     try {
         const deletedCourse = Course.findByIdAndRemove();
-        if (!deletedCourse){
+        if (!deletedCourse) {
             res.status(404).send("Resource not found")
-        }else{
+        } else {
             const courses = await Course.find()
             res.status(200).send({deletedCourse: deletedCourse, Courses: courses})
         }
 
 
-    }catch (error) {
+    } catch (error) {
         res.status(500).send("Internal Server Error")
     }
 
 })
+
+app.get("/api/teams/", mongoChecker, authenticate, async (req, res) => {
+    try {
+        const team = await Team.find().populate("teamLeader").populate("members");
+        if (!team) {
+            res.status(404).send("Missing resource");
+        } else {
+            res.status(200).send(team);
+        }
+    } catch (error) {
+        res.status(500).send("Internal server error");
+    }
+})
+
 /*
 params team_id
 
 send: team with team_id
  */
-app.get('/api/teams/:team_id', mongoChecker, authenticate, async(req, res)=> {
-    try{
 
-       const team = await Team.findById(req.params.id)
-        if(!team) {
+app.get('/api/teams/:team_id', mongoChecker, authenticate, async (req, res) => {
+    try {
+
+        const team = await Team.findById(req.params.id)
+        if (!team) {
             res.status(404).send("Missing resource")
-        }
-        else {
+        } else {
             res.status(200).send(team)
         }
-    }catch(error){
+    } catch (error) {
         res.status(500).send("Internal server error")
     }
 
@@ -376,26 +440,50 @@ app.get('/api/teams/:team_id', mongoChecker, authenticate, async(req, res)=> {
 /*
 params: course_id
 body{
- proper parameters of a team
+    teamInfo{
+        relevant team Info
+    }
+    teamLeader: username of the assigned team leader. Undefined if User is creating a new team
 }
 send: {team: <created team sub document> course: <updated course sub document>
 * */
-app.post('/api/teams:course_id', mongoChecker, authenticate, async(req, res)=> {
-    try{
-        const course = Course.findById(req.params.course_id)
-        if(!course){
+app.post('/api/teams/:course_id', mongoChecker, authenticate, async (req, res) => {
+    try {
+        const course = await Course.findById(req.params.course_id)
+
+        if (!course) {
             res.status(404).send("Missing Resource")
             return
         }
-        const team = new Team(req.body)
-        const savedTeam = await team.save()
-        course.teams.new(req.body)
-        if (!savedTeam){
-            res.status(400).send("Bad Parameter Input")
+
+
+
+
+        let teamLeader_id = null
+        if (!req.body.teamLeader){
+            teamLeader_id = req.session.user
         }else{
-            res.status(200).send({team: savedTeam, course: course })
+            const teamLeader = await User.findOne({username: req.body.teamLeader})
+            if (!teamLeader) {
+                res.status(404).send("Missing Resource: Team leader does not exist")
+                return
+            }
+            teamLeader_id = teamLeader._id
         }
-    }catch(error){
+
+        const team = new Team(req.body.teamInfo)
+        team.teamLeader = teamLeader_id
+        course.teams.push(team._id)
+        const savedCourse = await course.save()
+        const savedTeam = await team.save()
+
+
+        if (!savedTeam || !savedCourse) {
+            res.status(400).send("Bad Parameter Input")
+        } else {
+            res.status(200).send({team: savedTeam.populate('teams'), course: course})
+        }
+    } catch (error) {
         res.status(500).send("Internal Server Error")
     }
 })
@@ -405,16 +493,16 @@ params: team_id
 Body: New team attributes
 send : Updated team sub document
  */
-app.put('/api/teams/:team_id', async(req, res)=> {
-    if(!res.session.admin){
+app.put('/api/teams/:team_id', async (req, res) => {
+    if (!res.session.admin) {
         res.status(401).send("user is not authorized")
-    }else {
-        try{
+    } else {
+        try {
             let team = await Team.findById(req.params.team_id)
-            if (!team){
+            if (!team) {
                 res.status(404).send("Missing resource")
 
-            }else {
+            } else {
                 //Spread operator creates a new object, but _id property is not updated so save updates original sub document4
                 team = {
                     ...team,
@@ -424,7 +512,7 @@ app.put('/api/teams/:team_id', async(req, res)=> {
                 res.status(200).send(updatedTeam)
             }
 
-        }catch(error){
+        } catch (error) {
             res.status(500).send("internal server error")
         }
     }
@@ -436,11 +524,11 @@ app.put('/api/teams/:team_id', async(req, res)=> {
 
  send: The team that was deleted
  */
-app.delete('/api/teams:team_id', async(req, res)=> {
+app.delete('/api/teams:team_id', async (req, res) => {
 
-    if(!res.session.admin){
+    if (!res.session.admin) {
         res.status(401).send("user is not authorized")
-    }else {
+    } else {
         try {
             let team = await Team.findByIdAndRemove(req.params.team_id)
             if (!team) {
@@ -449,8 +537,8 @@ app.delete('/api/teams:team_id', async(req, res)=> {
             } else {
                 res.status(200).send(team)
             }
-        }catch(error) {
-           res.stats(500).send("Internal server error")
+        } catch (error) {
+            res.stats(500).send("Internal server error")
         }
     }
 })
@@ -489,4 +577,4 @@ app.get("*", (req, res) => {
 const port = process.env.PORT || 5000;
 app.listen(port, () => {
     log(`Listening on port ${port}...`);
-});
+})
