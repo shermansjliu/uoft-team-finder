@@ -498,6 +498,32 @@ app.put("/api/teams/new_leader/:team_id/:user_id", async (req, res) => {
   // }
 });
 
+// change teamName, teamCapacity, or teamDescription
+app.put("/api/teams/:team_id/:attribute/:value", async (req, res) => {
+  // if (!res.session.admin) {
+  //   res.status(401).send("user is not authorized");
+  // } else {
+  try {
+    let team = await Team.findById(req.params.team_id);
+    if (!team) {
+      res.status(404).send("Missing resource");
+    } else {
+      if (req.params.attribute === "teamName") {
+        team.teamName = req.params.value;
+      } else if (req.params.attribute === "teamDescription") {
+        team.teamDescription = req.params.value;
+      } else if (req.params.attribute === "teamCapacity") {
+        team.teamCapacity = req.params.value;
+      }
+      const updatedTeam = await team.save();
+      res.status(200).send({ team: updatedTeam });
+    }
+  } catch (error) {
+    res.status(500).send("internal server error!");
+  }
+  // }
+});
+
 /*
  params: team_id
 

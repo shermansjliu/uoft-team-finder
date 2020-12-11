@@ -148,15 +148,33 @@ class Team extends React.Component {
     if (newName === "") {
       alert("Name cannot be empty!");
     } else {
+      axios.put(
+        `${ENDPOINT}/api/teams/${this.state.teamID}/teamName/${newName}`,
+        {
+          method: "put",
+        }
+      );
       this.setState({ teamName: newName.toUpperCase() });
     }
   }
 
   setDescription(newDescription) {
+    axios.put(
+      `${ENDPOINT}/api/teams/${this.state.teamID}/teamDescription/${newDescription}`,
+      {
+        method: "put",
+      }
+    );
     this.setState({ teamDescription: newDescription });
   }
 
   setCapacity(newCapacity) {
+    axios.put(
+      `${ENDPOINT}/api/teams/${this.state.teamID}/teamCapacity/${newCapacity}`,
+      {
+        method: "put",
+      }
+    );
     this.setState({ teamCapacity: newCapacity });
   }
 
@@ -181,6 +199,7 @@ class Team extends React.Component {
                 isLeaderView={this.state.view === "teamLeaderView"}
                 setDescription={this.setDescription}
               />
+              {this.state.view}
               <MemberTable
                 view={this.state.view}
                 teamLeaderID={this.state.teamLeaderID}
