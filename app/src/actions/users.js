@@ -1,4 +1,6 @@
 // Send a request to check if a user is logged in through the session cookie
+import bkimg from "../img/home-books.jpg";
+
 export const checkSession = (app) => {
     const url = "/users/check-session";
 

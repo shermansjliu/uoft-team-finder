@@ -21,7 +21,8 @@ const UserSchema = new mongoose.Schema({
     validate: {
       validator: validator.isAlphanumeric,
       message: 'Not valid username'
-    }
+    },
+    tags: [String]
   },
   password: {
     type: String,
