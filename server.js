@@ -82,7 +82,7 @@ const authenticate = (req, res, next) => {
 function createDummyAdmin(req, res, next) {
     req.session.admin = true
     req.session.username =
-    next()
+        next()
 }
 
 
@@ -99,7 +99,6 @@ app.use(
         },
     })
 );
-
 
 
 app.use(createDummyAdmin)
@@ -173,25 +172,23 @@ body {
     description
     year
     CGPA
-
-
-
 }
 
  */
 app.post("/api/users", mongoChecker, authenticate, async (req, res) => {
     // Create a new user
 
-    const user = new User({...req.body,
+    const user = new User({
+        ...req.body,
         courses: [],
         teams: [],
-        exps:[],
+        exps: [],
     })
 
     try {
         // Save the user
-        const existingUser = await User.findOne({username: req.body.username })
-        if (existingUser){
+        const existingUser = await User.findOne({username: req.body.username})
+        if (existingUser) {
             res.status(400).send("Bad Request: username already exists")
             return
         }
@@ -219,7 +216,7 @@ body {
  */
 app.put("/api/users/:id", mongoChecker, authenticate, async (req, res) => {
 
-    if (!req.session.admin){
+    if (!req.session.admin) {
         res.status(401).send("User not authorized")
         return
     }
@@ -253,7 +250,7 @@ send {deletedUser}
  */
 
 app.delete('/api/users/:id', mongoChecker, authenticate, async (req, res) => {
-    if (!req.session.admin){
+    if (!req.session.admin) {
         res.status(401).send("ssss not authorized")
         return
     }
@@ -273,7 +270,7 @@ app.delete('/api/users/:id', mongoChecker, authenticate, async (req, res) => {
 
 //GET all courses
 
-app.get('/api/courses',mongoChecker, async(req, res)=> {
+app.get('/api/courses', mongoChecker, async (req, res) => {
         try {
             const courses = await Course.find()
             if (!courses) {
@@ -290,7 +287,7 @@ app.get('/api/courses',mongoChecker, async(req, res)=> {
 params: id
 send: course with corresponding id
  */
-app.get('/api/courses/:id',mongoChecker, authenticate, async(req, res)=> {
+app.get('/api/courses/:id', mongoChecker, authenticate, async (req, res) => {
     try {
         const course = await Course.findOne({_id: req.params.id})
         if (!course) {
@@ -298,8 +295,7 @@ app.get('/api/courses/:id',mongoChecker, authenticate, async(req, res)=> {
         } else {
             res.status(200).send(course)
         }
-    }
-    catch(error){
+    } catch (error) {
         res.status(500).send("Internal Server Error`")
     }
 })
@@ -307,8 +303,8 @@ app.get('/api/courses/:id',mongoChecker, authenticate, async(req, res)=> {
 parmas: code - course Code
 
 * */
-app.post('/api/courses/:code',mongoChecker, authenticate ,async(req, res)=> {
-    if(!req.session.admin){
+app.post('/api/courses/:code', mongoChecker, authenticate, async (req, res) => {
+    if (!req.session.admin) {
         res.status(401).send("User is not authenticated")
         return
     }
@@ -317,12 +313,12 @@ app.post('/api/courses/:code',mongoChecker, authenticate ,async(req, res)=> {
         courseCode: req.params.code,
         teams: []
     })
-        try{
-            const savedCourse = await course.save()
-            res.status(200).send(savedCourse)
+    try {
+        const savedCourse = await course.save()
+        res.status(200).send(savedCourse)
 
-        }catch(error){
-            res.status(500).send("Internal Server error")
+    } catch (error) {
+        res.status(500).send("Internal Server error")
 
     }
 
@@ -336,23 +332,24 @@ body {
 }
 send: updated sub document
 */
-app.put('/api/courses/:id', mongoChecker, authenticate, async(req, res)=> {
-    if(!req.session.admin){
+app.put('/api/courses/:id', mongoChecker, authenticate, async (req, res) => {
+    if (!req.session.admin) {
         res.status(401).send("User is not authenticated")
         return
-    }try {
+    }
+    try {
         const course = await Course.findById(req.params.id)
-        if (!course){
+        if (!course) {
             res.status(404).send("Resource not found")
 
-        }else {
+        } else {
             course.courseCode = req.body.courseCode
             course.teams = req.body.teams
         }
         const updatedCourse = await course.save()
         res.status(200).send(updatedCourse)
 
-    }catch(error){
+    } catch (error) {
         res.status(500).send("Internal Server Error")
     }
 
@@ -360,180 +357,193 @@ app.put('/api/courses/:id', mongoChecker, authenticate, async(req, res)=> {
 
 // params: id - the course being deleted
 //Send: {deletedCourse: <deletedCourse>, courses: <updated Courses document>}
-app.delete('/api/courses/:id', mongoChecker, authenticate, async(req, res)=> {
-    if(!req.session.admin){
+app.delete('/api/courses/:id', mongoChecker, authenticate, async (req, res) => {
+    if (!req.session.admin) {
         res.status(401).send("User is not authenticated")
         return
     }
 
     try {
         const deletedCourse = Course.findByIdAndRemove();
-        if (!deletedCourse){
+        if (!deletedCourse) {
             res.status(404).send("Resource not found")
-        }else{
+        } else {
             const courses = await Course.find()
             res.status(200).send({deletedCourse: deletedCourse, Courses: courses})
         }
 
 
-    }catch (error) {
+    } catch (error) {
         res.status(500).send("Internal Server Error")
     }
 
 })
-/*
-params team_id
 
-send: team with team_id
- */
-app.get('/api/teams/:team_id', mongoChecker, authenticate, async(req, res)=> {
-    try{
-
-       const team = await Team.findById(req.params.id)
-        if(!team) {
-            res.status(404).send("Missing resource")
+app.get("/api/teams/", mongoChecker, authenticate, async (req, res) => {
+    try {
+        const team = await Team.find().populate("teamLeader").populate("members");
+        if (!team) {
+            res.status(404).send("Missing resource");
+        } else {
+            res.status(200).send(team);
         }
-        else {
-            res.status(200).send(team)
-        }
-    }catch(error){
-        res.status(500).send("Internal server error")
-    }
-
-
-})
-
-/*
-params: course_id
-body{
-    teamInfo{
-        relevant team Info
-    }
-    teamLeader: username of the assigned team leader. Undefined if User is creating a new team
-}
-send: {team: <created team sub document> course: <updated course sub document>
-* */
-app.post('/api/teams/:course_id', mongoChecker, async(req, res)=> {
-    try{
-        const course = await Course.findById(req.params.course_id)
-
-
-        if(!course || !user){
-            res.status(404).send("Missing Resource")
-            return
-        }
-        const team = new Team(req.body.teamInfo)
-        course.teams.push(team._id)
-        if (!teamLeader){
-            course.user_id = req.session.user
-        }else {
-            const teamLeader = await User.findOne({username:req.body.teamLeader})
-            if(!teamLeader){
-                res.status(404).send("Missing Resource: Team leader does not exist")
-                return
-            }
-            course.user_id = teamLeader._id
-        }
-
-        const savedTeam = await team.save()
-        const savedCourse = await course.save()
-
-        if (!savedTeam || !savedCourse){
-            res.status(400).send("Bad Parameter Input")
-        }else{
-            res.status(200).send({team: savedTeam, course: course })
-        }
-    }catch(error){
-        res.status(500).send("Internal Server Error")
+    } catch (error) {
+        res.status(500).send("Internal server error");
     }
 })
 
-/*
-params: team_id
-Body: New team attributes
-send : Updated team sub document
- */
-app.put('/api/teams/:team_id', async(req, res)=> {
-    if(!res.session.admin){
-        res.status(401).send("user is not authorized")
-    }else {
-        try{
-            let team = await Team.findById(req.params.team_id)
-            if (!team){
-                res.status(404).send("Missing resource")
+    /*
+    params team_id
 
-            }else {
-                //Spread operator creates a new object, but _id property is not updated so save updates original sub document4
-                team = {
-                    ...team,
-                    ...req.body
-                }
-                const updatedTeam = await team.save()
-                res.status(200).send(updatedTeam)
-            }
+    send: team with team_id
+     */
 
-        }catch(error){
-            res.status(500).send("internal server error")
-        }
-    }
-
-})
-
-/*
- params: team_id
-
- send: The team that was deleted
- */
-app.delete('/api/teams:team_id', async(req, res)=> {
-
-    if(!res.session.admin){
-        res.status(401).send("user is not authorized")
-    }else {
+    app.get('/api/teams/:team_id', mongoChecker, authenticate, async (req, res) => {
         try {
-            let team = await Team.findByIdAndRemove(req.params.team_id)
+
+            const team = await Team.findById(req.params.id)
             if (!team) {
                 res.status(404).send("Missing resource")
-
             } else {
                 res.status(200).send(team)
             }
-        }catch(error) {
-           res.stats(500).send("Internal server error")
+        } catch (error) {
+            res.status(500).send("Internal server error")
         }
+
+
+    })
+
+    /*
+    params: course_id
+    body{
+        teamInfo{
+            relevant team Info
+        }
+        teamLeader: username of the assigned team leader. Undefined if User is creating a new team
     }
-})
+    send: {team: <created team sub document> course: <updated course sub document>
+    * */
+    app.post('/api/teams/:course_id', mongoChecker, authenticate, async (req, res) => {
+        try {
+            const course = await Course.findById(req.params.course_id)
+
+            if (!course || !user) {
+                res.status(404).send("Missing Resource")
+                return
+            }
+            const team = new Team(req.body.teamInfo)
+            course.teams.push(team._id)
+            if (!teamLeader) {
+                course.user_id = req.session.user
+            } else {
+                const teamLeader = await User.findOne({username: req.body.teamLeader})
+                if (!teamLeader) {
+                    res.status(404).send("Missing Resource: Team leader does not exist")
+                    return
+                }
+                course.user_id = teamLeader._id
+            }
+
+            const savedTeam = await team.save()
+            const savedCourse = await course.save()
+
+            if (!savedTeam || !savedCourse) {
+                res.status(400).send("Bad Parameter Input")
+            } else {
+                res.status(200).send({team: savedTeam, course: course})
+            }
+        } catch (error) {
+            res.status(500).send("Internal Server Error")
+        }
+    })
+
+    /*
+    params: team_id
+    Body: New team attributes
+    send : Updated team sub document
+     */
+    app.put('/api/teams/:team_id', async (req, res) => {
+        if (!res.session.admin) {
+            res.status(401).send("user is not authorized")
+        } else {
+            try {
+                let team = await Team.findById(req.params.team_id)
+                if (!team) {
+                    res.status(404).send("Missing resource")
+
+                } else {
+                    //Spread operator creates a new object, but _id property is not updated so save updates original sub document4
+                    team = {
+                        ...team,
+                        ...req.body
+                    }
+                    const updatedTeam = await team.save()
+                    res.status(200).send(updatedTeam)
+                }
+
+            } catch (error) {
+                res.status(500).send("internal server error")
+            }
+        }
+
+    })
+
+    /*
+     params: team_id
+
+     send: The team that was deleted
+     */
+    app.delete('/api/teams:team_id', async (req, res) => {
+
+        if (!res.session.admin) {
+            res.status(401).send("user is not authorized")
+        } else {
+            try {
+                let team = await Team.findByIdAndRemove(req.params.team_id)
+                if (!team) {
+                    res.status(404).send("Missing resource")
+
+                } else {
+                    res.status(200).send(team)
+                }
+            } catch (error) {
+                res.stats(500).send("Internal server error")
+            }
+        }
+    })
 
 
-/*** Webpage routes below **********************************/
+    /*** Webpage routes below **********************************/
 // Serve the build
-app.use(express.static(path.join(__dirname, "/app/build")));
+    app.use(express.static(path.join(__dirname, "/app/build")));
 
 // All routes other than above will go to index.html
-app.get("*", (req, res) => {
-    // check for page routes that we expect in the frontend to provide correct status code.
-    const goodPageRoutes = [
-        "/",
-        "/Home",
-        "/Course",
-        "/Team",
-        "/Profile",
-        "/Admin",
-        "/CourseAdmin",
-        "/teamAdmin",
-        "/AdminUsers",
-    ];
-    if (!goodPageRoutes.includes(req.url)) {
-        // if url not in expected page routes, set status to 404.
-        res.status(404);
-    }
+    app.get("*", (req, res) => {
+        // check for page routes that we expect in the frontend to provide correct status code.
+        const goodPageRoutes = [
+            "/",
+            "/Home",
+            "/Course",
+            "/Team",
+            "/Profile",
+            "/Admin",
+            "/CourseAdmin",
+            "/teamAdmin",
+            "/AdminUsers",
+        ];
+        if (!goodPageRoutes.includes(req.url)) {
+            // if url not in expected page routes, set status to 404.
+            res.status(404);
+        }
 
-    // send index.html
-    res.sendFile(path.join(__dirname, "/app/build/index.html"));
-});
+        // send index.html
+        res.sendFile(path.join(__dirname, "/app/build/index.html"));
+    });
 
-/*************************************************/
+    /*************************************************/
 // Express server listening...
-const port = process.env.PORT || 5000;
-app.listen(port, () => {
-    log(`Listening on port ${port}...`);
-})
+    const port = process.env.PORT || 5000;
+    app.listen(port, () => {
+        log(`Listening on port ${port}...`);
+    })
