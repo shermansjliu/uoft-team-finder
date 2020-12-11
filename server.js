@@ -367,25 +367,25 @@ body{
 }
 send: {team: <created team sub document> course: <updated course sub document>
 * */
-// app.post("/api/teams:course_id", mongoChecker, async (req, res) => {
-//   try {
-//     const course = Course.findById(req.params.course_id);
-//     if (!course) {
-//       res.status(404).send("Missing Resource");
-//       return;
-//     }
-//     const team = new Team(req.body);
-//     const savedTeam = await team.save();
-//     course.teams.new(req.body);
-//     if (!savedTeam) {
-//       res.status(400).send("Bad Parameter Input");
-//     } else {
-//       res.status(200).send({ team: savedTeam, course: course });
-//     }
-//   } catch (error) {
-//     res.status(500).send("Internal Server Error");
-//   }
-// });
+app.post("/api/teams:course_id", mongoChecker, async (req, res) => {
+  try {
+    const course = Course.findById(req.params.course_id);
+    if (!course) {
+      res.status(404).send("Missing Resource");
+      return;
+    }
+    const team = new Team(req.body);
+    const savedTeam = await team.save();
+    course.teams.new(req.body);
+    if (!savedTeam) {
+      res.status(400).send("Bad Parameter Input");
+    } else {
+      res.status(200).send({ team: savedTeam, course: course });
+    }
+  } catch (error) {
+    res.status(500).send("Internal Server Error");
+  }
+});
 
 app.post("/api/teams", mongoChecker, async (req, res) => {
   try {
@@ -529,21 +529,21 @@ app.put("/api/teams/:team_id/:attribute/:value", async (req, res) => {
 
  send: The team that was deleted
  */
-app.delete("/api/teams:team_id", async (req, res) => {
-  if (!res.session.admin) {
-    res.status(401).send("user is not authorized");
-  } else {
-    try {
-      let team = await Team.findByIdAndRemove(req.params.team_id);
-      if (!team) {
-        res.status(404).send("Missing resource");
-      } else {
-        res.status(200).send(team);
-      }
-    } catch (error) {
-      res.stats(500).send("Internal server error");
+app.delete("/api/teams/:team_id", async (req, res) => {
+  // if (!res.session.admin) {
+  //   res.status(401).send("user is not authorized");
+  // } else {
+  try {
+    let team = await Team.findByIdAndRemove(req.params.team_id);
+    if (!team) {
+      res.status(404).send("Missing resource");
+    } else {
+      res.status(200).send(team);
     }
+  } catch (error) {
+    res.stats(500).send("Internal server error");
   }
+  // }
 });
 
 /*** Webpage routes below **********************************/

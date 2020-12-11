@@ -49,13 +49,14 @@ class Team extends React.Component {
     this.setName = this.setName.bind(this);
     this.setDescription = this.setDescription.bind(this);
     this.setCapacity = this.setCapacity.bind(this);
+    this.deleteTeam = this.deleteTeam.bind(this);
   }
 
   async componentDidMount() {
     try {
       // team id received as a prop
       const team = await axios.get(
-        `${ENDPOINT}/api/teams/5fd392d05a786804334140dc`,
+        `${ENDPOINT}/api/teams/5fd3f0812e247c5c60a457b8`,
         {
           method: "get",
         }
@@ -63,7 +64,7 @@ class Team extends React.Component {
 
       // currentUser id received from session
       const currentUser = await axios.get(
-        `${ENDPOINT}/api/users/5fd28e27386dd75b03af2774`,
+        `${ENDPOINT}/api/users/5fd3ece0e420755973483a8b`,
         {
           method: "get",
         }
@@ -185,6 +186,12 @@ class Team extends React.Component {
     this.setState({ teamCapacity: newCapacity });
   }
 
+  deleteTeam() {
+    axios.delete(`${ENDPOINT}/api/teams/delete/${this.state.teamID}`, {
+      method: "delete",
+    });
+  }
+
   render() {
     if (this.state.view === "") {
       this.initView();
@@ -217,6 +224,7 @@ class Team extends React.Component {
                 deleteMember={this.deleteMember}
                 changeLeader={this.changeLeader}
                 setCapacity={this.setCapacity}
+                deleteTeam={this.deleteTeam}
               />
             </div>
           }
