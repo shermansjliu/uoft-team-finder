@@ -84,11 +84,13 @@ export default class Course extends Component {
 
       const response = await axios.get(`${ENDPOINT}/api/courses/${this.state.courseCode}`,{ method: "get"})
       const data = response.data
+
       const teams = data.teams.map(team=> (
           {
             teamName:team.teamName,
             members: team.members,
-            capacity: team.teamCapacity
+            capacity: team.teamCapacity,
+            teamID: team._id
 
           }
       ))
@@ -112,6 +114,7 @@ export default class Course extends Component {
     const cards = this.state.teams.filter((team) => {
       return regex.test(team.teamName);
     });
+
     return (
       <StandardLayout
         app={this.props.app}
@@ -128,6 +131,7 @@ export default class Course extends Component {
                   <Col key={uuid()} span={8}>
                     <div>
                       <TeamCard
+                          teamID={team.teamID}
                         teamName={team.teamName}
                         members={team.members}
                         capacity={team.capacity}

@@ -19,6 +19,8 @@ const { Title } = Typography;
 class Team extends React.Component {
   constructor(props) {
     super(props);
+    const team_id = this.props.location.state.teamID
+    alert(team_id)
     /* ----------- HARD-CODED DATA ------------- */
     /* BELOW DATA WILL BE PASSED IN FROM HOME VIEW */
     //

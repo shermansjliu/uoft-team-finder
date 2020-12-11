@@ -57,9 +57,9 @@ class App extends React.Component {
               render={() => <Profile app={this} />}
             />
             <Route
-              exact
-              path="/Course"
-              render={() => <Course app={this} />}
+
+              path="/Course/:courseCode"
+              render={(props) => <Course {...props} app={this} />}
             />
             <Route
               exact
@@ -69,7 +69,7 @@ class App extends React.Component {
             <Route
               exact
               path="/Team"
-              render={() => <Team app={this} />}
+              render={(props) => <Team {...props} app={this} />}
             />
             <Route
               exact
