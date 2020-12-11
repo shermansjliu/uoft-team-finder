@@ -261,6 +261,33 @@ app.put("/api/users/:id", mongoChecker, authenticate, async (req, res) => {
 });
 
 /*
+Params: username that will be edited
+
+body {
+  New data that will updated the user
+}
+ */
+app.put("/api/users/:username", mongoChecker, authenticate, async (req, res) => {
+
+    if (!req.session.admin) {
+        res.status(401).send("User not authorized")
+        return
+    }
+    try {
+        User.findByIdAndUpdate(req.params.username, req.body,function (err, doc) {
+            if (err){
+                console.log(err)
+            }
+            else{
+                res.status(200).send(doc)
+            }
+        });
+    } catch (error) {
+        res.status(500).send("Internal Server Error")
+    }
+});
+
+/*
 Params: deleted user id
 body {
 

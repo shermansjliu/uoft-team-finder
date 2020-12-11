@@ -11,30 +11,6 @@ class AdminUsers extends React.Component {
     state = {
         searchRes: "",
         users: [
-            {
-                key: '1',
-                username: 'John2',
-                name: 'John Brown',
-                year: 3,
-                address: 'New York No. 1 Lake Park',
-                tags: [],
-            },
-            {
-                key: '2',
-                username: 'Jimeee',
-                name: 'Jim Green',
-                year: 4,
-                address: 'London No. 1 Lake Park',
-                tags: ['TeamLeader'],
-            },
-            {
-                key: '3',
-                username: 'Joeeeee',
-                name: 'Joe Black',
-                year: 3,
-                address: 'Sidney No. 1 Lake Park',
-                tags: ['CSC'],
-            },
         ],
     }
 
