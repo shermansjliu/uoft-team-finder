@@ -454,6 +454,50 @@ app.put("/api/teams/add/:team_id/:user_id", async (req, res) => {
   // }
 });
 
+// remove user from team
+app.put("/api/teams/delete/:team_id/:user_id", async (req, res) => {
+  // if (!res.session.admin) {
+  //   res.status(401).send("user is not authorized");
+  // } else {
+  try {
+    let team = await Team.findById(req.params.team_id);
+    let user = await User.findById(req.params.user_id);
+    if (!team || !user) {
+      res.status(404).send("Missing resource");
+    } else {
+      team.members.splice(team.members.indexOf(req.params.user_id), 1);
+      user.teams.splice(user.teams.indexOf(req.params.team_id), 1);
+      console.log(team.members, user.teams);
+      const updatedTeam = await team.save();
+      const updatedUser = await user.save();
+      res.status(200).send({ team: updatedTeam, user: updatedUser });
+    }
+  } catch (error) {
+    res.status(500).send("internal server error");
+  }
+  // }
+});
+
+// assign new team leader
+app.put("/api/teams/new_leader/:team_id/:user_id", async (req, res) => {
+  // if (!res.session.admin) {
+  //   res.status(401).send("user is not authorized");
+  // } else {
+  try {
+    let team = await Team.findById(req.params.team_id);
+    if (!team) {
+      res.status(404).send("Missing resource");
+    } else {
+      team.teamLeader = req.params.user_id;
+      const updatedTeam = await team.save();
+      res.status(200).send({ team: updatedTeam });
+    }
+  } catch (error) {
+    res.status(500).send("internal server error!");
+  }
+  // }
+});
+
 /*
  params: team_id
 

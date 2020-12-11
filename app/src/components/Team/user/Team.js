@@ -30,27 +30,15 @@ class Team extends React.Component {
       },
       teamLeaderID: "ShermanID",
       members: [
-        // list of users
-        {
-          _id: "DavidID",
-          name: "David",
-          description: "Radiohead is the best",
-        },
         {
           _id: "ShermanID",
           name: "Sherman",
           description: "REEEEEEEEEEEEEE",
         },
-        {
-          _id: "QuincyID",
-          name: "Quincy",
-          description: "Yasuo happy happy hahappy",
-        },
-        { _id: "JesseID", name: "Jesse", description: "LALALALALLALALALA" },
       ],
-      teamName: "THE JOHN WICKS",
-      teamDescription: "We seek revenge for our dogs",
-      teamCapacity: 4,
+      teamName: "",
+      teamDescription: "",
+      teamCapacity: 0,
       view: "",
     };
     this.updateView = this.updateView.bind(this);
@@ -127,6 +115,13 @@ class Team extends React.Component {
   }
 
   deleteMember(rmMember) {
+    axios.put(
+      `${ENDPOINT}/api/teams/delete/${this.state.teamID}/${rmMember._id}`,
+      {
+        method: "put",
+      }
+    );
+
     this.setState(
       (prevState) => ({
         members: prevState.members.filter(
@@ -138,6 +133,12 @@ class Team extends React.Component {
   }
 
   changeLeader(newLeader) {
+    axios.put(
+      `${ENDPOINT}/api/teams/new_leader/${this.state.teamID}/${newLeader._id}`,
+      {
+        method: "put",
+      }
+    );
     this.setState({ teamLeaderID: newLeader._id }, () =>
       this.setState({ view: this.updateView() })
     );
