@@ -105,6 +105,12 @@ class Team extends React.Component {
         (member) => this.state.currentUser._id === member._id
       )
     ) {
+      axios.put(
+        `${ENDPOINT}/api/teams/add/${this.state.teamID}/${newMember._id}`,
+        {
+          method: "put",
+        }
+      );
       this.setState(
         (prevState) => ({
           members: [...prevState.members, newMember],
