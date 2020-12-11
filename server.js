@@ -149,6 +149,17 @@ app.get("/api/users", mongoChecker, async (req, res) => {
   }
 });
 
+app.get("/api/users/:id", mongoChecker, async (req, res) => {
+  // Get the students
+  try {
+    const users = await User.findById(req.params.id);
+    res.send(users); // just the array
+  } catch (error) {
+    log(error);
+    res.status(498).send("Internal Server Error");
+  }
+});
+
 // User API Route
 app.post("/api/users", mongoChecker, async (req, res) => {
   // Create a new user
@@ -334,6 +345,21 @@ app.get("/api/teams/", mongoChecker, async (req, res) => {
   }
 });
 
+app.get("/api/teams/:team_id", mongoChecker, async (req, res) => {
+  try {
+    const team = await Team.findById(req.params.team_id)
+      .populate("teamLeader")
+      .populate("members");
+    if (!team) {
+      res.status(404).send("Missing resource");
+    } else {
+      res.status(200).send(team);
+    }
+  } catch (error) {
+    res.status(500).send("Internal server error");
+  }
+});
+
 /*
 params: course_id
 body{
@@ -381,26 +407,51 @@ Body: New team attributes
 send : Updated team sub document
  */
 app.put("/api/teams/:team_id", async (req, res) => {
-  if (!res.session.admin) {
-    res.status(401).send("user is not authorized");
-  } else {
-    try {
-      let team = await Team.findById(req.params.team_id);
-      if (!team) {
-        res.status(404).send("Missing resource");
-      } else {
-        //Spread operator creates a new object, but _id property is not updated so save updates original sub document4
-        team = {
-          ...team,
-          ...req.body,
-        };
-        const updatedTeam = await team.save();
-        res.status(200).send(updatedTeam);
-      }
-    } catch (error) {
-      res.status(500).send("internal server error");
+  // if (!res.session.admin) {
+  //   res.status(401).send("user is not authorized");
+  // } else {
+  try {
+    let team = await Team.findById(req.params.team_id);
+    console.log(team);
+    if (!team) {
+      res.status(404).send("Missing resource");
+    } else {
+      //Spread operator creates a new object, but _id property is not updated so save updates original sub document4
+      team = {
+        ...team,
+        ...req.body,
+      };
+      const updatedTeam = await team.save();
+      res.status(200).send(updatedTeam);
     }
+  } catch (error) {
+    res.status(500).send("internal server error");
   }
+  // }
+});
+
+// add user to team
+app.put("/api/teams/add/:team_id/:user_id", async (req, res) => {
+  // if (!res.session.admin) {
+  //   res.status(401).send("user is not authorized");
+  // } else {
+  try {
+    let team = await Team.findById(req.params.team_id);
+    let user = await User.findById(req.params.user_id);
+    if (!team || !user) {
+      res.status(404).send("Missing resource");
+    } else {
+      //Spread operator creates a new object, but _id property is not updated so save updates original sub document4
+      team.members.push(req.params.user_id);
+      user.teams.push(req.params.team_id);
+      const updatedTeam = await team.save();
+      const updatedUser = await user.save();
+      res.status(200).send({ team: updatedTeam, user: updatedUser });
+    }
+  } catch (error) {
+    res.status(500).send("internal server error");
+  }
+  // }
 });
 
 /*
