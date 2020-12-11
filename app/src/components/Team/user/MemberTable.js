@@ -6,14 +6,14 @@ import { Button, Statistic, Typography } from "antd";
 
 import "./style.css";
 
+import { ENDPOINT } from "../../../requests";
+import axios from "axios";
+
 const { Paragraph } = Typography;
 
 class MemberTable extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      willBeDeleted: false,
-    };
     this.handleAddRequest = this.handleAddRequest.bind(this);
     this.handleRemoveRequest = this.handleRemoveRequest.bind(this);
     this.handleChangeLeaderRequest = this.handleChangeLeaderRequest.bind(this);
@@ -26,14 +26,15 @@ class MemberTable extends React.Component {
 
   handleRemoveRequest(rmMember) {
     if (
-      this.props.teamLeaderID === rmMember.userID &&
+      this.props.teamLeaderID === rmMember._id &&
       this.props.members.length > 1
     ) {
       // the member to be removed is the team leader
       alert("You have to pick a new team leader first before you leave!");
     } else if (this.props.members.length === 1) {
       alert("This team will be deleted and return to course view");
-      this.setState({ willBeDeleted: true });
+      this.props.deleteMember(rmMember);
+      this.props.deleteTeam();
     } else {
       this.props.deleteMember(rmMember);
     }
@@ -62,11 +63,9 @@ class MemberTable extends React.Component {
     } = this.props;
 
     const teamLeader = members.filter(
-      (member) => member.userID === teamLeaderID
+      (member) => member._id === teamLeaderID
     )[0];
-    const teamMembers = members.filter(
-      (member) => member.userID !== teamLeaderID
-    );
+    const teamMembers = members.filter((member) => member._id !== teamLeaderID);
 
     const renderJoinOrLeaveButton = () => {
       if (view === "otherUserView") {
@@ -108,9 +107,9 @@ class MemberTable extends React.Component {
       }
     };
 
-    if (this.state.willBeDeleted) {
-      return <Redirect push to="/Course" />;
-    }
+    // if (this.state.willBeDeleted) {
+    //   return <Redirect push to="/Course" />;
+    // }
 
     return (
       <div className="memberTableContainer">
@@ -125,7 +124,7 @@ class MemberTable extends React.Component {
 
         {teamMembers.map((member) => (
           <TeamMember
-            key={member.userID}
+            key={member._id}
             member={member}
             view={view}
             currentUser={currentUser}

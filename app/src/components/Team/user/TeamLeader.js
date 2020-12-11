@@ -53,7 +53,9 @@ class TeamLeader extends React.Component {
               onClick={this.handleProfileClick}
             />
           </div>
-          <div className="memberButtonsContainer">{renderLockButton()}</div>
+          <div className="memberButtonsContainer">
+            {false && renderLockButton()}
+          </div>
           <div className="teamLeaderDescription">{teamLeader.description}</div>
         </Card>
       </div>
