@@ -17,3 +17,27 @@ export const checkSession = (app) => {
             console.log(error);
         });
 };
+
+export const getAllUsers = (field) => {
+    const new_request = new Request("/api/users", {
+        method: "get",
+        headers: {
+            Accept: "application/json, text/plain, */*",
+            "Content-Type": "application/json"
+        }
+    });
+    fetch(new_request)
+        .then(res => {
+            if (res.status === 200) {
+                return res.json();
+            }
+        })
+        .then(json => {
+            field.setState({users: json})
+        })
+        .catch(error => {
+            console.log(error);
+            return []
+        });
+};
+

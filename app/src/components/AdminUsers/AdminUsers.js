@@ -5,11 +5,12 @@ import {SearchOutlined} from "@ant-design/icons";
 import "./style.css"
 import {Link} from "react-router-dom";
 import {changePassword, deleteUser} from "./actions"
+import {getAllUsers} from "../../actions/users";
 
 class AdminUsers extends React.Component {
     state = {
         searchRes: "",
-        data: [
+        users: [
             {
                 key: '1',
                 username: 'John2',
@@ -89,11 +90,13 @@ class AdminUsers extends React.Component {
     ];
 
     render() {
+         getAllUsers(this);
+
         let regex = RegExp(`${this.state.searchRes}`, "gi");
-        const filteredData = this.state.data.filter((item) => {
+        const filteredData = this.state.users.filter((item) => {
             return regex.test(item.username);
         });
-        console.log("data", this.state.data);
+        console.log("data", this.state.users);
         console.log("filtered", filteredData);
         return (
             <AdminLayout

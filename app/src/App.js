@@ -33,23 +33,26 @@ class App extends React.Component {
         <BrowserRouter>
           <Switch>
             <Route
-                exact path={["/", "/login", "/Home"] /* any of these URLs are accepted. */ }
+                exact path={["/", "/login", "/Home", "/Admin"] /* any of these URLs are accepted. */ }
                 render={ props => (
                     <div className="app">
                       { /* Different componenets rendered depending on if someone is logged in. */}
-                      {!currentUser ? <Login {...props} app={this} /> : <Home {...props} app={this} />}
+                      {!currentUser ? <Login {...props} app={this} /> :
+                          <div className="app">
+                            {this.state.admin ? <Admin app={this} /> : <Home  app={this} />}
+                          </div>}
                     </div>
                 )}
             />
 
-            <Route
-                exact path="/Admin"
-                render={props => (
-                    <div className="app">
-                      {(this.state.currentUser && this.state.admin) ? <Admin app={this} /> : <Login  app={this} />}
-                    </div>
-                )}
-            />
+            {/*<Route*/}
+            {/*    exact path="/Admin"*/}
+            {/*    render={props => (*/}
+            {/*        <div className="app">*/}
+            {/*          {(this.state.currentUser && this.state.admin) ? <Admin app={this} /> : <Login  app={this} />}*/}
+            {/*        </div>*/}
+            {/*    )}*/}
+            {/*/>*/}
 
             <Route
               exact

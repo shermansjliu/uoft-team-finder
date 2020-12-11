@@ -19,7 +19,7 @@ class AdminCourseCard extends React.Component {
         const course = this.props.course;
         this.state = {
             isEditing: false,
-            newCourseName: course.courseName,
+            newCourseName: course.courseCode,
             newDescription: course.description,
             newImg: course.image,
             newDepartment: course.department,
@@ -30,7 +30,7 @@ class AdminCourseCard extends React.Component {
         const {page, course} = this.props;
         // if not editing, all elements should be displayed
         let img = (<img alt="No image yet" src={course.image} />)
-        let courseName = course.courseName;
+        let courseName = course.courseCode;
         let description = course.description;
         let editIcon = (<EditOutlined onClick={() => edit(this)}/>)
 
