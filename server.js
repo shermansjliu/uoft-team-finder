@@ -59,25 +59,31 @@ const mongoChecker = (req, res, next) => {
 
 // Middleware for authentication of resources
 const authenticate = (req, res, next) => {
-    if (req.session.user) {
-        User.findById(req.session.user)
-            .then((user) => {
-                if (!user) {
-                    res.status(404).send("Missing resource");
-                    return Promise.reject();
-                } else {
-                    req.user = user;
-                    next();
-                }
-            })
-            .catch((error) => {
-                res.status(401).send("Unauthorized");
-            });
-    } else {
-        res.status(401).send("Unauthorized");
-    }
+    // if (req.session.user) {
+    //     User.findById(req.session.user)
+    //         .then((user) => {
+    //             if (!user) {
+    //                 res.status(404).send("Missing resource");
+    //                 return Promise.reject();
+    //             } else {
+    //                 req.user = user;
+    //                 next();
+    //             }
+    //         })
+    //         .catch((error) => {
+    //             res.status(401).send("Unauthorized");
+    //         });
+    // } else {
+    //     res.status(401).send("Unauthorized");
+    // }
+    next()
 };
 
+function createDummyAdmin(req, res, next) {
+    req.session.admin = true
+    req.session.username =
+    next()
+}
 
 
 /*** Session handling **************************************/
@@ -93,6 +99,10 @@ app.use(
         },
     })
 );
+
+
+
+app.use(createDummyAdmin)
 
 // A route to login and create a session
 app.post("/users/login", (req, res) => {
@@ -154,17 +164,39 @@ app.get("/api/users", mongoChecker, authenticate, async (req, res) => {
 })
 
 // User API Route
+/*
+body {
+    username:
+    password:
+    admin:
+    major
+    description
+    year
+    CGPA
+
+
+
+}
+
+ */
 app.post("/api/users", mongoChecker, authenticate, async (req, res) => {
     // Create a new user
-    if(!req.session.admin){
-        res.status(401).send("User not Authorized")
-        return
-    }
-    const user = new User(req.body)
+
+    const user = new User({...req.body,
+        courses: [],
+        teams: [],
+        exps:[],
+    })
 
     try {
         // Save the user
+        const existingUser = await User.findOne({username: req.body.username })
+        if (existingUser){
+            res.status(400).send("Bad Request: username already exists")
+            return
+        }
         const newUser = await user.save();
+
         res.status(200).send(newUser);
     } catch (error) {
         if (isMongoError(error)) {
@@ -241,7 +273,7 @@ app.delete('/api/users/:id', mongoChecker, authenticate, async (req, res) => {
 
 //GET all courses
 
-app.get('/api/courses',mongoChecker,authenticate, async(req, res)=> {
+app.get('/api/courses',mongoChecker, async(req, res)=> {
         try {
             const courses = await Course.find()
             if (!courses) {
@@ -271,23 +303,22 @@ app.get('/api/courses/:id',mongoChecker, authenticate, async(req, res)=> {
         res.status(500).send("Internal Server Error`")
     }
 })
-
 /*
 parmas: code - course Code
 
 * */
-app.post('/api/courses/:code',mongoChecker, authenticate, async(req, res)=> {
+app.post('/api/courses/:code',mongoChecker, authenticate ,async(req, res)=> {
     if(!req.session.admin){
         res.status(401).send("User is not authenticated")
         return
     }
 
-    const course = Course.create({
+    const course = new Course({
         courseCode: req.params.code,
         teams: []
     })
         try{
-            const savedCourse = course.save()
+            const savedCourse = await course.save()
             res.status(200).send(savedCourse)
 
         }catch(error){
@@ -375,21 +406,39 @@ app.get('/api/teams/:team_id', mongoChecker, authenticate, async(req, res)=> {
 /*
 params: course_id
 body{
- proper parameters of a team
+    teamInfo{
+        relevant team Info
+    }
+    teamLeader: username of the assigned team leader. Undefined if User is creating a new team
 }
 send: {team: <created team sub document> course: <updated course sub document>
 * */
-app.post('/api/teams/:course_id', mongoChecker, authenticate, async(req, res)=> {
+app.post('/api/teams/:course_id', mongoChecker, async(req, res)=> {
     try{
-        const course = Course.findById(req.params.course_id)
-        if(!course){
+        const course = await Course.findById(req.params.course_id)
+
+
+        if(!course || !user){
             res.status(404).send("Missing Resource")
             return
         }
-        const team = new Team(req.body)
-        const savedTeam = await team.save()
+        const team = new Team(req.body.teamInfo)
         course.teams.push(team._id)
-        if (!savedTeam){
+        if (!teamLeader){
+            course.user_id = req.session.user
+        }else {
+            const teamLeader = await User.findOne({username:req.body.teamLeader})
+            if(!teamLeader){
+                res.status(404).send("Missing Resource: Team leader does not exist")
+                return
+            }
+            course.user_id = teamLeader._id
+        }
+
+        const savedTeam = await team.save()
+        const savedCourse = await course.save()
+
+        if (!savedTeam || !savedCourse){
             res.status(400).send("Bad Parameter Input")
         }else{
             res.status(200).send({team: savedTeam, course: course })
