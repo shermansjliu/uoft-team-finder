@@ -4,9 +4,10 @@ import TeamCard from "./TeamCard";
 import SearchBar from "./SearchBar";
 import uuid from "react-uuid";
 import "../../App.css";
+import {checkSession} from "../../actions/users"
 import "./index.css";
 import axios from "axios"
-import endpoint, {ENDPOINT} from "../requests"
+import {ENDPOINT} from "../requests"
 import StandardLayout from "../StandardLayout/layout";
 
 
@@ -80,9 +81,10 @@ export default class Course extends Component {
   //         },
   //       ]
   async componentDidMount() {
+    checkSession((this))
     try {
 
-      const response = await axios.get(`${ENDPOINT}/api/courses/${this.state.courseCode}`,{ method: "get"})
+      const response = await axios.get(`${ENDPOINT}/api/courses/${this.state.courseCode}`)
       const data = response.data
 
       const teams = data.teams.map(team=> (

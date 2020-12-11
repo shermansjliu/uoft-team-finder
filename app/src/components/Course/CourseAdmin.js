@@ -2,7 +2,8 @@ import React, {Component} from "react";
 import {Layout, Space, Table} from "antd";
 import SearchBar from "./SearchBar";
 import {Link} from "react-router-dom";
-
+import axios from "axios"
+import {ENDPOINT} from "../requests"
 import "../../App.css";
 import "./index.css";
 import Sidebar from "../StandardLayout/Sidebar";
@@ -82,6 +83,29 @@ export default class CourseAdmin extends Component {
         };
     }
 
+    async componentDidMount() {
+        try {
+
+            const res = await axios.get(`${ENDPOINT}/api/courses/${this.state.courseCode}`)
+            const data = res.data
+
+            const teams = data.teams.map(team => (
+                {
+                    teamName: team.teamName,
+                    teamLeader:team.teamLeader,
+                    members: team.members,
+                    capacity: team.teamCapacity,
+                    teamID: team._id
+                }
+            ))
+            this.setState({teams: teams})
+        } catch (error) {
+            console.log("Could not get course ", error)
+        }
+
+    }
+
+
     handleInputChange = (e) => {
         this.setState({searchRes: e.target.value});
     };
@@ -160,19 +184,19 @@ export default class CourseAdmin extends Component {
                 app={this.props.app}
                 content={
                     <div>
-                    <h1 className="courseCode theme-title">{this.state.courseCode}</h1>
-                    <SearchBar
-                        searchRes={this.state.searchRes}
-                        handleInputChange={this.handleInputChange}
-                    />
-                    <Table
-                        className="courseAdminTable"
-                        columns={columns}
-                        dataSource={data}
-                    >
-                        {" "}
-                    </Table>
-                </div>
+                        <h1 className="courseCode theme-title">{this.state.courseCode}</h1>
+                        <SearchBar
+                            searchRes={this.state.searchRes}
+                            handleInputChange={this.handleInputChange}
+                        />
+                        <Table
+                            className="courseAdminTable"
+                            columns={columns}
+                            dataSource={data}
+                        >
+                            {" "}
+                        </Table>
+                    </div>
                 }
             />
 
