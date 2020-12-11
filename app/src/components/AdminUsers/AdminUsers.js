@@ -90,7 +90,7 @@ class AdminUsers extends React.Component {
                                 prefix={<SearchOutlined/>}
                             />
                         </div>
-                        <Table columns={this.columns} dataSource={filteredData}/>
+                        <Table rowKey="username" columns={this.columns} dataSource={filteredData}/>
                     </div>
 
                 }
