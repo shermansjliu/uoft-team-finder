@@ -284,10 +284,10 @@ app.get('/api/courses', mongoChecker, async (req, res) => {
     }
 )
 /*
-params: id
-send: course with corresponding id
+params: course_code
+send: A single course document with the corresponding course code
  */
-app.get('/api/courses/:id', mongoChecker, authenticate, async (req, res) => {
+app.get('/api/courses/:course_code', mongoChecker, authenticate, async (req, res) => {
     try {
         const course = await Course.findOne({_id: req.params.id})
         if (!course) {
