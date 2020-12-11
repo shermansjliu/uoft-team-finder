@@ -19,78 +19,80 @@ export default class Course extends Component {
 
     this.state = {
       searchRes: "",
-      courseCode: "CSC236",
-      teams: [
-        {
-          teamName: "The John Wicks",
-          teamLeader: "John Wick",
-          members: [
-            { userID: "DavidID", name: "David" },
-            { userID: "ShermanID", name: "Sherman" },
-            { userID: "QuincyID", name: "Quincy" },
-            { userID: "JesseID", name: "Jesse" },
-          ],
-          capacity: 4,
-          teamId: 0,
-        },
-        {
-          teamName: "BA Forever",
-          teamLeader: "Daveedo",
-          members: [],
-          capacity: 4,
-          teamId: 1,
-        },
-        {
-          teamName: "League of Legends",
-          teamLeader: "Mike",
-          members: [],
-          capacity: 4,
-          teamId: 2,
-        },
-        {
-          teamName: "March March",
-          teamLeader: "Sherman",
-          members: [],
-          capacity: 4,
-          teamId: 4,
-        },
-        {
-          teamName: "March March",
-          teamLeader: "Quincy",
-          members: [
-            { userID: "QuincyID", name: "Quincy" },
-            { userID: "JesseID", name: "Jesse" },
-          ],
-          capacity: 4,
-          teamId: 5,
-        },
-        {
-          teamName: "Love Live Laugh",
-          teamLeader: "Jesse",
-          members: [
-            { userID: "QuincyID", name: "Quincy" },
-            { userID: "JesseID", name: "Jesse" },
-          ],
-          capacity: 4,
-          teamId: 6,
-        },
-        {
-          teamName: "March March",
-          teamLeader: "Sherman",
-          members: [],
-          capacity: 4,
-          teamId: 3,
-        },
-      ],
+      courseCode: "CSC418",
+      teams: []
+
     };
   }
-
+  // Sample returned teams obj  teams: [
+  //         {
+  //           teamName: "The John Wicks",
+  //           members: [
+  //             { userID: "DavidID", name: "David" },
+  //             { userID: "ShermanID", name: "Sherman" },
+  //             { userID: "QuincyID", name: "Quincy" },
+  //             { userID: "JesseID", name: "Jesse" },
+  //           ],
+  //           capacity: 4,
+  //           teamId: 0,
+  //         },
+  //         {
+  //           teamName: "BA Forever",
+  //           members: [],
+  //           capacity: 4,
+  //           teamId: 1,
+  //         },
+  //         {
+  //           teamName: "League of Legends",
+  //           members: [],
+  //           capacity: 4,
+  //           teamId: 2,
+  //         },
+  //         {
+  //           teamName: "March March",
+  //           members: [],
+  //           capacity: 4,
+  //           teamId: 4,
+  //         },
+  //         {
+  //           teamName: "March March",
+  //           members: [
+  //             { userID: "QuincyID", name: "Quincy" },
+  //             { userID: "JesseID", name: "Jesse" },
+  //           ],
+  //           capacity: 4,
+  //           teamId: 5,
+  //         },
+  //         {
+  //           teamName: "Love Live Laugh",
+  //           members: [
+  //             { userID: "QuincyID", name: "Quincy" },
+  //             { userID: "JesseID", name: "Jesse" },
+  //           ],
+  //           capacity: 4,
+  //           teamId: 6,
+  //         },
+  //         {
+  //           teamName: "March March",
+  //           members: [],
+  //           capacity: 4,
+  //           teamId: 3,
+  //         },
+  //       ]
   async componentDidMount() {
     try {
-      const response = await axios.get(`${ENDPOINT}/api/courses/`,{ method: "get"})
-      const data = await response.json().response
-      console.log(data)
 
+      const response = await axios.get(`${ENDPOINT}/api/courses/${this.state.courseCode}`,{ method: "get"})
+      const data = response.data
+      const teams = data.teams.map(team=> (
+          {
+            teamName:team.teamName,
+            members: team.members,
+            capacity: team.teamCapacity
+
+          }
+      ))
+      this.setState({teams:teams})
     }catch(error){
       console.log("Could not get course ",error)
     }

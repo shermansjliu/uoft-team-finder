@@ -289,7 +289,7 @@ send: A single course document with the corresponding course code
  */
 app.get('/api/courses/:courseCode', mongoChecker, authenticate, async (req, res) => {
     try {
-        const course = await Course.findOne({courseCode: req.params.courseCode})
+        const course = await Course.findOne({courseCode: req.params.courseCode}).populate('teams')
 
         if (!course) {
             res.status(404).send("Resource not Found")
@@ -391,161 +391,167 @@ app.get("/api/teams/", mongoChecker, authenticate, async (req, res) => {
     } catch (error) {
         res.status(500).send("Internal server error");
     }
-    })
+})
 
-    /*
-    params team_id
+/*
+params team_id
 
-    send: team with team_id
-     */
+send: team with team_id
+ */
 
-    app.get('/api/teams/:team_id', mongoChecker, authenticate, async (req, res) => {
+app.get('/api/teams/:team_id', mongoChecker, authenticate, async (req, res) => {
+    try {
+
+        const team = await Team.findById(req.params.id)
+        if (!team) {
+            res.status(404).send("Missing resource")
+        } else {
+            res.status(200).send(team)
+        }
+    } catch (error) {
+        res.status(500).send("Internal server error")
+    }
+
+
+})
+
+/*
+params: course_id
+body{
+    teamInfo{
+        relevant team Info
+    }
+    teamLeader: username of the assigned team leader. Undefined if User is creating a new team
+}
+send: {team: <created team sub document> course: <updated course sub document>
+* */
+app.post('/api/teams/:course_id', mongoChecker, authenticate, async (req, res) => {
+    try {
+        const course = await Course.findById(req.params.course_id)
+
+        if (!course) {
+            res.status(404).send("Missing Resource")
+            return
+        }
+
+
+
+
+        let teamLeader_id = null
+        if (!req.body.teamLeader){
+            teamLeader_id = req.session.user
+        }else{
+            const teamLeader = await User.findOne({username: req.body.teamLeader})
+            if (!teamLeader) {
+                res.status(404).send("Missing Resource: Team leader does not exist")
+                return
+            }
+            teamLeader_id = teamLeader._id
+        }
+
+        const team = new Team(req.body.teamInfo)
+        team.teamLeader = teamLeader_id
+        course.teams.push(team._id)
+        const savedCourse = await course.save()
+        const savedTeam = await team.save()
+
+
+        if (!savedTeam || !savedCourse) {
+            res.status(400).send("Bad Parameter Input")
+        } else {
+            res.status(200).send({team: savedTeam.populate('teams'), course: course})
+        }
+    } catch (error) {
+        res.status(500).send("Internal Server Error")
+    }
+})
+
+/*
+params: team_id
+Body: New team attributes
+send : Updated team sub document
+ */
+app.put('/api/teams/:team_id', async (req, res) => {
+    if (!res.session.admin) {
+        res.status(401).send("user is not authorized")
+    } else {
         try {
-
-            const team = await Team.findById(req.params.id)
+            let team = await Team.findById(req.params.team_id)
             if (!team) {
                 res.status(404).send("Missing resource")
+
+            } else {
+                //Spread operator creates a new object, but _id property is not updated so save updates original sub document4
+                team = {
+                    ...team,
+                    ...req.body
+                }
+                const updatedTeam = await team.save()
+                res.status(200).send(updatedTeam)
+            }
+
+        } catch (error) {
+            res.status(500).send("internal server error")
+        }
+    }
+
+})
+
+/*
+ params: team_id
+
+ send: The team that was deleted
+ */
+app.delete('/api/teams:team_id', async (req, res) => {
+
+    if (!res.session.admin) {
+        res.status(401).send("user is not authorized")
+    } else {
+        try {
+            let team = await Team.findByIdAndRemove(req.params.team_id)
+            if (!team) {
+                res.status(404).send("Missing resource")
+
             } else {
                 res.status(200).send(team)
             }
         } catch (error) {
-            res.status(500).send("Internal server error")
+            res.stats(500).send("Internal server error")
         }
-
-
-    })
-
-    /*
-    params: course_id
-    body{
-        teamInfo{
-            relevant team Info
-        }
-        teamLeader: username of the assigned team leader. Undefined if User is creating a new team
     }
-    send: {team: <created team sub document> course: <updated course sub document>
-    * */
-    app.post('/api/teams/:course_id', mongoChecker, authenticate, async (req, res) => {
-        try {
-            const course = await Course.findById(req.params.course_id)
-
-            if (!course || !user) {
-                res.status(404).send("Missing Resource")
-                return
-            }
-            const team = new Team(req.body.teamInfo)
-            course.teams.push(team._id)
-
-            if (!req.body.teamLeader) {
-                course.user_id = req.session.user_id
-            } else {
-                const teamLeader = await User.findOne({username: req.body.teamLeader})
-                if (!teamLeader) {
-                    res.status(404).send("Missing Resource: Team leader does not exist")
-                    return
-                }
-                course.user_id = teamLeader._id
-            }
-
-            const savedTeam = await team.save()
-            const savedCourse = await course.save()
-
-            if (!savedTeam || !savedCourse) {
-                res.status(400).send("Bad Parameter Input")
-            } else {
-                res.status(200).send({team: savedTeam, course: course})
-            }
-        } catch (error) {
-            res.status(500).send("Internal Server Error")
-        }
-    })
-
-    /*
-    params: team_id
-    Body: New team attributes
-    send : Updated team sub document
-     */
-    app.put('/api/teams/:team_id', async (req, res) => {
-        if (!res.session.admin) {
-            res.status(401).send("user is not authorized")
-        } else {
-            try {
-                let team = await Team.findById(req.params.team_id)
-                if (!team) {
-                    res.status(404).send("Missing resource")
-
-                } else {
-                    //Spread operator creates a new object, but _id property is not updated so save updates original sub document4
-                    team = {
-                        ...team,
-                        ...req.body
-                    }
-                    const updatedTeam = await team.save()
-                    res.status(200).send(updatedTeam)
-                }
-
-            } catch (error) {
-                res.status(500).send("internal server error")
-            }
-        }
-
-    })
-
-    /*
-     params: team_id
-
-     send: The team that was deleted
-     */
-    app.delete('/api/teams:team_id', async (req, res) => {
-
-        if (!res.session.admin) {
-            res.status(401).send("user is not authorized")
-        } else {
-            try {
-                let team = await Team.findByIdAndRemove(req.params.team_id)
-                if (!team) {
-                    res.status(404).send("Missing resource")
-
-                } else {
-                    res.status(200).send(team)
-                }
-            } catch (error) {
-                res.stats(500).send("Internal server error")
-            }
-        }
-    })
+})
 
 
-    /*** Webpage routes below **********************************/
+/*** Webpage routes below **********************************/
 // Serve the build
-    app.use(express.static(path.join(__dirname, "/app/build")));
+app.use(express.static(path.join(__dirname, "/app/build")));
 
 // All routes other than above will go to index.html
-    app.get("*", (req, res) => {
-        // check for page routes that we expect in the frontend to provide correct status code.
-        const goodPageRoutes = [
-            "/",
-            "/Home",
-            "/Course",
-            "/Team",
-            "/Profile",
-            "/Admin",
-            "/CourseAdmin",
-            "/teamAdmin",
-            "/AdminUsers",
-        ];
-        if (!goodPageRoutes.includes(req.url)) {
-            // if url not in expected page routes, set status to 404.
-            res.status(404);
-        }
+app.get("*", (req, res) => {
+    // check for page routes that we expect in the frontend to provide correct status code.
+    const goodPageRoutes = [
+        "/",
+        "/Home",
+        "/Course",
+        "/Team",
+        "/Profile",
+        "/Admin",
+        "/CourseAdmin",
+        "/teamAdmin",
+        "/AdminUsers",
+    ];
+    if (!goodPageRoutes.includes(req.url)) {
+        // if url not in expected page routes, set status to 404.
+        res.status(404);
+    }
 
-        // send index.html
-        res.sendFile(path.join(__dirname, "/app/build/index.html"));
-    });
+    // send index.html
+    res.sendFile(path.join(__dirname, "/app/build/index.html"));
+});
 
-    /*************************************************/
+/*************************************************/
 // Express server listening...
-    const port = process.env.PORT || 5000;
-    app.listen(port, () => {
-        log(`Listening on port ${port}...`);
-    })
+const port = process.env.PORT || 5000;
+app.listen(port, () => {
+    log(`Listening on port ${port}...`);
+})
