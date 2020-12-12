@@ -45,14 +45,14 @@ class App extends React.Component {
                 )}
             />
 
-            {/*<Route*/}
-            {/*    exact path="/Admin"*/}
-            {/*    render={props => (*/}
-            {/*        <div className="app">*/}
-            {/*          {(this.state.currentUser && this.state.admin) ? <Admin app={this} /> : <Login  app={this} />}*/}
-            {/*        </div>*/}
-            {/*    )}*/}
-            {/*/>*/}
+            <Route
+                exact path="/Admin"
+                render={props => (
+                    <div className="app">
+                      {(this.state.currentUser && this.state.admin) ? <Admin app={this} /> : <Login  app={this} />}
+                    </div>
+                )}
+            />
 
             <Route
               exact
@@ -67,7 +67,10 @@ class App extends React.Component {
             <Route
               exact
               path="/CourseAdmin/:courseCode"
-              render={(props) => <CourseAdmin {...props} app={this} />}
+              render={(props) =>
+                  <div className="app">
+                    {(this.state.currentUser && this.state.admin) ? <CourseAdmin {...props} app={this} /> : <Login  app={this} />}
+                  </div>}
             />
             <Route
               exact
@@ -82,12 +85,17 @@ class App extends React.Component {
             <Route
               exact
               path="/teamAdmin"
-              render={() => <AdminTeam app={this} />}
+              render={() => <div className="app">
+                {(this.state.currentUser && this.state.admin) ? <AdminTeam app={this} /> : <Login  app={this} />}
+              </div>}
             />
             <Route
                 exact
                 path="/AdminUsers"
-                render={() => <AdminUsers app={this} />}
+                render={() =>
+                    <div className="app">
+                      {(this.state.currentUser && this.state.admin) ? <AdminUsers app={this} /> : <Login  app={this} />}
+                    </div>}
             />
           </Switch>
         </BrowserRouter>

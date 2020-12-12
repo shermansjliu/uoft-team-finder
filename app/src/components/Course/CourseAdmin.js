@@ -16,7 +16,6 @@ const {Sider, Content} = Layout;
 export default class CourseAdmin extends Component {
     constructor(props) {
         super(props);
-        checkSession(this.props.app)
         this.state = {
             searchRes: "",
             users: [],
