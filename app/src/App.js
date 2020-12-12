@@ -22,8 +22,8 @@ class App extends React.Component {
   }
   // global state passed down includes the current logged in user.
   state = {
-    currentUser: null,
-    admin: false
+    currentUser: {username:"admin"},
+    admin: true
   }
 
   render() {
@@ -63,7 +63,7 @@ class App extends React.Component {
                   </div>}
             />
             <Route
-              path="/Course/:courseCode"
+              path="/Course"
               render={(props) =>
                   <div className="app">
                     {this.state.currentUser ? <Course {...props} app={this} /> : <Login  app={this} />}
@@ -71,7 +71,7 @@ class App extends React.Component {
             />
             <Route
               exact
-              path="/CourseAdmin/:courseCode"
+              path="/CourseAdmin"
               render={(props) =>
                   <div className="app">
                     {(this.state.currentUser && this.state.admin) ? <CourseAdmin {...props} app={this} /> : <Login  app={this} />}

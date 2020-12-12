@@ -25,65 +25,14 @@ export default class Course extends Component {
 
     };
   }
-  // Sample returned teams obj  teams: [
-  //         {
-  //           teamName: "The John Wicks",
-  //           members: [
-  //             { userID: "DavidID", name: "David" },
-  //             { userID: "ShermanID", name: "Sherman" },
-  //             { userID: "QuincyID", name: "Quincy" },
-  //             { userID: "JesseID", name: "Jesse" },
-  //           ],
-  //           capacity: 4,
-  //           teamId: 0,
-  //         },
-  //         {
-  //           teamName: "BA Forever",
-  //           members: [],
-  //           capacity: 4,
-  //           teamId: 1,
-  //         },
-  //         {
-  //           teamName: "League of Legends",
-  //           members: [],
-  //           capacity: 4,
-  //           teamId: 2,
-  //         },
-  //         {
-  //           teamName: "March March",
-  //           members: [],
-  //           capacity: 4,
-  //           teamId: 4,
-  //         },
-  //         {
-  //           teamName: "March March",
-  //           members: [
-  //             { userID: "QuincyID", name: "Quincy" },
-  //             { userID: "JesseID", name: "Jesse" },
-  //           ],
-  //           capacity: 4,
-  //           teamId: 5,
-  //         },
-  //         {
-  //           teamName: "Love Live Laugh",
-  //           members: [
-  //             { userID: "QuincyID", name: "Quincy" },
-  //             { userID: "JesseID", name: "Jesse" },
-  //           ],
-  //           capacity: 4,
-  //           teamId: 6,
-  //         },
-  //         {
-  //           teamName: "March March",
-  //           members: [],
-  //           capacity: 4,
-  //           teamId: 3,
-  //         },
-  //       ]
+
   async componentDidMount() {
     checkSession((this))
     try {
-      const courseCode = this.props.match.params.courseCode
+      let courseCode = this.props.location.state.courseCode
+      courseCode = courseCode.replace(/\s/g, '');
+      courseCode = courseCode.toUpperCase()
+      console.log(courseCode)
       const response = await axios.get(`${ENDPOINT}/api/courses/${courseCode}`)
       const data = response.data
 
@@ -96,7 +45,7 @@ export default class Course extends Component {
 
           }
       ))
-      this.setState({teams:teams})
+      this.setState({teams:teams, courseCode: courseCode})
     }catch(error){
       console.log("Could not get course ",error)
     }

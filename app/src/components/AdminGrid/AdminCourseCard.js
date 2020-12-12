@@ -66,7 +66,7 @@ class AdminCourseCard extends React.Component {
                   ]}
             >
                 {/*if is not editing, pass the course we entered, and go to the next page*/}
-                <ConditionalLink to={{pathname: `/CourseAdmin/${courseName}`, query :{ course: course }}} condition={!this.state.isEditing}>
+                <ConditionalLink to={{pathname: `/CourseAdmin`,state:{courseCode:courseName}, query :{ course: course }}} condition={!this.state.isEditing}>
                 <Meta hoverable
                     title={courseName}
                     description={description}
