@@ -11,6 +11,7 @@ import {getAllCourses} from "../AdminGrid/action";
 class AdminUsers extends React.Component {
     constructor(props) {
         super(props);
+        checkSession(this.props.app)
         this.state = {
             searchRes: "",
             users: [],

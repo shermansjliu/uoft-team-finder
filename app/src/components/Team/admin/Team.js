@@ -7,6 +7,8 @@ import { UserOutlined, TeamOutlined, LogoutOutlined } from "@ant-design/icons";
 
 import "./style.css";
 import AdminLayout from "../../AdminLayout/AdminLayout";
+import {getAllUsers} from "../../../actions/users";
+import {getAllCourses} from "../../AdminGrid/action";
 
 const { Sider, Content } = Layout;
 
@@ -24,6 +26,8 @@ class AdminTeam extends React.Component {
     // const currentUser = {userID: "ShermanID", name: "Sherman"}
     this.state = {
       currentUser: { userID: "ShermanID", name: "Sherman" },
+      users: [],
+      courses: [],
       teamLeaderID: "ShermanID",
       members: [
         // list of users
@@ -55,6 +59,8 @@ class AdminTeam extends React.Component {
     this.setName = this.setName.bind(this);
     this.setDescription = this.setDescription.bind(this);
     this.setCapacity = this.setCapacity.bind(this);
+    getAllUsers(this);
+    getAllCourses(this)
   }
 
   addMember(newMember) {
@@ -104,7 +110,9 @@ class AdminTeam extends React.Component {
 
     return (
       <AdminLayout
-        app={this.props.app}
+        app = {this.props.app}
+        users = {this.state.users}
+        courses = {this.state.courses}
         content={
           <div>
             <TeamName

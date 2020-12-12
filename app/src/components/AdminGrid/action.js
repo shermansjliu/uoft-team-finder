@@ -25,6 +25,7 @@ export const removeCourse = (page, course,card) => {
         .catch(error => {
             console.log(error);
         });
+    getAllCourses(page)
 };
 
 export const addCourse = (page, img) => {
@@ -60,7 +61,7 @@ export const edit = (card) =>{
     card.setState({isEditing: true});
 }
 
-export const save = (card, course) => {
+export const save = (page, card, course) => {
     console.log(card.state);
     card.setState({isEditing: false});
     const courseId = course._id
@@ -86,6 +87,8 @@ export const save = (card, course) => {
     }).catch(error => {
         console.log(error);
     });
+    // update the page
+    getAllCourses(page)
 };
 
 export const onSearch = (page, value) =>{

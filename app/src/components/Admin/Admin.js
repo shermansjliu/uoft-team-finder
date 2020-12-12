@@ -7,7 +7,7 @@ import "./style.css";
 import bkimg from "../../img/home-books.jpg";
 import AdminLayout from "../AdminLayout/AdminLayout";
 import CourseAdmin from "../Course/CourseAdmin";
-import {getAllUsers} from "../../actions/users";
+import {checkSession, getAllUsers} from "../../actions/users";
 import {addCourse, getAllCourses} from "../AdminGrid/action";
 import {FileAddOutlined, SearchOutlined} from "@ant-design/icons";
 import CourseCard from "../AdminGrid/AdminCourseCard";
@@ -18,6 +18,7 @@ const { Title } = Typography;
 class Admin extends Component {
     constructor(props) {
         super(props);
+        checkSession(this.props.app)
         this.props.history.push("/Admin");
         this.state = {
             users:[],

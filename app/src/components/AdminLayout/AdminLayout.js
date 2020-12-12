@@ -13,7 +13,10 @@ const { Title } = Typography;
 // to use this module call <AdminLayout title={} content={} appState={}>
 
 class AdminLayout extends React.Component {
-  state = {users:[], courses:[]}
+  state = {users:[], courses:[], collapsed: false,}
+  toggleCollapsed = () => {
+    this.setState({collapsed: !this.state.collapsed});
+  };
   render() {
     const { title, content, app, users, courses } = this.props;
 
@@ -21,13 +24,20 @@ class AdminLayout extends React.Component {
     const numCourses =courses.length
     const numAdmin = users.filter(user => user.admin).length
     const numNormalUser = numUsers - numAdmin
-    const cscCourses =courses.filter(course => course.courseCode.includes("csc")).length
-    const ecoCourses =courses.filter(course => course.courseCode.includes("eco")).length
-    const matCourses =courses.filter(course => course.courseCode.includes("mat")).length
+    const cscCourses =courses.filter(course => course.courseCode.includes("Csc")).length
+    const ecoCourses =courses.filter(course => course.courseCode.includes("Eco")).length
+    const matCourses =courses.filter(course => course.courseCode.includes("Mat")).length
     return (
       <div>
         <Layout className="theme-content">
-          <Sider className="sideBar theme-background-color" width={300}>
+          <Sider
+              className="sideBar theme-background-color"
+              width={300}
+              collapsible
+              collapsed={this.state.collapsed}
+              onCollapse={this.toggleCollapsed}
+              collapsedWidth={0}
+          >
             <div>
               <Title level={2} className={"admin"}>
                 {" "}
@@ -69,19 +79,19 @@ class AdminLayout extends React.Component {
                 <Title level={5}> Eco: {ecoCourses}</Title>
               </Space>
 
-              <Title className="totalTeams" level={2}>
-                {/*<Link to={"/AdminTeams"}>*/}
-                <Button
-                  type="primary"
-                  className="round"
-                  size="large"
-                >
-                  {/*All Teams: {this.state.teams.length}*/}
-                  {/*All Teams:  {appState.teams.length}*/}
-                  All Teams: {10}
-                </Button>
-                {/*</Link>*/}
-              </Title>
+              {/*<Title className="totalTeams" level={2}>*/}
+              {/*  /!*<Link to={"/AdminTeams"}>*!/*/}
+              {/*  <Button*/}
+              {/*    type="primary"*/}
+              {/*    className="round"*/}
+              {/*    size="large"*/}
+              {/*  >*/}
+              {/*    /!*All Teams: {this.state.teams.length}*!/*/}
+              {/*    /!*All Teams:  {appState.teams.length}*!/*/}
+              {/*    All Teams: {10}*/}
+              {/*  </Button>*/}
+              {/*  /!*</Link>*!/*/}
+              {/*</Title>*/}
             </div>
 
             <footer>

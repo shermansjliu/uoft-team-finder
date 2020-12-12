@@ -51,7 +51,7 @@ class AdminCourseCard extends React.Component {
                 </span>
                 )
             // change icon to save mode
-            editIcon = (<SaveOutlined onClick={() => save(this, course)}/>)
+            editIcon = (<SaveOutlined onClick={() => save(page, this, course)}/>)
         }
 
 
