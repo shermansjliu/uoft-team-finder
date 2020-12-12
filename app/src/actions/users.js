@@ -16,7 +16,8 @@ export const checkSession = (app) => {
             }
         })
         .catch(error => {
-            console.log(error);
+            console.log(error)
+
         });
 };
 

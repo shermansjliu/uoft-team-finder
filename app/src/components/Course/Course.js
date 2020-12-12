@@ -4,9 +4,10 @@ import TeamCard from "./TeamCard";
 import SearchBar from "./SearchBar";
 import uuid from "react-uuid";
 import "../../App.css";
+import {checkSession} from "../../actions/users"
 import "./index.css";
 import axios from "axios"
-import endpoint, {ENDPOINT} from "../requests"
+import {ENDPOINT} from "../requests"
 import StandardLayout from "../StandardLayout/layout";
 
 
@@ -80,15 +81,18 @@ export default class Course extends Component {
   //         },
   //       ]
   async componentDidMount() {
+    checkSession((this))
     try {
-
-      const response = await axios.get(`${ENDPOINT}/api/courses/${this.state.courseCode}`,{ method: "get"})
+      const courseCode = this.props.match.params.courseCode
+      const response = await axios.get(`${ENDPOINT}/api/courses/${courseCode}`)
       const data = response.data
+
       const teams = data.teams.map(team=> (
           {
             teamName:team.teamName,
             members: team.members,
-            capacity: team.teamCapacity
+            capacity: team.teamCapacity,
+            teamID: team._id
 
           }
       ))
@@ -112,6 +116,7 @@ export default class Course extends Component {
     const cards = this.state.teams.filter((team) => {
       return regex.test(team.teamName);
     });
+
     return (
       <StandardLayout
         app={this.props.app}
@@ -128,6 +133,7 @@ export default class Course extends Component {
                   <Col key={uuid()} span={8}>
                     <div>
                       <TeamCard
+                          teamID={team.teamID}
                         teamName={team.teamName}
                         members={team.members}
                         capacity={team.capacity}

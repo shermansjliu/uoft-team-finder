@@ -45,11 +45,11 @@ class AdminCourseCard extends React.Component {
                                     name={"newDescription"}
                                     onChange={this.handleInputChange}/>
             // upload photo if editing, need backend here
-            img = (
-                <span className={"center__"}>
-                    <ImageUploader api={"implement latter"} />
-                </span>
-                )
+            // img = (
+            //     <span className={"center__"}>
+            //         <ImageUploader api={"implement latter"} />
+            //     </span>
+            //     )
             // change icon to save mode
             editIcon = (<SaveOutlined onClick={() => save(page, this, course)}/>)
         }
@@ -66,7 +66,7 @@ class AdminCourseCard extends React.Component {
                   ]}
             >
                 {/*if is not editing, pass the course we entered, and go to the next page*/}
-                <ConditionalLink to={{pathname: '/CourseAdmin', query :{ course: course }}} condition={!this.state.isEditing}>
+                <ConditionalLink to={{pathname: `/CourseAdmin/${courseName}`, query :{ course: course }}} condition={!this.state.isEditing}>
                 <Meta hoverable
                     title={courseName}
                     description={description}

@@ -2,7 +2,8 @@ import React, {Component} from "react";
 import {Layout, Space, Table} from "antd";
 import SearchBar from "./SearchBar";
 import {Link} from "react-router-dom";
-
+import axios from "axios"
+import {ENDPOINT} from "../requests"
 import "../../App.css";
 import "./index.css";
 import Sidebar from "../StandardLayout/Sidebar";
@@ -15,89 +16,61 @@ const {Sider, Content} = Layout;
 export default class CourseAdmin extends Component {
     constructor(props) {
         super(props);
-        checkSession(this.props.app)
         this.state = {
             searchRes: "",
             users: [],
             courses: [],
             courseCode: "CSC236",
-            teams: [
-                {
-                    teamName: "The John Wicks",
-                    teamLeader: "John Wick",
-                    members: [
-                        {userID: "DavidID", name: "David"},
-                        {userID: "ShermanID", name: "Sherman"},
-                        {userID: "QuincyID", name: "Quincy"},
-                        {userID: "JesseID", name: "Jesse"},
-                    ],
-                    capacity: 4,
-                    teamId: 0,
-                },
-                {
-                    teamName: "BA Forever",
-                    teamLeader: "Daveedo",
-                    members: [],
-                    capacity: 4,
-                    teamId: 1,
-                },
-                {
-                    teamName: "League of Legends",
-                    teamLeader: "Mike",
-                    members: [],
-                    capacity: 4,
-                    teamId: 2,
-                },
-                {
-                    teamName: "March March",
-                    teamLeader: "Sherman",
-                    members: [],
-                    capacity: 4,
-                    teamId: 4,
-                },
-                {
-                    teamName: "March March",
-                    teamLeader: "Quincy",
-                    members: [
-                        {userID: "QuincyID", name: "Quincy"},
-                        {userID: "JesseID", name: "Jesse"},
-                    ],
-                    capacity: 4,
-                    teamId: 5,
-                },
-                {
-                    teamName: "March March",
-                    teamLeader: "Jesse",
-                    members: [
-                        {userID: "QuincyID", name: "Quincy"},
-                        {userID: "JesseID", name: "Jesse"},
-                    ],
-                    capacity: 4,
-                    teamId: 6,
-                },
-                {
-                    teamName: "March March",
-                    teamLeader: "Sherman",
-                    members: [],
-                    capacity: 4,
-                    teamId: 3,
-                },
-            ],
+            teams:[]
         };
         getAllUsers(this);
         getAllCourses(this)
     }
 
+    async componentDidMount() {
+        try {
+
+            const courseCode = this.props.match.params.courseCode.toUpperCase()
+            const res = await axios.get(`${ENDPOINT}/api/courses/${courseCode}`)
+            // const res = await axios.get(`${ENDPOINT}/api/courses/CSC309`)
+            const data = res.data
+            console.log(res.data.teams[0])
+            const teams = data.teams.map(team => (
+                {
+                    teamName: team.teamName,
+                    teamLeader:team.teamLeader.username,
+                    members: team.members,
+                    capacity: team.teamCapacity,
+                    teamId: team._id
+                }
+            ))
+            this.setState({teams: teams, courseCode: courseCode})
+        } catch (error) {
+            console.log("Could not get course ", error)
+        }
+
+    }
+
+
     handleInputChange = (e) => {
         this.setState({searchRes: e.target.value});
     };
 
-    handleDeleteTeam = (key) => {
+    handleDeleteTeam = async (key) => {
         const {teamId: deletedTeamId} = key;
         const newTeams = this.state.teams.filter((team) => {
             return team.teamId !== deletedTeamId;
         });
-        this.setState({teams: newTeams});
+        console.log(deletedTeamId, "deletedTeamID")
+        const res = await axios.delete(`${ENDPOINT}/api/teams/${deletedTeamId}`)
+        if (res.status !== 200){
+            console.log("course could not be deleted")
+        }
+
+        else{
+            this.setState({teams: newTeams});
+        }
+
     };
 
     render() {
@@ -168,19 +141,19 @@ export default class CourseAdmin extends Component {
                 courses = {this.state.courses}
                 content={
                     <div>
-                    <h1 className="courseCode theme-title">{this.state.courseCode}</h1>
-                    <SearchBar
-                        searchRes={this.state.searchRes}
-                        handleInputChange={this.handleInputChange}
-                    />
-                    <Table
-                        className="courseAdminTable"
-                        columns={columns}
-                        dataSource={data}
-                    >
-                        {" "}
-                    </Table>
-                </div>
+                        <h1 className="courseCode theme-title">{this.state.courseCode}</h1>
+                        <SearchBar
+                            searchRes={this.state.searchRes}
+                            handleInputChange={this.handleInputChange}
+                        />
+                        <Table
+                            className="courseAdminTable"
+                            columns={columns}
+                            dataSource={data}
+                        >
+                            {" "}
+                        </Table>
+                    </div>
                 }
             />
 

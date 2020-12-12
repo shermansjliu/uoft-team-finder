@@ -50,7 +50,7 @@ class CourseGrid extends React.Component {
                     dataSource={filteredCourses}
                     renderItem={item => (
                         <List.Item>
-                            <Link to='/Course' params={{ course: item }}>
+                            <Link to={`/Course/${item.courseName}`} params={{ course: item }}>
                                 <Card hoverable
                                     cover={
                                         <img className={"courseCard"}

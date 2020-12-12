@@ -13,50 +13,34 @@ import {
 import "./style.css";
 import StandardLayout from "../../StandardLayout/layout";
 
+import { ENDPOINT } from "../../../requests";
+import axios from "axios";
+
 const { Sider, Content } = Layout;
 const { Title } = Typography;
 
 class Team extends React.Component {
   constructor(props) {
     super(props);
-    /* ----------- HARD-CODED DATA ------------- */
-    /* BELOW DATA WILL BE PASSED IN FROM HOME VIEW */
-    //
-    // three types of current users, will have different views:
-    //      1) a team member of the team
-    //      2) the team leader of the team
-    //      3) other users not in the team
-    // const currentUser = {userID: "SpectatorID", name: "Spectator"}
-    // const currentUser = {userID: "ShermanID", name: "Sherman"}
+    const team_id = this.props.location.state.teamID;
     this.state = {
+      teamID: "",
       currentUser: {
-        userID: "ShermanID",
+        _id: "ShermanID",
         name: "Sherman",
         description: "REEEEEEEEEEEEEE",
       },
       teamLeaderID: "ShermanID",
       members: [
-        // list of users
         {
-          userID: "DavidID",
-          name: "David",
-          description: "Radiohead is the best",
-        },
-        {
-          userID: "ShermanID",
+          _id: "ShermanID",
           name: "Sherman",
           description: "REEEEEEEEEEEEEE",
         },
-        {
-          userID: "QuincyID",
-          name: "Quincy",
-          description: "Yasuo happy happy hahappy",
-        },
-        { userID: "JesseID", name: "Jesse", description: "LALALALALLALALALA" },
       ],
-      teamName: "THE JOHN WICKS",
-      teamDescription: "We seek revenge for our dogs",
-      teamCapacity: 4,
+      teamName: "",
+      teamDescription: "",
+      teamCapacity: 0,
       view: "",
     };
     this.updateView = this.updateView.bind(this);
@@ -66,6 +50,38 @@ class Team extends React.Component {
     this.setName = this.setName.bind(this);
     this.setDescription = this.setDescription.bind(this);
     this.setCapacity = this.setCapacity.bind(this);
+    this.deleteTeam = this.deleteTeam.bind(this);
+  }
+
+  async componentDidMount() {
+    try {
+      // team id received as a prop
+      const team = await axios.get(
+        `${ENDPOINT}/api/teams/${this.state.teamID}`,
+        {
+          method: "get",
+        }
+      );
+
+      // currentUser id received from session
+      const currentUser = await axios.get(
+        `${ENDPOINT}/api/users/get-current-user`,
+        {
+          method: "get",
+        }
+      );
+      this.setState({
+        teamID: team.data._id,
+        currentUser: currentUser.data,
+        teamLeaderID: team.data.teamLeader._id,
+        members: team.data.members,
+        teamName: team.data.teamName,
+        teamDescription: team.data.teamDescription,
+        teamCapacity: team.data.teamCapacity,
+      });
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   initView() {
@@ -75,11 +91,11 @@ class Team extends React.Component {
   updateView() {
     if (
       !this.state.members.some(
-        (member) => this.state.currentUser.userID === member.userID
+        (member) => this.state.currentUser._id === member._id
       )
     ) {
       return "otherUserView";
-    } else if (this.state.currentUser.userID === this.state.teamLeaderID) {
+    } else if (this.state.currentUser._id === this.state.teamLeaderID) {
       return "teamLeaderView";
     } else {
       return "teamMemberView";
@@ -89,9 +105,15 @@ class Team extends React.Component {
   addMember(newMember) {
     if (
       !this.state.members.some(
-        (member) => this.state.currentUser.userID === member.userID
+        (member) => this.state.currentUser._id === member._id
       )
     ) {
+      axios.put(
+        `${ENDPOINT}/api/teams/add/${this.state.teamID}/${newMember._id}`,
+        {
+          method: "put",
+        }
+      );
       this.setState(
         (prevState) => ({
           members: [...prevState.members, newMember],
@@ -102,10 +124,17 @@ class Team extends React.Component {
   }
 
   deleteMember(rmMember) {
+    axios.put(
+      `${ENDPOINT}/api/teams/delete/${this.state.teamID}/${rmMember._id}`,
+      {
+        method: "put",
+      }
+    );
+
     this.setState(
       (prevState) => ({
         members: prevState.members.filter(
-          (member) => rmMember.userID !== member.userID
+          (member) => rmMember._id !== member._id
         ),
       }),
       () => this.setState({ view: this.updateView() })
@@ -113,7 +142,13 @@ class Team extends React.Component {
   }
 
   changeLeader(newLeader) {
-    this.setState({ teamLeaderID: newLeader.userID }, () =>
+    axios.put(
+      `${ENDPOINT}/api/teams/new_leader/${this.state.teamID}/${newLeader._id}`,
+      {
+        method: "put",
+      }
+    );
+    this.setState({ teamLeaderID: newLeader._id }, () =>
       this.setState({ view: this.updateView() })
     );
   }
@@ -122,16 +157,40 @@ class Team extends React.Component {
     if (newName === "") {
       alert("Name cannot be empty!");
     } else {
+      axios.put(
+        `${ENDPOINT}/api/teams/${this.state.teamID}/teamName/${newName}`,
+        {
+          method: "put",
+        }
+      );
       this.setState({ teamName: newName.toUpperCase() });
     }
   }
 
   setDescription(newDescription) {
+    axios.put(
+      `${ENDPOINT}/api/teams/${this.state.teamID}/teamDescription/${newDescription}`,
+      {
+        method: "put",
+      }
+    );
     this.setState({ teamDescription: newDescription });
   }
 
   setCapacity(newCapacity) {
+    axios.put(
+      `${ENDPOINT}/api/teams/${this.state.teamID}/teamCapacity/${newCapacity}`,
+      {
+        method: "put",
+      }
+    );
     this.setState({ teamCapacity: newCapacity });
+  }
+
+  deleteTeam() {
+    axios.delete(`${ENDPOINT}/api/teams/delete/${this.state.teamID}`, {
+      method: "delete",
+    });
   }
 
   render() {
@@ -155,6 +214,7 @@ class Team extends React.Component {
                 isLeaderView={this.state.view === "teamLeaderView"}
                 setDescription={this.setDescription}
               />
+              {this.state.view}
               <MemberTable
                 view={this.state.view}
                 teamLeaderID={this.state.teamLeaderID}
@@ -165,6 +225,7 @@ class Team extends React.Component {
                 deleteMember={this.deleteMember}
                 changeLeader={this.changeLeader}
                 setCapacity={this.setCapacity}
+                deleteTeam={this.deleteTeam}
               />
             </div>
           }

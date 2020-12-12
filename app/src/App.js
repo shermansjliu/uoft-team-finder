@@ -45,49 +45,68 @@ class App extends React.Component {
                 )}
             />
 
-            {/*<Route*/}
-            {/*    exact path="/Admin"*/}
-            {/*    render={props => (*/}
-            {/*        <div className="app">*/}
-            {/*          {(this.state.currentUser && this.state.admin) ? <Admin app={this} /> : <Login  app={this} />}*/}
-            {/*        </div>*/}
-            {/*    )}*/}
-            {/*/>*/}
+            <Route
+                exact path="/Admin"
+                render={props => (
+                    <div className="app">
+                      {(this.state.currentUser && this.state.admin) ? <Admin app={this} /> : <Login  app={this} />}
+                    </div>
+                )}
+            />
 
             <Route
               exact
               path="/Profile"
-              render={() => <Profile app={this} />}
+              render={() =>
+                  <div className="app">
+                    {this.state.currentUser ? <Profile app={this} /> : <Login  app={this} />}
+                  </div>}
+            />
+            <Route
+              path="/Course/:courseCode"
+              render={(props) =>
+                  <div className="app">
+                    {this.state.currentUser ? <Course {...props} app={this} /> : <Login  app={this} />}
+                  </div>}
             />
             <Route
               exact
-              path="/Course"
-              render={() => <Course app={this} />}
-            />
-            <Route
-              exact
-              path="/CourseAdmin"
-              render={() => <CourseAdmin app={this} />}
+              path="/CourseAdmin/:courseCode"
+              render={(props) =>
+                  <div className="app">
+                    {(this.state.currentUser && this.state.admin) ? <CourseAdmin {...props} app={this} /> : <Login  app={this} />}
+                  </div>}
             />
             <Route
               exact
               path="/Team"
-              render={() => <Team app={this} />}
+              render={(props) =>
+                  <div className="app">
+                    {this.state.currentUser ? <Team {...props} app={this} /> : <Login  app={this} />}
+                  </div>}
             />
             <Route
               exact
               path="/Profile"
-              render={() => <Profile app={this} />}
+              render={() =>
+                  <div className="app">
+                    {this.state.currentUser ? <Profile app={this} /> : <Login  app={this} />}
+                  </div>}
             />
             <Route
               exact
               path="/teamAdmin"
-              render={() => <AdminTeam app={this} />}
+              render={() => <div className="app">
+                {(this.state.currentUser && this.state.admin) ? <AdminTeam app={this} /> : <Login  app={this} />}
+              </div>}
             />
             <Route
                 exact
                 path="/AdminUsers"
-                render={() => <AdminUsers app={this} />}
+                render={() =>
+                    <div className="app">
+                      {(this.state.currentUser && this.state.admin) ? <AdminUsers app={this} /> : <Login  app={this} />}
+                    </div>}
             />
           </Switch>
         </BrowserRouter>

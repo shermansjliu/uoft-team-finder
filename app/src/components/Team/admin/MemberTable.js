@@ -26,7 +26,7 @@ class MemberTable extends React.Component {
 
   handleRemoveRequest(rmMember) {
     if (
-      this.props.teamLeaderID === rmMember.userID &&
+      this.props.teamLeaderID === rmMember._id &&
       this.props.members.length > 1
     ) {
       // the member to be removed is the team leader
@@ -56,11 +56,9 @@ class MemberTable extends React.Component {
     const { teamLeaderID, members, teamCapacity } = this.props;
 
     const teamLeader = members.filter(
-      (member) => member.userID === teamLeaderID
+      (member) => member._id === teamLeaderID
     )[0];
-    const teamMembers = members.filter(
-      (member) => member.userID !== teamLeaderID
-    );
+    const teamMembers = members.filter((member) => member._id !== teamLeaderID);
 
     const renderCapacity = () => {
       return (
@@ -87,7 +85,7 @@ class MemberTable extends React.Component {
 
         {teamMembers.map((member) => (
           <TeamMember
-            key={member.userID}
+            key={member._id}
             member={member}
             handleKickRequest={this.handleRemoveRequest}
             handleMakeLeaderRequest={this.handleChangeLeaderRequest}
