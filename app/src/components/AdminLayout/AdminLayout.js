@@ -19,7 +19,7 @@ class AdminLayout extends React.Component {
   };
   render() {
     const { title, content, app, users, courses } = this.props;
-
+    console.log(this.props)
     const numUsers = users.length
     const numCourses =courses.length
     const numAdmin = users.filter(user => user.admin).length
