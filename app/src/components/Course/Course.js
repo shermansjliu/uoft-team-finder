@@ -5,9 +5,13 @@ import SearchBar from "./SearchBar";
 import uuid from "react-uuid";
 import "../../App.css";
 import "./index.css";
+import axios from "axios"
+import endpoint, {ENDPOINT} from "../requests"
 import StandardLayout from "../StandardLayout/layout";
 
+
 const { Content } = Layout;
+
 
 export default class Course extends Component {
   constructor(props) {
@@ -15,71 +19,89 @@ export default class Course extends Component {
 
     this.state = {
       searchRes: "",
-      courseCode: "CSC236",
-      teams: [
-        {
-          teamName: "The John Wicks",
-          teamLeader: "John Wick",
-          members: [
-            { userID: "DavidID", name: "David" },
-            { userID: "ShermanID", name: "Sherman" },
-            { userID: "QuincyID", name: "Quincy" },
-            { userID: "JesseID", name: "Jesse" },
-          ],
-          capacity: 4,
-          teamId: 0,
-        },
-        {
-          teamName: "BA Forever",
-          teamLeader: "Daveedo",
-          members: [],
-          capacity: 4,
-          teamId: 1,
-        },
-        {
-          teamName: "League of Legends",
-          teamLeader: "Mike",
-          members: [],
-          capacity: 4,
-          teamId: 2,
-        },
-        {
-          teamName: "March March",
-          teamLeader: "Sherman",
-          members: [],
-          capacity: 4,
-          teamId: 4,
-        },
-        {
-          teamName: "March March",
-          teamLeader: "Quincy",
-          members: [
-            { userID: "QuincyID", name: "Quincy" },
-            { userID: "JesseID", name: "Jesse" },
-          ],
-          capacity: 4,
-          teamId: 5,
-        },
-        {
-          teamName: "Love Live Laugh",
-          teamLeader: "Jesse",
-          members: [
-            { userID: "QuincyID", name: "Quincy" },
-            { userID: "JesseID", name: "Jesse" },
-          ],
-          capacity: 4,
-          teamId: 6,
-        },
-        {
-          teamName: "March March",
-          teamLeader: "Sherman",
-          members: [],
-          capacity: 4,
-          teamId: 3,
-        },
-      ],
+      courseCode: "CSC418",
+      teams: []
+
     };
   }
+  // Sample returned teams obj  teams: [
+  //         {
+  //           teamName: "The John Wicks",
+  //           members: [
+  //             { userID: "DavidID", name: "David" },
+  //             { userID: "ShermanID", name: "Sherman" },
+  //             { userID: "QuincyID", name: "Quincy" },
+  //             { userID: "JesseID", name: "Jesse" },
+  //           ],
+  //           capacity: 4,
+  //           teamId: 0,
+  //         },
+  //         {
+  //           teamName: "BA Forever",
+  //           members: [],
+  //           capacity: 4,
+  //           teamId: 1,
+  //         },
+  //         {
+  //           teamName: "League of Legends",
+  //           members: [],
+  //           capacity: 4,
+  //           teamId: 2,
+  //         },
+  //         {
+  //           teamName: "March March",
+  //           members: [],
+  //           capacity: 4,
+  //           teamId: 4,
+  //         },
+  //         {
+  //           teamName: "March March",
+  //           members: [
+  //             { userID: "QuincyID", name: "Quincy" },
+  //             { userID: "JesseID", name: "Jesse" },
+  //           ],
+  //           capacity: 4,
+  //           teamId: 5,
+  //         },
+  //         {
+  //           teamName: "Love Live Laugh",
+  //           members: [
+  //             { userID: "QuincyID", name: "Quincy" },
+  //             { userID: "JesseID", name: "Jesse" },
+  //           ],
+  //           capacity: 4,
+  //           teamId: 6,
+  //         },
+  //         {
+  //           teamName: "March March",
+  //           members: [],
+  //           capacity: 4,
+  //           teamId: 3,
+  //         },
+  //       ]
+  async componentDidMount() {
+    try {
+
+      const response = await axios.get(`${ENDPOINT}/api/courses/${this.state.courseCode}`,{ method: "get"})
+      const data = response.data
+      const teams = data.teams.map(team=> (
+          {
+            teamName:team.teamName,
+            members: team.members,
+            capacity: team.teamCapacity
+
+          }
+      ))
+      this.setState({teams:teams})
+    }catch(error){
+      console.log("Could not get course ",error)
+    }
+  }
+
+
+
+
+
 
   handleInputChange = (e) => {
     this.setState({ searchRes: e.target.value });
@@ -92,7 +114,7 @@ export default class Course extends Component {
     });
     return (
       <StandardLayout
-        appState={this.state}
+        app={this.props.app}
         content={
           <div className="homeViewContent">
             <h1 className="courseCode theme-title">{this.state.courseCode}</h1>

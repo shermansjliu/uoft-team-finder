@@ -7,15 +7,19 @@ import "../../App.css";
 import "./index.css";
 import Sidebar from "../StandardLayout/Sidebar";
 import AdminLayout from "../AdminLayout/AdminLayout";
+import {checkSession, getAllUsers} from "../../actions/users";
+import {getAllCourses} from "../AdminGrid/action";
 
 const {Sider, Content} = Layout;
 
 export default class CourseAdmin extends Component {
     constructor(props) {
         super(props);
-
+        checkSession(this.props.app)
         this.state = {
             searchRes: "",
+            users: [],
+            courses: [],
             courseCode: "CSC236",
             teams: [
                 {
@@ -80,6 +84,8 @@ export default class CourseAdmin extends Component {
                 },
             ],
         };
+        getAllUsers(this);
+        getAllCourses(this)
     }
 
     handleInputChange = (e) => {
@@ -157,7 +163,9 @@ export default class CourseAdmin extends Component {
 
         return (
             <AdminLayout
-                appState={this.state}
+                app = {this.props.app}
+                users = {this.state.users}
+                courses = {this.state.courses}
                 content={
                     <div>
                     <h1 className="courseCode theme-title">{this.state.courseCode}</h1>

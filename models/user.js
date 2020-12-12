@@ -21,14 +21,15 @@ const UserSchema = new mongoose.Schema({
     validate: {
       validator: validator.isAlphanumeric,
       message: 'Not valid username'
-    }
+    },
   },
+  tags: [String],
   password: {
     type: String,
     required: true,
     minlength: 6
   },
-  admin: Boolean,
+  admin: { type: Boolean, default: false },
   name: String,
   major: String,
   description: String,
@@ -75,7 +76,7 @@ UserSchema.pre('save', function(next) {
 UserSchema.statics.findByUsernamePassword = function(username, password) {
   const User = this // binds this to the User model
 
-  // First find the user by their email
+  // First find the user by their username
   return User.findOne({ username: username }).then((user) => {
     if (!user) {
       return Promise.reject()  // a rejected promise

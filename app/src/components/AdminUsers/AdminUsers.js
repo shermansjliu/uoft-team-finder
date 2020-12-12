@@ -5,37 +5,22 @@ import {SearchOutlined} from "@ant-design/icons";
 import "./style.css"
 import {Link} from "react-router-dom";
 import {changePassword, deleteUser} from "./actions"
+import {checkSession, getAllUsers} from "../../actions/users";
+import {getAllCourses} from "../AdminGrid/action";
 
 class AdminUsers extends React.Component {
-    state = {
-        searchRes: "",
-        data: [
-            {
-                key: '1',
-                username: 'John2',
-                name: 'John Brown',
-                year: 3,
-                address: 'New York No. 1 Lake Park',
-                tags: [],
-            },
-            {
-                key: '2',
-                username: 'Jimeee',
-                name: 'Jim Green',
-                year: 4,
-                address: 'London No. 1 Lake Park',
-                tags: ['TeamLeader'],
-            },
-            {
-                key: '3',
-                username: 'Joeeeee',
-                name: 'Joe Black',
-                year: 3,
-                address: 'Sidney No. 1 Lake Park',
-                tags: ['CSC'],
-            },
-        ],
+    constructor(props) {
+        super(props);
+        checkSession(this.props.app)
+        this.state = {
+            searchRes: "",
+            users: [],
+            courses: []
+        }
+        getAllUsers(this);
+        getAllCourses(this)
     }
+
 
     columns = [
         {
@@ -90,13 +75,16 @@ class AdminUsers extends React.Component {
 
     render() {
         let regex = RegExp(`${this.state.searchRes}`, "gi");
-        const filteredData = this.state.data.filter((item) => {
-            return regex.test(item.username);
+        const filteredData = this.state.users.filter((item) => {
+            return regex.test(item.username) && item.username!=="admin";
         });
-        console.log("data", this.state.data);
-        console.log("filtered", filteredData);
+        // console.log("data", this.state.users);
+        // console.log("filtered", filteredData);
         return (
             <AdminLayout
+                app = {this.props.app}
+                users = {this.state.users}
+                courses = {this.state.courses}
                 content={
                     <div>
                         <h1 className="courseCode theme-title">{"Users"}</h1>
@@ -110,7 +98,7 @@ class AdminUsers extends React.Component {
                                 prefix={<SearchOutlined/>}
                             />
                         </div>
-                        <Table columns={this.columns} dataSource={filteredData}/>
+                        <Table rowKey="username" columns={this.columns} dataSource={filteredData}/>
                     </div>
 
                 }

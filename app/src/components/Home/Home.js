@@ -14,6 +14,7 @@ export default class Home extends Component {
     return (
       <>
         <StandardLayout
+            app={this.props.app}
             img={""}
             title={""}
             content={<CourseGrid />} />

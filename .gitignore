@@ -4,3 +4,5 @@ mongo-data/
 app/build/
 app/node_modules/
 .env
+.idea/
+.mongo-data/
