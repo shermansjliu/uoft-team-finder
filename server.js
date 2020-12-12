@@ -305,14 +305,19 @@ app.get('/api/courses', mongoChecker, async (req, res) => {
         }
     }
 )
+
+
 /*
 params: course_code
 send: A single course document with the corresponding course code
  */
 app.get('/api/courses/:courseCode', mongoChecker, authenticate, async (req, res) => {
+    const courseCode = req.params.courseCode.toUpperCase()
     try {
-        const course = await Course.findOne({courseCode: req.params.courseCode}).populate('teams')
+        const course = await Course.findOne({courseCode: courseCode}).populate('teams')
 
+        const expandedTeams = await Team.find().where("_id").in(course.teams).populate('teamLeader')
+        course.teams = expandedTeams
         if (!course) {
             res.status(404).send("Resource not Found")
         } else {
@@ -326,14 +331,14 @@ app.get('/api/courses/:courseCode', mongoChecker, authenticate, async (req, res)
 parmas: code - course Code
 
 * */
-app.post('/api/courses/:code', mongoChecker, authenticate, async (req, res) => {
+app.post('/api/courses/:courseCode', mongoChecker, authenticate, async (req, res) => {
     if (!req.session.admin) {
         res.status(401).send("User is not authenticated")
         return
     }
-
+   const courseCode = req.params.courseCode.toUpperCase()
     const course = new Course({
-        courseCode: req.params.code,
+        courseCode: courseCode,
         teams: []
     })
     try {
@@ -387,7 +392,10 @@ app.delete('/api/courses/:id', mongoChecker, authenticate, async (req, res) => {
     }
 
     try {
-        const deletedCourse = Course.findByIdAndRemove();
+        const deletedCourse = await Course.findById(req.params.id)
+        console.log(deletedCourse)
+        // const deletedCourse =  await Course.findByIdAndRemove(req.params.id);
+
         if (!deletedCourse) {
             res.status(404).send("Resource not found")
         } else {
@@ -402,18 +410,7 @@ app.delete('/api/courses/:id', mongoChecker, authenticate, async (req, res) => {
 
 })
 
-app.get("/api/teams/", mongoChecker, authenticate, async (req, res) => {
-    try {
-        const team = await Team.find().populate("teamLeader").populate("members");
-        if (!team) {
-            res.status(404).send("Missing resource");
-        } else {
-            res.status(200).send(team);
-        }
-    } catch (error) {
-        res.status(500).send("Internal server error");
-    }
-})
+
 
 /*
 params team_id
@@ -432,6 +429,7 @@ app.get("/api/teams/", mongoChecker, async (req, res) => {
     res.status(500).send("Internal server error");
   }
 });
+
 
 app.get("/api/teams/:team_id", mongoChecker, async (req, res) => {
   try {
