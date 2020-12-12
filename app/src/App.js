@@ -57,12 +57,17 @@ class App extends React.Component {
             <Route
               exact
               path="/Profile"
-              render={() => <Profile app={this} />}
+              render={() =>
+                  <div className="app">
+                    {this.state.currentUser ? <Profile app={this} /> : <Login  app={this} />}
+                  </div>}
             />
             <Route
-
               path="/Course/:courseCode"
-              render={(props) => <Course {...props} app={this} />}
+              render={(props) =>
+                  <div className="app">
+                    {this.state.currentUser ? <Course {...props} app={this} /> : <Login  app={this} />}
+                  </div>}
             />
             <Route
               exact
@@ -75,12 +80,18 @@ class App extends React.Component {
             <Route
               exact
               path="/Team"
-              render={(props) => <Team {...props} app={this} />}
+              render={(props) =>
+                  <div className="app">
+                    {this.state.currentUser ? <Team {...props} app={this} /> : <Login  app={this} />}
+                  </div>}
             />
             <Route
               exact
               path="/Profile"
-              render={() => <Profile app={this} />}
+              render={() =>
+                  <div className="app">
+                    {this.state.currentUser ? <Profile app={this} /> : <Login  app={this} />}
+                  </div>}
             />
             <Route
               exact
