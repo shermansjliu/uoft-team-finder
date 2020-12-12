@@ -347,8 +347,8 @@ send: A single course document with the corresponding course code
 app.get('/api/courses/:courseCode', mongoChecker, authenticate, async (req, res) => {
     const courseCode = req.params.courseCode.toUpperCase()
     try {
-        const course = await Course.findOne({courseCode: courseCode}).populate('teams')
 
+        const course = await Course.findOne({courseCode: courseCode}).populate('teams')
         const expandedTeams = await Team.find().where("_id").in(course.teams).populate('teamLeader')
         course.teams = expandedTeams
         if (!course) {

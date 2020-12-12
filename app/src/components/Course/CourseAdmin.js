@@ -22,68 +22,7 @@ export default class CourseAdmin extends Component {
             users: [],
             courses: [],
             courseCode: "CSC236",
-            teams: [
-                {
-                    teamName: "The John Wicks",
-                    teamLeader: "John Wick",
-                    members: [
-                        {userID: "DavidID", name: "David"},
-                        {userID: "ShermanID", name: "Sherman"},
-                        {userID: "QuincyID", name: "Quincy"},
-                        {userID: "JesseID", name: "Jesse"},
-                    ],
-                    capacity: 4,
-                    teamId: 0,
-                },
-                {
-                    teamName: "BA Forever",
-                    teamLeader: "Daveedo",
-                    members: [],
-                    capacity: 4,
-                    teamId: 1,
-                },
-                {
-                    teamName: "League of Legends",
-                    teamLeader: "Mike",
-                    members: [],
-                    capacity: 4,
-                    teamId: 2,
-                },
-                {
-                    teamName: "March March",
-                    teamLeader: "Sherman",
-                    members: [],
-                    capacity: 4,
-                    teamId: 4,
-                },
-                {
-                    teamName: "March March",
-                    teamLeader: "Quincy",
-                    members: [
-                        {userID: "QuincyID", name: "Quincy"},
-                        {userID: "JesseID", name: "Jesse"},
-                    ],
-                    capacity: 4,
-                    teamId: 5,
-                },
-                {
-                    teamName: "March March",
-                    teamLeader: "Jesse",
-                    members: [
-                        {userID: "QuincyID", name: "Quincy"},
-                        {userID: "JesseID", name: "Jesse"},
-                    ],
-                    capacity: 4,
-                    teamId: 6,
-                },
-                {
-                    teamName: "March March",
-                    teamLeader: "Sherman",
-                    members: [],
-                    capacity: 4,
-                    teamId: 3,
-                },
-            ],
+            teams:[]
         };
         getAllUsers(this);
         getAllCourses(this)
@@ -94,6 +33,7 @@ export default class CourseAdmin extends Component {
 
             const courseCode = this.props.match.params.courseCode.toUpperCase()
             const res = await axios.get(`${ENDPOINT}/api/courses/${courseCode}`)
+            // const res = await axios.get(`${ENDPOINT}/api/courses/CSC309`)
             const data = res.data
             console.log(res.data.teams[0])
             const teams = data.teams.map(team => (
