@@ -17,7 +17,7 @@ class AdminTeam extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      teamID: "",
+      teamID: this.props.teamID,
       currentUser: { _id: "ShermanID", name: "Sherman" },
       teamLeaderID: "ShermanID",
       members: [
@@ -44,7 +44,7 @@ class AdminTeam extends React.Component {
     try {
       // team id received as a prop
       const team = await axios.get(
-        `${ENDPOINT}/api/teams/5fd392d05a786804334140dc`,
+        `${ENDPOINT}/api/teams/${this.state.teamID}`,
         {
           method: "get",
         }
@@ -52,11 +52,12 @@ class AdminTeam extends React.Component {
 
       // currentUser id received from session
       const currentUser = await axios.get(
-        `${ENDPOINT}/api/users/5fd28e27386dd75b03af2774`,
+        `${ENDPOINT}/api/users/get-current-user`,
         {
           method: "get",
         }
       );
+
       this.setState({
         teamID: team.data._id,
         currentUser: currentUser.data,

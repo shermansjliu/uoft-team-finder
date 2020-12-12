@@ -135,6 +135,15 @@ app.get("/users/check-session", (req, res) => {
   }
 });
 
+// A route to check if a user is logged in on the session
+app.get("/users/get-current-user", (req, res) => {
+  if (req.session.user) {
+    res.send({ currentUser: req.session.user });
+  } else {
+    res.status(401).send();
+  }
+});
+
 /*********************************************************/
 /*** API Routes below ************************************/
 // a GET route to get all users

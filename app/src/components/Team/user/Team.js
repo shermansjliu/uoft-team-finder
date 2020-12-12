@@ -22,8 +22,9 @@ const { Title } = Typography;
 class Team extends React.Component {
   constructor(props) {
     super(props);
+    const team_id = this.props.location.state.teamID;
     this.state = {
-      teamID: "",
+      teamID: team_id,
       currentUser: {
         _id: "ShermanID",
         name: "Sherman",
@@ -56,7 +57,7 @@ class Team extends React.Component {
     try {
       // team id received as a prop
       const team = await axios.get(
-        `${ENDPOINT}/api/teams/5fd3f0812e247c5c60a457b8`,
+        `${ENDPOINT}/api/teams/${this.state.teamID}`,
         {
           method: "get",
         }
@@ -64,7 +65,7 @@ class Team extends React.Component {
 
       // currentUser id received from session
       const currentUser = await axios.get(
-        `${ENDPOINT}/api/users/5fd3ece0e420755973483a8b`,
+        `${ENDPOINT}/api/users/get-current-user`,
         {
           method: "get",
         }
