@@ -31,12 +31,14 @@ body {
   margin-right: 10%;
   margin-top: 60px;
   text-align: center;
+  max-width: 70%;
 }
 
 .teamDescription {
   text-align: center;
   font-style: italic;
   margin: auto 10%;
+  max-width: 50%;
 }
 
 .teamMemberCard {
