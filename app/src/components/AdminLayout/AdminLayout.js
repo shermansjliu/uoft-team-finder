@@ -6,14 +6,24 @@ import "../../App.css";
 import { Link } from "react-router-dom";
 import {logout} from "../Login/action";
 
+
 const { Sider, Content } = Layout;
 const { Title } = Typography;
 
 // to use this module call <AdminLayout title={} content={} appState={}>
 
 class AdminLayout extends React.Component {
+  state = {users:[], courses:[]}
   render() {
-    const { title, content, app } = this.props;
+    const { title, content, app, users, courses } = this.props;
+
+    const numUsers = users.length
+    const numCourses =courses.length
+    const numAdmin = users.filter(user => user.admin).length
+    const numNormalUser = numUsers - numAdmin
+    const cscCourses =courses.filter(course => course.courseCode.includes("csc")).length
+    const ecoCourses =courses.filter(course => course.courseCode.includes("eco")).length
+    const matCourses =courses.filter(course => course.courseCode.includes("mat")).length
     return (
       <div>
         <Layout className="theme-content">
@@ -26,15 +36,13 @@ class AdminLayout extends React.Component {
               <Title level={2}>
                 <Link to={"/AdminUsers"}>
                   <Button type="primary" className="round" size="large">
-                    {/*All Users: {this.state.users.length}*/}
-                    {/*All Users:  {appState.users.length}*/}
-                    All Users: {3}
+                    All Users: {numUsers}
                   </Button>
                 </Link>
               </Title>
               <Space direction="vertical">
-                <Title level={5}> Normal Users: {4}</Title>
-                <Title level={5}> Admin: {1}</Title>
+                <Title level={5}> Normal Users: {numNormalUser}</Title>
+                <Title level={5}> Admin: {numAdmin}</Title>
               </Space>
 
               <Title level={2}>
@@ -51,16 +59,14 @@ class AdminLayout extends React.Component {
                   }}
                 >
                   <Button type="primary" className="round" size="large">
-                    {/*All Courses: {this.state.courses.length}*/}
-                    {/*All Courses:  {appState.courses.length}*/}
-                    All Courses: {4}
+                    All Courses: {numCourses}
                   </Button>
                 </Link>
               </Title>
               <Space direction="vertical">
-                <Title level={5}> Csc: 5</Title>
-                <Title level={5}> Mat: 5</Title>
-                <Title level={5}> Eco: 5</Title>
+                <Title level={5}> Csc: {cscCourses}</Title>
+                <Title level={5}> Mat: {matCourses}</Title>
+                <Title level={5}> Eco: {ecoCourses}</Title>
               </Space>
 
               <Title className="totalTeams" level={2}>

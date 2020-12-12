@@ -5,14 +5,21 @@ import {SearchOutlined} from "@ant-design/icons";
 import "./style.css"
 import {Link} from "react-router-dom";
 import {changePassword, deleteUser} from "./actions"
-import {getAllUsers} from "../../actions/users";
+import {checkSession, getAllUsers} from "../../actions/users";
+import {getAllCourses} from "../AdminGrid/action";
 
 class AdminUsers extends React.Component {
-    state = {
-        searchRes: "",
-        users: [
-        ],
+    constructor(props) {
+        super(props);
+        this.state = {
+            searchRes: "",
+            users: [],
+            courses: []
+        }
+        getAllUsers(this);
+        getAllCourses(this)
     }
+
 
     columns = [
         {
@@ -66,17 +73,17 @@ class AdminUsers extends React.Component {
     ];
 
     render() {
-         getAllUsers(this);
-
         let regex = RegExp(`${this.state.searchRes}`, "gi");
         const filteredData = this.state.users.filter((item) => {
-            return regex.test(item.username);
+            return regex.test(item.username) && item.username!=="admin";
         });
-        console.log("data", this.state.users);
-        console.log("filtered", filteredData);
+        // console.log("data", this.state.users);
+        // console.log("filtered", filteredData);
         return (
             <AdminLayout
                 app = {this.props.app}
+                users = {this.state.users}
+                courses = {this.state.courses}
                 content={
                     <div>
                         <h1 className="courseCode theme-title">{"Users"}</h1>

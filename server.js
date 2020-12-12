@@ -224,41 +224,10 @@ app.get("/api/users/:username", mongoChecker, async (req, res) => {
 
     } catch (error) {
         log(error)
-        res.status(500).send("Internal Server Error")
+        res.status(400).send("Bad Request");
     }
 });
 
-/*
-Params: user id that will be edited
-
-body {
-  New data that will updated the user
-}
- */
-app.put("/api/users/:id", mongoChecker, authenticate, async (req, res) => {
-
-    if (!req.session.admin) {
-        res.status(401).send("User not authorized")
-        return
-    }
-    try {
-
-        let user = await User.findByIdAndRemove(req.params.id)
-        if (!user) {
-            res.status(404).send("Missing resource")
-        } else {
-            user = {
-                ...user,
-                ...req.body.data
-            }
-            const updatedUser = await user.save()
-            res.status(200).send(updatedUser)
-        }
-
-    } catch (error) {
-        res.status(500).send("Internal Server Error")
-    }
-});
 
 /*
 Params: username that will be edited
@@ -269,12 +238,12 @@ body {
  */
 app.put("/api/users/:username", mongoChecker, authenticate, async (req, res) => {
 
-    if (!req.session.admin) {
-        res.status(401).send("User not authorized")
-        return
-    }
+    // if (!req.session.admin && req.params.username !== req.session.currentUser ) {
+    //     res.status(401).send("User not authorized")
+    //     return
+    // }
     try {
-        User.findByIdAndUpdate(req.params.username, req.body,function (err, doc) {
+        User.findOneAndUpdate({username: req.params.username} , req.body,function (err, doc) {
             if (err){
                 console.log(err)
             }
@@ -283,35 +252,59 @@ app.put("/api/users/:username", mongoChecker, authenticate, async (req, res) => 
             }
         });
     } catch (error) {
-        res.status(500).send("Internal Server Error")
+        log(error)
+        res.status(400).send("Bad Request");
+    }
+
+});
+
+// api to change password
+app.put("/api/changePassword/:username", mongoChecker, authenticate, async (req, res) => {
+
+    // if (!req.session.admin && req.params.username !== req.session.currentUser ) {
+    //     res.status(401).send("User not authorized")
+    //     return
+    // }
+    try {
+        User.findOne({username: req.params.username},function(err, doc) {
+            if (err) return false;
+            if (req.body.password.length <6){
+                res.status(400).send("password length too short")
+            }else{
+                doc.password = req.body.password;
+                doc.save();
+                res.status(200).send(doc)
+            }
+
+        });
+    } catch (error) {
+        log(error)
+        res.status(400).send("Bad Request");
     }
 });
 
 /*
-Params: deleted user id
-body {
-
-    username: username of deleted user
-    password: pwd of deleted user
-}
+Params: deleted username
 send {deletedUser}
  */
 
-app.delete('/api/users/:id', mongoChecker, authenticate, async (req, res) => {
+app.delete('/api/users/:username', mongoChecker, authenticate, async (req, res) => {
     if (!req.session.admin){
         res.status(401).send("User not authorized")
         return
     }
     try {
-
-        const delUser = await User.findByIdAndRemove(req.params.id)
-        if (!delUser) {
-            res.status(404).send('Missing resource')
-        } else {
-            res.status(200).send(delUser)
-        }
+        User.findOneAndRemove({username: req.params.username}, function (err, docs) {
+            if (err){
+                console.log(err)
+            }
+            else{
+                console.log("Deleted user : ", docs);
+                res.status(200).send(docs)
+            }
+        });
     } catch (error) {
-        res.status(500).send("Internal Server Error")
+        res.status(400).send("Bad Request");
     }
 
 })
@@ -327,7 +320,7 @@ app.get('/api/courses', mongoChecker, async (req, res) => {
             }
             res.status(200).send({courses})
         } catch (error) {
-            res.status(500).send("Internal Server error")
+            res.status(400).send("Bad Request");
         }
     }
 )
@@ -361,7 +354,7 @@ app.get('/api/courses/:courseCode', mongoChecker, authenticate, async (req, res)
             res.status(200).send(course)
         }
     } catch (error) {
-        res.status(500).send("Internal Server Error`")
+        res.status(400).send("Bad Request");
     }
 })
 
@@ -386,9 +379,9 @@ app.post('/api/courses/:code', mongoChecker, authenticate, async (req, res) => {
 
     } catch (error) {
         console.log(error)
-            res.status(500).send("Internal Server error")
+            res.status(400).send("Bad Request");
 
-    }
+        }
 
 })
 
@@ -417,7 +410,7 @@ app.put('/api/courses/:id', mongoChecker, authenticate, async (req, res) => {
 
     } catch (error) {
         console.log(error)
-        res.status(500).send("Internal Server Error")
+        res.status(400).send("Bad Request");
     }
 
 })
@@ -443,7 +436,7 @@ app.delete('/api/courses/:id', mongoChecker, authenticate, async (req, res) => {
 
     } catch (error) {
         console.log(error)
-        res.status(500).send("Internal Server Error")
+        res.status(400).send("Bad Request");
     }
 
 })
@@ -457,7 +450,7 @@ app.get("/api/teams/", mongoChecker, authenticate, async (req, res) => {
             res.status(200).send(team);
         }
     } catch (error) {
-        res.status(500).send("Internal server error");
+        res.status(400).send("Bad Request");
     }
 })
 
@@ -477,7 +470,7 @@ app.get('/api/teams/:team_id', mongoChecker, authenticate, async (req, res) => {
             res.status(200).send(team)
         }
     } catch (error) {
-        res.status(500).send("Internal server error")
+        res.status(400).send("Bad Request");
     }
 
 
@@ -530,7 +523,7 @@ app.post('/api/teams/:course_id', mongoChecker, authenticate, async (req, res) =
             res.status(200).send({team: savedTeam.populate('teams'), course: course})
         }
     } catch (error) {
-        res.status(500).send("Internal Server Error")
+        res.status(400).send("Bad Request");
     }
 })
 
@@ -559,7 +552,7 @@ app.put('/api/teams/:team_id', async (req, res) => {
             }
 
         } catch (error) {
-            res.status(500).send("internal server error")
+            res.status(400).send("Bad Request");
         }
     }
 
@@ -584,7 +577,7 @@ app.delete('/api/teams:team_id', async (req, res) => {
                 res.status(200).send(team)
             }
         } catch (error) {
-            res.stats(500).send("Internal server error")
+            res.status(400).send("Bad Request");
         }
     }
 })

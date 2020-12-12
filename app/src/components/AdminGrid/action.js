@@ -28,9 +28,6 @@ export const removeCourse = (page, course,card) => {
 };
 
 export const addCourse = (page, img) => {
-
-    // filters out the student we don't want.
-
     const course = {
         courseCode: "new course name",
         description: "This is a description",
@@ -54,6 +51,8 @@ export const addCourse = (page, img) => {
     }).catch(error => {
             console.log(error);
         });
+    // update the page
+    getAllCourses(page)
 };
 
 export const edit = (card) =>{
