@@ -63,8 +63,8 @@ class App extends React.Component {
             />
             <Route
               exact
-              path="/CourseAdmin"
-              render={() => <CourseAdmin app={this} />}
+              path="/CourseAdmin/:courseCode"
+              render={(props) => <CourseAdmin {...props} app={this} />}
             />
             <Route
               exact

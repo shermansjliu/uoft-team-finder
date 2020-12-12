@@ -86,19 +86,20 @@ export default class CourseAdmin extends Component {
     async componentDidMount() {
         try {
 
-            const res = await axios.get(`${ENDPOINT}/api/courses/${this.state.courseCode}`)
+            const courseCode = this.props.match.params.courseCode.toUpperCase()
+            const res = await axios.get(`${ENDPOINT}/api/courses/${courseCode}`)
             const data = res.data
-
+            console.log(res.data.teams[0])
             const teams = data.teams.map(team => (
                 {
                     teamName: team.teamName,
-                    teamLeader:team.teamLeader,
+                    teamLeader:team.teamLeader.username,
                     members: team.members,
                     capacity: team.teamCapacity,
-                    teamID: team._id
+                    teamId: team._id
                 }
             ))
-            this.setState({teams: teams})
+            this.setState({teams: teams, courseCode: courseCode})
         } catch (error) {
             console.log("Could not get course ", error)
         }
@@ -110,12 +111,21 @@ export default class CourseAdmin extends Component {
         this.setState({searchRes: e.target.value});
     };
 
-    handleDeleteTeam = (key) => {
+    handleDeleteTeam = async (key) => {
         const {teamId: deletedTeamId} = key;
         const newTeams = this.state.teams.filter((team) => {
             return team.teamId !== deletedTeamId;
         });
-        this.setState({teams: newTeams});
+        console.log(deletedTeamId, "deletedTeamID")
+        const res = await axios.delete(`${ENDPOINT}/api/teams/${deletedTeamId}`)
+        if (res.status !== 200){
+            console.log("course could not be deleted")
+        }
+
+        else{
+            this.setState({teams: newTeams});
+        }
+
     };
 
     render() {

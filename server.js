@@ -392,9 +392,7 @@ app.delete('/api/courses/:id', mongoChecker, authenticate, async (req, res) => {
     }
 
     try {
-        const deletedCourse = await Course.findById(req.params.id)
-        console.log(deletedCourse)
-        // const deletedCourse =  await Course.findByIdAndRemove(req.params.id);
+        const deletedCourse =  await Course.findByIdAndRemove(req.params.id);
 
         if (!deletedCourse) {
             res.status(404).send("Resource not found")

@@ -83,8 +83,8 @@ export default class Course extends Component {
   async componentDidMount() {
     checkSession((this))
     try {
-
-      const response = await axios.get(`${ENDPOINT}/api/courses/${this.state.courseCode}`)
+      const courseCode = this.props.match.params.courseCode
+      const response = await axios.get(`${ENDPOINT}/api/courses/${courseCode}`)
       const data = response.data
 
       const teams = data.teams.map(team=> (
