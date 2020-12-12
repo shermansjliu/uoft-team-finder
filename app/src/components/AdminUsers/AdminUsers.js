@@ -5,13 +5,12 @@ import {SearchOutlined} from "@ant-design/icons";
 import "./style.css"
 import {Link} from "react-router-dom";
 import {changePassword, deleteUser} from "./actions"
-import {checkSession, getAllUsers} from "../../actions/users";
 import {getAllCourses} from "../AdminGrid/action";
+import {getAllUsers} from "../../actions/users";
 
 class AdminUsers extends React.Component {
     constructor(props) {
         super(props);
-        checkSession(this.props.app)
         this.state = {
             searchRes: "",
             users: [],

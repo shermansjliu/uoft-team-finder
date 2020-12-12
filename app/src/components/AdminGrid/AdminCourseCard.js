@@ -45,11 +45,11 @@ class AdminCourseCard extends React.Component {
                                     name={"newDescription"}
                                     onChange={this.handleInputChange}/>
             // upload photo if editing, need backend here
-            img = (
-                <span className={"center__"}>
-                    <ImageUploader api={"implement latter"} />
-                </span>
-                )
+            // img = (
+            //     <span className={"center__"}>
+            //         <ImageUploader api={"implement latter"} />
+            //     </span>
+            //     )
             // change icon to save mode
             editIcon = (<SaveOutlined onClick={() => save(page, this, course)}/>)
         }

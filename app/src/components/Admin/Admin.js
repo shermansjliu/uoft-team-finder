@@ -18,7 +18,6 @@ const { Title } = Typography;
 class Admin extends Component {
     constructor(props) {
         super(props);
-        checkSession(this.props.app)
         this.props.history.push("/Admin");
         this.state = {
             users:[],
