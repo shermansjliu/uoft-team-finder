@@ -2,6 +2,7 @@ import React from "react";
 import { Card, Avatar, Button } from "antd";
 import { Redirect } from "react-router-dom";
 import "./style.css";
+import { Link } from "react-router-dom";
 
 const { Meta } = Card;
 class TeamMember extends React.Component {
@@ -37,7 +38,14 @@ class TeamMember extends React.Component {
     };
 
     if (this.state.profileClick) {
-      return <Redirect push to="/Profile" />;
+      return (
+        <Redirect
+          to={{
+            pathname: "/Profile",
+            state: { userID: this.props.member._id },
+          }}
+        />
+      );
     }
 
     return (

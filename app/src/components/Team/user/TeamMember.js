@@ -43,7 +43,14 @@ class TeamMember extends React.Component {
     };
 
     if (this.state.profileClick) {
-      return <Redirect push to="/Profile" />;
+      return (
+        <Redirect
+          to={{
+            pathname: "/Profile",
+            state: { userID: this.props.member._id },
+          }}
+        />
+      );
     }
 
     return (

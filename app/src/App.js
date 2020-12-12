@@ -13,7 +13,6 @@ import Profile from "./components/Profile/Profile";
 import AdminTeam from "./components/Team/admin/Team";
 import AdminUsers from "./components/AdminUsers/AdminUsers";
 
-
 class App extends React.Component {
   state = {
     users: [
@@ -65,7 +64,7 @@ class App extends React.Component {
             <Route
               exact
               path="/Profile"
-              render={() => <Profile appState={this.state} />}
+              render={(props) => <Profile {...props} app={this} />}
             />
             <Route
               exact
@@ -73,9 +72,9 @@ class App extends React.Component {
               render={() => <AdminTeam appState={this.state} />}
             />
             <Route
-                exact
-                path="/AdminUsers"
-                render={() => <AdminUsers appState={this.state} />}
+              exact
+              path="/AdminUsers"
+              render={() => <AdminUsers appState={this.state} />}
             />
           </Switch>
         </BrowserRouter>
