@@ -115,7 +115,7 @@ app.post("/users/login", (req, res) => {
             req.session.username = user.username; // we will later send the username to the browser when checking if someone is logged in through GET /check-session (we will display it on the frontend dashboard. You could however also just send a boolean flag).
             req.session.admin = user.admin;
             // req.session.admin = true
-            res.send({currentUser: user.username, admin: user.admin});
+            res.status(200).send({currentUser: user.username, admin: user.admin});
         })
         .catch((error) => {
             console.log(error);
@@ -157,7 +157,7 @@ app.get("/api/users", mongoChecker, authenticate, async (req, res) => {
     // only admin can get all users info
     try {
         const users = await User.find();
-        res.send({users}); // just the array
+        res.send(users); // just the array
     } catch (error) {
         log(error);
         res.status(498).send("Internal Server Error");
@@ -195,7 +195,6 @@ app.get("/api/users", mongoChecker, authenticate, async (req, res) => {
             return
         }
         const newUser = await user.save();
-
         res.status(200).send(newUser);
     } catch (error) {
         if (isMongoError(error)) {
@@ -224,68 +223,88 @@ app.get("/api/users/:username", mongoChecker, async (req, res) => {
 
     } catch (error) {
         log(error)
-        res.status(500).send("Internal Server Error")
+        res.status(400).send("Bad Request");
     }
 });
 
+
 /*
-Params: user id that will be edited
+Params: username that will be edited
 
 body {
   New data that will updated the user
 }
  */
-app.put("/api/users/:id", mongoChecker, authenticate, async (req, res) => {
+app.put("/api/users/:username", mongoChecker, authenticate, async (req, res) => {
 
-    if (!req.session.admin) {
-        res.status(401).send("User not authorized")
-        return
-    }
+    // if (!req.session.admin && req.params.username !== req.session.currentUser ) {
+    //     res.status(401).send("User not authorized")
+    //     return
+    // }
     try {
-
-        let user = await User.findByIdAndRemove(req.params.id)
-        if (!user) {
-            res.status(404).send("Missing resource")
-        } else {
-            user = {
-                ...user,
-                ...req.body.data
+        User.findOneAndUpdate({username: req.params.username} , req.body,function (err, doc) {
+            if (err){
+                console.log(err)
             }
-            const updatedUser = await user.save()
-            res.status(200).send(updatedUser)
-        }
-
+            else{
+                res.status(200).send(doc)
+            }
+        });
     } catch (error) {
-        res.status(500).send("Internal Server Error")
+        log(error)
+        res.status(400).send("Bad Request");
+    }
+
+});
+
+// api to change password
+app.put("/api/changePassword/:username", mongoChecker, authenticate, async (req, res) => {
+
+    // if (!req.session.admin && req.params.username !== req.session.currentUser ) {
+    //     res.status(401).send("User not authorized")
+    //     return
+    // }
+    try {
+        User.findOne({username: req.params.username},function(err, doc) {
+            if (err) return false;
+            if (req.body.password.length <6){
+                res.status(400).send("password length too short")
+            }else{
+                doc.password = req.body.password;
+                doc.save();
+                res.status(200).send(doc)
+            }
+
+        });
+    } catch (error) {
+        log(error)
+        res.status(400).send("Bad Request");
     }
 
 });
 
 /*
-Params: deleted user id
-body {
-
-    username: username of deleted user
-    password: pwd of deleted user
-}
+Params: deleted username
 send {deletedUser}
  */
 
-app.delete('/api/users/:id', mongoChecker, authenticate, async (req, res) => {
-    if (!req.session.admin) {
-        res.status(401).send("ssss not authorized")
+app.delete('/api/users/:username', mongoChecker, authenticate, async (req, res) => {
+    if (!req.session.admin){
+        res.status(401).send("User not authorized")
         return
     }
     try {
-
-        const delUser = await User.findByIdAndRemove(req.params.id)
-        if (!delUser) {
-            res.status(404).send('Missing resource')
-        } else {
-            res.status(200).send(delUser)
-        }
+        User.findOneAndRemove({username: req.params.username}, function (err, docs) {
+            if (err){
+                console.log(err)
+            }
+            else{
+                console.log("Deleted user : ", docs);
+                res.status(200).send(docs)
+            }
+        });
     } catch (error) {
-        res.status(500).send("Internal Server Error")
+        res.status(400).send("Bad Request");
     }
 
 })
@@ -301,12 +320,26 @@ app.get('/api/courses', mongoChecker, async (req, res) => {
             }
             res.status(200).send({courses})
         } catch (error) {
-            res.status(500).send("Internal Server error")
+            res.status(400).send("Bad Request");
         }
     }
 )
 
-
+// Add a course
+app.post("/api/courses", mongoChecker, async (req, res) => {
+    const course = new Course(req.body)
+    try {
+        const newCourse = await course.save();
+        res.status(200).send(newCourse);
+    } catch (error) {
+        if (isMongoError(error)) {
+            res.status(500).send("Internal server error");
+        } else {
+            log(error);
+            res.status(400).send("Bad Request");
+        }
+    }
+});
 /*
 params: course_code
 send: A single course document with the corresponding course code
@@ -324,9 +357,10 @@ app.get('/api/courses/:courseCode', mongoChecker, authenticate, async (req, res)
             res.status(200).send(course)
         }
     } catch (error) {
-        res.status(500).send("Internal Server Error`")
-}
+        res.status(400).send("Bad Request");
+    }
 })
+
 /*
 parmas: code - course Code
 
@@ -341,14 +375,16 @@ app.post('/api/courses/:courseCode', mongoChecker, authenticate, async (req, res
         courseCode: courseCode,
         teams: []
     })
-    try {
-        const savedCourse = await course.save()
-        res.status(200).send(savedCourse)
+    console.log(course)
+        try{
+            const savedCourse = await course.save()
+            res.status(200).send(savedCourse)
 
     } catch (error) {
-        res.status(500).send("Internal Server error")
+        console.log(error)
+            res.status(400).send("Bad Request");
 
-    }
+        }
 
 })
 
@@ -366,19 +402,18 @@ app.put('/api/courses/:id', mongoChecker, authenticate, async (req, res) => {
         return
     }
     try {
-        const course = await Course.findById(req.params.id)
-        if (!course) {
-            res.status(404).send("Resource not found")
-
-        } else {
-            course.courseCode = req.body.courseCode
-            course.teams = req.body.teams
-        }
-        const updatedCourse = await course.save()
-        res.status(200).send(updatedCourse)
+        Course.findByIdAndUpdate(req.params.id, req.body,function (err, doc) {
+            if (err){
+                console.log(err)
+            }
+            else{
+                res.status(200).send(doc)
+            }
+        });
 
     } catch (error) {
-        res.status(500).send("Internal Server Error")
+        console.log(error)
+        res.status(400).send("Bad Request");
     }
  
 });
@@ -392,40 +427,55 @@ app.delete('/api/courses/:id', mongoChecker, authenticate, async (req, res) => {
     }
 
     try {
-        const deletedCourse =  await Course.findByIdAndRemove(req.params.id);
-
-        if (!deletedCourse) {
-            res.status(404).send("Resource not found")
-        } else {
-            const courses = await Course.find()
-            res.status(200).send({deletedCourse: deletedCourse, Courses: courses})
-        }
-
+        Course.findByIdAndRemove(req.params.id, function (err, docs) {
+            if (err){
+                console.log(err)
+            }
+            else{
+                console.log("Removed Course : ", docs);
+                res.status(200).send(docs)
+            }
+        });
 
     } catch (error) {
-        res.status(500).send("Internal Server Error")
+        console.log(error)
+        res.status(400).send("Bad Request");
     }
 
 })
 
-
+app.get("/api/teams/", mongoChecker, authenticate, async (req, res) => {
+    try {
+        const team = await Team.find().populate("teamLeader").populate("members");
+        if (!team) {
+            res.status(404).send("Missing resource");
+        } else {
+            res.status(200).send(team);
+        }
+    } catch (error) {
+        res.status(400).send("Bad Request");
+    }
+})
 
 /*
 params team_id
 
 send: all teams
  */
-app.get("/api/teams/", mongoChecker, async (req, res) => {
-  try {
-    const team = await Team.find().populate("teamLeader").populate("members");
-    if (!team) {
-      res.status(404).send("Missing resource");
-    } else {
-      res.status(200).send(team);
+
+app.get('/api/teams/:team_id', mongoChecker, authenticate, async (req, res) => {
+    try {
+
+        const team = await Team.findById(req.params.id)
+        if (!team) {
+            res.status(404).send("Missing resource")
+        } else {
+            res.status(200).send(team)
+        }
+    } catch (error) {
+        res.status(400).send("Bad Request");
     }
-  } catch (error) {
-    res.status(500).send("Internal server error");
-  }
+  
 });
 
 
@@ -462,10 +512,6 @@ app.post('/api/teams/:course_id', mongoChecker, authenticate, async (req, res) =
             res.status(404).send("Missing Resource")
             return
         }
-
-
-
-
         let teamLeader_id = null
         if (!req.body.teamLeader){
             teamLeader_id = req.session.user
@@ -491,7 +537,7 @@ app.post('/api/teams/:course_id', mongoChecker, authenticate, async (req, res) =
             res.status(200).send({team: savedTeam.populate('teams'), course: course})
         }
     } catch (error) {
-        res.status(500).send("Internal Server Error")
+        res.status(400).send("Bad Request");
     }
 
 });
@@ -647,7 +693,17 @@ app.delete("/api/teams/:team_id", async (req, res) => {
     if (!team) {
       res.status(404).send("Missing resource");
     } else {
-      res.status(200).send(team);
+        try {
+            let team = await Team.findByIdAndRemove(req.params.team_id)
+            if (!team) {
+                res.status(404).send("Missing resource")
+
+            } else {
+                res.status(200).send(team)
+            }
+        } catch (error) {
+            res.status(400).send("Bad Request");
+        }
     }
   } catch (error) {
     res.stats(500).send("Internal server error");

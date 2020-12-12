@@ -4,7 +4,6 @@ import { UserOutlined, LockOutlined } from "@ant-design/icons";
 import "./styles.css";
 import { register, login } from "./action.js";
 import { withRouter } from "react-router-dom";
-// import { forgetPWD } from "./action";
 import Sky from 'react-sky';
 
 class LoginView extends React.Component {

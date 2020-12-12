@@ -7,47 +7,27 @@ import {
 import CourseCard from "./AdminCourseCard";
 import {Tooltip, Input} from "antd";
 import bkimg from "../../img/home-books.jpg";
-import {addCourse} from "./action";
+import {addCourse, getAllCourses} from "./action";
 import "./style.css"
+import {getAllUsers} from "../../actions/users";
+
 
 export class AdminGrid extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            courses: [
-                {
-                    courseName: 'csc309',
-                    department: 'CSC',
-                    description: 'This is a description',
-                    image: bkimg,
-                },
-                {
-                    courseName: 'csc301',
-                    department: 'CSC',
-                    description: 'This is a description',
-                    image: bkimg,
-                },
-                {
-                    courseName: 'csc302',
-                    department: 'CSC',
-                    description: 'This is a description',
-                    image: bkimg,
-                },
-                {
-                    courseName: 'csc303',
-                    department: 'CSC',
-                    description: 'This is a description',
-                    image: bkimg,
-                },
-            ],
+            users:[],
+            courses: [],
             onSearchString: "",
         }
+        getAllCourses(this)
+        getAllUsers(this)
     }
 
 
     render() {
         const filteredCourses = this.state.courses.filter(course => {
-            return course.courseName.includes(this.state.onSearchString)
+            return course.courseCode.includes(this.state.onSearchString)
         })
         return (
             <>
@@ -92,7 +72,7 @@ export class AdminGrid extends React.Component {
                             <CourseCard
                                 page={this}
                                 course={item}
-                                key={item.courseName}
+                                key={item.courseCode}
                             />
                         </List.Item>
                     )}

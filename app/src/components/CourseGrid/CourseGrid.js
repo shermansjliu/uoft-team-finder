@@ -5,67 +5,21 @@ import "./style.css"
 import {Link} from "react-router-dom";
 import bkimg from "../../img/home-books.jpg";
 import {SearchOutlined} from "@ant-design/icons";
+import {getAllCourses} from "../AdminGrid/action";
 
 const {Meta} = Card;
 
 class CourseGrid extends React.Component {
     state = {
         courses: [
-            {
-                courseName: 'csc309',
-                department: 'CSC',
-                description: 'This is a description',
-                image: bkimg,
-            },
-            {
-                courseName: 'csc301',
-                department: 'CSC',
-                description: 'This is a description',
-                image: bkimg,
-            },
-            {
-                courseName: 'csc302',
-                department: 'CSC',
-                description: 'This is a description',
-                image: bkimg,
-            },
-            {
-                courseName: 'csc303',
-                department: 'CSC',
-                description: 'This is a description',
-                image: bkimg,
-            },
-            {
-                courseName: 'csc369',
-                department: 'CSC',
-                description: 'This is a description',
-                image: bkimg,
-            },
-            {
-                courseName: 'csc373',
-                department: 'CSC',
-                description: 'This is a description',
-                image: bkimg,
-            },
-            {
-                courseName: 'csc320',
-                department: 'CSC',
-                description: 'This is a description',
-                image: bkimg,
-            },
-            {
-                courseName: 'csc343',
-                department: 'CSC',
-                description: 'This is a description',
-                image: bkimg,
-            },
         ],
         onSearchString: "",
     };
 
     render() {
+        getAllCourses(this)
         const filteredCourses = this.state.courses.filter(course => {
-            return course.courseName.includes(this.state.onSearchString)})
+            return course.courseCode.includes(this.state.onSearchString)})
         return (
             <>
                 <div >
@@ -106,7 +60,7 @@ class CourseGrid extends React.Component {
                                     }
                                 >
                                     <Meta
-                                        title={item.courseName}
+                                        title={item.courseCode}
                                         description={item.description}
                                     />
                                 </Card>
