@@ -24,9 +24,9 @@ class AdminLayout extends React.Component {
     const numCourses =courses.length
     const numAdmin = users.filter(user => user.admin).length
     const numNormalUser = numUsers - numAdmin
-    const cscCourses =courses.filter(course => course.courseCode.includes("Csc")).length
-    const ecoCourses =courses.filter(course => course.courseCode.includes("Eco")).length
-    const matCourses =courses.filter(course => course.courseCode.includes("Mat")).length
+    const cscCourses =courses.filter(course => course.courseCode.includes("CSC")).length
+    const ecoCourses =courses.filter(course => course.courseCode.includes("ECO")).length
+    const matCourses =courses.filter(course => course.courseCode.includes("MAT")).length
     return (
       <div>
         <Layout className="theme-content">

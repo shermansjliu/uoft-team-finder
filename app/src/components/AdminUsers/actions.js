@@ -53,7 +53,7 @@ export const changeUsernameAdmin = (record,page) => {
     fetch(new_request).then(res => {
         console.log(res.status)
         if (res.status === 200) {
-            console.log('Password Changed!')
+            console.log('Username Changed!')
             return res.json();
         }else{
             throw new Error("Failed to change Username");

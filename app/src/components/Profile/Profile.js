@@ -35,9 +35,9 @@ class Profile extends React.Component {
                {/* Left side bar */}
                <InformationBar infos={this}/>
                {/* Right side bar */}
-               {/*<Layout className="rightLayout theme-content">*/}
-               {/*    <TabTable infos={this}/>*/}
-               {/*</Layout>*/}
+               <Layout className="rightLayout theme-content">
+                   <TabTable infos={this}/>
+               </Layout>
            </Layout>
        )
    }

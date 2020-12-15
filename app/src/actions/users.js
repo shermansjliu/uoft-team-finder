@@ -8,6 +8,8 @@ export const checkSession = (app) => {
         .then(res => {
             if (res.status === 200) {
                 return res.json();
+            }else{
+                app.setState({ currentUser: null , admin: null});
             }
         })
         .then(json => {
