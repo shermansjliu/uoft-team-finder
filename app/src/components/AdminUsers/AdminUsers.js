@@ -65,7 +65,7 @@ class AdminUsers extends React.Component {
             render: (text, record) => (
                 <Space size="middle">
                     <a onClick={() => changePassword(record)}>ChangePassword</a>
-                    <Link to="/Profile"><a>Edit</a></Link>
+                    <a onClick={() => changeUsernameAdmin(record)}>ChangeName</a>
                     <a onClick={() => deleteUser(record, this)}>Delete</a>
                 </Space>
             ),
