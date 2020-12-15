@@ -4,7 +4,7 @@ import {Input, Space, Table, Tag} from "antd";
 import {SearchOutlined} from "@ant-design/icons";
 import "./style.css"
 import {Link} from "react-router-dom";
-import {changePassword, deleteUser} from "./actions"
+import {changePassword, changeUsernameAdmin, deleteUser} from "./actions"
 import {getAllCourses} from "../AdminGrid/action";
 import {getAllUsers} from "../../actions/users";
 
