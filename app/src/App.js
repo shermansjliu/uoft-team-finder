@@ -22,8 +22,8 @@ class App extends React.Component {
   }
   // global state passed down includes the current logged in user.
   state = {
-    currentUser: {username:"admin"},
-    admin: true
+      currentUser: null,
+      admin: false
   }
 
   render() {
