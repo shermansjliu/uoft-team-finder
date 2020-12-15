@@ -45,14 +45,14 @@ class App extends React.Component {
                 )}
             />
 
-            <Route
-                exact path="/Admin"
-                render={props => (
-                    <div className="app">
-                      {(this.state.currentUser && this.state.admin) ? <Admin app={this} /> : <Login  app={this} />}
-                    </div>
-                )}
-            />
+            {/*<Route*/}
+            {/*    exact path="/Admin"*/}
+            {/*    render={props => (*/}
+            {/*        <div className="app">*/}
+            {/*          {(this.state.currentUser && this.state.admin) ? <Admin app={this} /> : <Login  app={this} />}*/}
+            {/*        </div>*/}
+            {/*    )}*/}
+            {/*/>*/}
 
             <Route
               exact
