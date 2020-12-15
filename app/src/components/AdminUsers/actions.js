@@ -32,7 +32,7 @@ export const changePassword = (record) => {
     });
 }
 
-export const changeUsernameAdmin = (record) => {
+export const changeUsernameAdmin = (record,page) => {
     console.log(record);
     let newUsername = prompt('Please Enter new Username for this user')
     if (!newUsername) {
@@ -42,7 +42,7 @@ export const changeUsernameAdmin = (record) => {
     const new_user = {
         username: newUsername
     }
-    const new_request = new Request('/api/changePassword/' + username, {
+    const new_request = new Request('/api/users/' + username, {
         method: "put",
         body: JSON.stringify(new_user),
         headers: {
@@ -62,6 +62,7 @@ export const changeUsernameAdmin = (record) => {
         console.log(error);
         prompt(error)
     });
+    getAllUsers(page);
 }
 
 export const  deleteUser = (record, page) => {
@@ -86,9 +87,4 @@ export const  deleteUser = (record, page) => {
         console.log(error);
     });
     getAllUsers(page);
-    // const filteredDate = page.state.data.filter((item) => {
-    //     return item.username !== record.username
-    // })
-    // page.setState({data:filteredDate})
-    // console.log("deleteUser",record.username)
 }

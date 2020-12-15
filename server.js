@@ -260,10 +260,10 @@ app.put("/api/users/:username", mongoChecker, authenticate, async (req, res) => 
 // api to change password
 app.put("/api/changePassword/:username", mongoChecker, authenticate, async (req, res) => {
 
-    // if (!req.session.admin && req.params.username !== req.session.currentUser ) {
-    //     res.status(401).send("User not authorized")
-    //     return
-    // }
+    if (!req.session.admin && req.params.username !== req.session.currentUser ) {
+        res.status(401).send("User not authorized")
+        return
+    }
     try {
         User.findOne({username: req.params.username},function(err, doc) {
             if (err) return false;
