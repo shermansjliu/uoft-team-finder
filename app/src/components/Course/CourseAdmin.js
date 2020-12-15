@@ -29,8 +29,11 @@ export default class CourseAdmin extends Component {
 
     async componentDidMount() {
         try {
-
-            const courseCode = this.props.match.params.courseCode.toUpperCase()
+            // const team_id = this.props.location.state.teamID
+            let courseCode = this.props.location.state.courseCode
+            courseCode = courseCode.replace(/\s/g, '');
+            courseCode = courseCode.toUpperCase()
+            console.log(courseCode)
             const res = await axios.get(`${ENDPOINT}/api/courses/${courseCode}`)
             // const res = await axios.get(`${ENDPOINT}/api/courses/CSC309`)
             const data = res.data

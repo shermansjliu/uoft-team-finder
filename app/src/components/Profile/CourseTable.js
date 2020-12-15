@@ -19,7 +19,7 @@ class CourseTable extends React.Component{
     render() {
         const {infos} = this.props;
         const filteredCourses = infos.state.courses.filter(course => {
-            return course.courseName.includes(this.state.onSearchString)})
+            return course.courseCode.includes(this.state.onSearchString)})
         return (
             <div>
                 <Row type="flex" align="middle">

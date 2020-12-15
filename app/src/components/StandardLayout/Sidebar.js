@@ -74,7 +74,7 @@ export default class Sidebar extends Component {
                             <PlusOutlined className="sb-btn" onClick={this.openModal}/>
                         </Tooltip>
 
-                        <Link to={"/Profile"}>
+                        <Link to={"/Profile"} app={app}>
                             <Tooltip placement="right" title="Profile">
                                 <UserOutlined className="sb-btn"/>
                             </Tooltip>
