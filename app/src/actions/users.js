@@ -17,7 +17,7 @@ export const checkSession = (app) => {
         })
         .catch(error => {
             console.log(error)
-
+            app.setState({ currentUser: null , admin: null});
         });
 };
 
