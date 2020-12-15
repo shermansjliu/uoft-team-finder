@@ -23,6 +23,9 @@ class Team extends React.Component {
   constructor(props) {
     super(props);
     const team_id = this.props.location.state.teamID;
+    console.log(team_id);
+    const currentUser = this.props.state.currentUser;
+    console.log(currentUser);
     this.state = {
       teamID: "",
       currentUser: {
@@ -63,16 +66,16 @@ class Team extends React.Component {
         }
       );
 
-      // currentUser id received from session
-      const currentUser = await axios.get(
-        `${ENDPOINT}/api/users/get-current-user`,
-        {
-          method: "get",
-        }
-      );
+      // // currentUser id received from session
+      // const currentUser = await axios.get(
+      //   `${ENDPOINT}/api/users/get-current-user`,
+      //   {
+      //     method: "get",
+      //   }
+      // );
       this.setState({
-        teamID: team.data._id,
-        currentUser: currentUser.data,
+        // teamID: team.data._id,
+        // currentUser: currentUser.data,
         teamLeaderID: team.data.teamLeader._id,
         members: team.data.members,
         teamName: team.data.teamName,
