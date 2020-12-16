@@ -22,14 +22,12 @@ const { Title } = Typography;
 class Team extends React.Component {
   constructor(props) {
     super(props);
-    const team_id = this.props.location.state.teamID;
+    const { app } = this.props;
+    console.log(app.state.currentUser);
+    // const team_id = this.props.location.state.teamID;
     this.state = {
       teamID: "",
-      currentUser: {
-        _id: "ShermanID",
-        name: "Sherman",
-        description: "REEEEEEEEEEEEEE",
-      },
+      currentUser: app.state.currentUser,
       teamLeaderID: "ShermanID",
       members: [
         {
@@ -63,16 +61,16 @@ class Team extends React.Component {
         }
       );
 
-      // currentUser id received from session
-      const currentUser = await axios.get(
-        `${ENDPOINT}/api/users/get-current-user`,
-        {
-          method: "get",
-        }
-      );
+      // // currentUser id received from session
+      // const currentUser = await axios.get(
+      //   `${ENDPOINT}/api/users/get-current-user`,
+      //   {
+      //     method: "get",
+      //   }
+      // );
       this.setState({
         teamID: team.data._id,
-        currentUser: currentUser.data,
+        // currentUser: currentUser.data,
         teamLeaderID: team.data.teamLeader._id,
         members: team.data.members,
         teamName: team.data.teamName,
