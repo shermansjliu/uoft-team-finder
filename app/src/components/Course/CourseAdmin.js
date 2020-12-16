@@ -6,9 +6,8 @@ import axios from "axios"
 import {ENDPOINT} from "../requests"
 import "../../App.css";
 import "./index.css";
-import Sidebar from "../StandardLayout/Sidebar";
 import AdminLayout from "../AdminLayout/AdminLayout";
-import {checkSession, getAllUsers} from "../../actions/users";
+import {getAllUsers} from "../../actions/users";
 import {getAllCourses} from "../AdminGrid/action";
 
 const {Sider, Content} = Layout;
@@ -31,13 +30,12 @@ export default class CourseAdmin extends Component {
         try {
             // const team_id = this.props.location.state.teamID
             let courseCode = this.props.location.state.courseCode
+            console.log(courseCode)
             courseCode = courseCode.replace(/\s/g, '');
             courseCode = courseCode.toUpperCase()
-            console.log(courseCode)
             const res = await axios.get(`${ENDPOINT}/api/courses/${courseCode}`)
-            // const res = await axios.get(`${ENDPOINT}/api/courses/CSC309`)
+
             const data = res.data
-            console.log(res.data.teams[0])
             const teams = data.teams.map(team => (
                 {
                     teamName: team.teamName,
@@ -53,8 +51,36 @@ export default class CourseAdmin extends Component {
         }
 
     }
+    handleAddTeam = async()=> {
+        try {
+            const courseRes = await axios.get(`${ENDPOINT}/api/courses/${this.state.courseCode}`)
+            const teamResponse = await axios.post(`${ENDPOINT}/api/teams/${courseRes.data._id}`,
+                {
+                    teamInfo:{
+                        teamName: "new team name",
+                        teamDescription: "new description",
+                        teamCapacity: 1,
+                    },
+                    teamLeader: "N/A"
 
+                 }
+                )
+            const {team} = teamResponse.data
 
+            const newTeams = this.state.teams
+            console.log(team)
+            newTeams.push({
+                teamName: team.teamName,
+                teamLeader:team.teamLeader.username,
+                members: team.members,
+                capacity: team.teamCapacity,
+                teamId: team._id
+            })
+            this.setState({teams: newTeams})
+        }catch(error){
+            console.log(error.status)
+        }
+    }
     handleInputChange = (e) => {
         this.setState({searchRes: e.target.value});
     };
@@ -119,14 +145,13 @@ export default class CourseAdmin extends Component {
                 title: "Action",
                 key: "action",
                 render: (record) => {
+                    console.log(record)
                     return (
                         <Space size="middle">
-                            <Link to="/teamAdmin">
+                            <Link to={{pathname:"/teamAdmin", state:{teamID: record.teamId}}}>
                                 {/* Goes to a specific teamAdmin page based on the teamId
                 This bevahour is not possible with react-router and so it goes to a default page for now*/}
-                                <a href="#" onClick={this.handleEditTeam}>
-                                    Edit
-                                </a>
+                                <a href="#" >Edit</a>
                             </Link>
                             <a href="#" onClick={() => this.handleDeleteTeam(record)}>
                                 Delete
@@ -139,7 +164,7 @@ export default class CourseAdmin extends Component {
 
         return (
             <AdminLayout
-                app = {this.props.app}
+                app = {this}
                 users = {this.state.users}
                 courses = {this.state.courses}
                 content={
@@ -147,6 +172,7 @@ export default class CourseAdmin extends Component {
                         <h1 className="courseCode theme-title">{this.state.courseCode}</h1>
                         <SearchBar
                             searchRes={this.state.searchRes}
+                            handleAddTeam={this.handleAddTeam}
                             handleInputChange={this.handleInputChange}
                         />
                         <Table

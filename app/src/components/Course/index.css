@@ -88,3 +88,13 @@
   margin-bottom: 2rem;
   width: 50%;
 }
+.addTeamBtn{
+  margin-left: 10px;
+  height: 40px;
+}
+.addTeamBtn:visited{
+  background: #6cc;
+}
+.addTeamBtn:focus{
+  background: #6cc;
+}

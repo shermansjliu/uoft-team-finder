@@ -1,13 +1,12 @@
 import React, { Component } from "react";
-import { Input } from "antd";
+import { Input, Button } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
-import "./index.css";
+import  "./index.css";
 export default class SearchBar extends Component {
   render() {
-    const { searchRes, handleInputChange } = this.props;
+    const { searchRes, handleInputChange, handleAddTeam } = this.props;
     return (
       <div className="searchBarContainer">
-        {/* <div> */}
         <Input
           className="searchBar"
           value={searchRes}
@@ -16,7 +15,7 @@ export default class SearchBar extends Component {
           placeholder="search team name"
           prefix={<SearchOutlined />}
         />
-        {/* </div> */}
+        <Button className="addTeamBtn" type={"primary"} onClick={handleAddTeam}>Add Team</Button>
       </div>
     );
   }
