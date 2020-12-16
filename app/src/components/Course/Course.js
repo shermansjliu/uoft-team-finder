@@ -82,6 +82,7 @@ export default class Course extends Component {
                   <Col key={uuid()} span={8}>
                     <div>
                       <TeamCard
+                          app={this}
                           teamID={team.teamID}
                         teamName={team.teamName}
                         members={team.members}

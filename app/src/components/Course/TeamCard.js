@@ -15,9 +15,9 @@ export default class TeamCard extends Component {
     }
 
     render() {
-        const {teamName, members, capacity, teamID} = this.props;
+        const {teamName, members, capacity, teamID, app} = this.props;
         return (
-            <Link to={{pathname: "/Team", state: {teamID: teamID}}}>
+            <Link to={{pathname: "/Team", state: {teamID: teamID}}} app={app}>
                 <Card hoverable className="teamCardContainer">
                     <div className="teamCardHeader">
                         <Title className="teamName" level={3} ellipsis={true}>
