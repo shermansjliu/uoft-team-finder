@@ -1,5 +1,3 @@
-# team4
-
 https://sleepy-ocean-40336.herokuapp.com/
 
 >User Account: user/123456
@@ -8,19 +6,6 @@ https://sleepy-ocean-40336.herokuapp.com/
 
 This is a web app used to help users find teammates for their personal projects. The app will target primarily university students. University students can access the premade course teams created by the Admin, create their profiles, and search for their ideal teammates based on their profiles.
 
-# Phase 1
-
-### Data:
-
-All data is hardcoded in the js files.
-
-User Data should be pulled from server, but we hardcoded them in the state. 
-
-### Sidebars:
-
-Most pages have the same sidebar to keep a consistent layout. Since we are not dealing with the data transforming right now, all sidebars are hardcoded but will be dynamically changed depending on data in phase 2.
-
-## Views:
 
 ### Login view, path:`/`
 
